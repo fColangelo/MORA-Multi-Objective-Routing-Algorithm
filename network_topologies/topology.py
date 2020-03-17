@@ -340,26 +340,14 @@ class Topology:
                 # ..and get j-th node from node_names too.
                 node_j = self.node_names[j]
                 
-                #TODO: this is a trick -> to be improved
-                # Now, consider the following link ids:
+                # Consider the following link id:
                 link_name = node_i + node_j
-                eman_knil = node_j + node_i
 
-                # If one of the two previous ids is in 'link_names' list..
+                # If it is in 'link_names' list..
                 if link_name in self.link_names:
                     # ..link exists...
                     
                     link = self.get_one_link(link_name)
-
-                    if link.status == 'on':
-                        op_adj_matrix[i][j] = 1  # ..and it is turned on: 1
-                    else:
-                        op_adj_matrix[i][j] = 0  # ..but it is switched off: 0
-
-                elif eman_knil in self.link_names:
-                    # ..link exists...
-                    
-                    link = self.get_one_link(eman_knil)
 
                     if link.status == 'on':
                         op_adj_matrix[i][j] = 1  # ..and it is turned on: 1
@@ -370,7 +358,8 @@ class Topology:
                     op_adj_matrix[i][j] = 0  #..otherwise, link doesn't exists: 0.
         
         return op_adj_matrix
-    
+
+
     def __repr__(self):
         
         adj_matrix=self.get_adjacency_matrix()        
@@ -525,6 +514,7 @@ class Topology:
     def has_loops(self, path):
         has_loops = (len(path) != len(set(path)))                                                                     
         return has_loops 
+
 
     def is_valid(self, path):
         for idx in range(len(path)-1):

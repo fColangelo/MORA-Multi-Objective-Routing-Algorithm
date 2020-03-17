@@ -125,6 +125,7 @@ class TrafficGenerator():
         
         if current_flows == []:
 
+            ## APPLY FLOWS ON NETWORK
             for key, flow in self.flows.items():
 
                 node1 = flow["node1"]
@@ -134,6 +135,7 @@ class TrafficGenerator():
         
         else:
 
+            ## APPLY/MODIFY FLOWS ON NETWORK
             for key, flow in self.flows.items():
 
                 node1 = flow["node1"]
@@ -160,6 +162,18 @@ class TrafficGenerator():
                 else:  
                     # ..otherwise, apply this flow on topology
                     self.topo.apply_service_on_network(flow, flow_path)
+
+            ## REMOVE TERMINED FLOWS FROM NETWORK
+            flows_ids = []
+            for key, flow, in self.flows.items():
+                flows_ids.append(flow["_id"])
+            
+            for cf in current_flows:
+                if cf["_id"] not in flows_ids:
+                    node1 = cf["node1"]
+                    node2 = cf["node2"]
+                    cf_path = self.topo.get_path(node1, node2)
+                    self.topo.remove_service_from_network(cf, cf_path)
 
 
 def read_from_json(json_path):
