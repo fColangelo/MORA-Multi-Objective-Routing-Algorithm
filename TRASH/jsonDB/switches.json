@@ -1,0 +1,84 @@
+{
+    "switche1": {
+        "_id": "s1", 
+        "links": { 
+            "link1": "s1s2", 
+            "link2": "s1s3"
+        }, 
+        "neighbors": {
+            "neighbor1": "s2", 
+            "neighbor2": "s3" 
+        }
+    }, 
+    "switche2": {
+        "_id": "s2", 
+        "links": {
+            "link1": "s1s2", 
+            "link2": "s2s3", 
+            "link3": "s2s5", 
+            "link4": "s2s4"
+        }, 
+        "neighbors": {
+            "neighbor1": "s1", 
+            "neighbor2": "s3", 
+            "neighbor3": "s5", 
+            "neighbor4": "s4"
+        }
+    }, 
+    "switche3": {
+        "_id": "s3", 
+        "links": {
+            "link1": "s1s3", 
+            "link2": "s3s5", 
+            "link3": "s3s4", 
+            "link4": "s2s3"
+        }, 
+        "neighbors": {
+            "neighbor1": "s1", 
+            "neighbor2": "s5", 
+            "neighbor3": "s4", 
+            "neighbor4": "s2"
+        }
+    }, 
+    "switche4": {
+        "_id": "s4", 
+        "links": {
+            "link1": "s6s4", 
+            "link2": "s4s5", 
+            "link3": "s3s4", 
+            "link4": "s2s4"
+        }, 
+        "neighbors": {
+            "neighbor1": "s6", 
+            "neighbor2": "s5", 
+            "neighbor3": "s3", 
+            "neighbor4": "s2"
+        }
+    }, 
+    "switche5": {
+        "_id": "s5", 
+        "links": {
+            "link1": "s4s5", 
+            "link2": "s3s5", 
+            "link3": "s6s5", 
+            "link4": "s2s5"
+        }, 
+        "neighbors": {
+            "neighbor1": "s4", 
+            "neighbor2": "s3", 
+            "neighbor3": "s6", 
+            "neighbor4": "s2"
+        }
+    }, 
+    "switche6": {
+        "_id": "s6", 
+        "links": {
+            "link1": "s6s4", 
+            "link2": "s6s5"
+        }, 
+        "neighbors": {
+            "neighbor1": "s4", 
+            "neighbor2": "s5"
+        }
+    }
+}

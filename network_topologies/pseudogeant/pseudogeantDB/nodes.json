@@ -1,0 +1,1146 @@
+{
+    "node1": {
+        "_id": "01",
+        "active_links": {
+            "link1": "0103",
+            "link2": "0107",
+            "link3": "0116"
+        },
+        "active_links_list": [
+            "0103",
+            "0107",
+            "0116"
+        ],
+        "active_neighbors": {
+            "neighbor1": "03",
+            "neighbor2": "07",
+            "neighbor3": "16"
+        },
+        "active_neighbors_list": [
+            "03",
+            "07",
+            "16"
+        ],
+        "links": {
+            "link1": "0103",
+            "link2": "0107",
+            "link3": "0116"
+        },
+        "links_list": [
+            "0103",
+            "0107",
+            "0116"
+        ],
+        "neighbors": {
+            "neighbor1": "03",
+            "neighbor2": "07",
+            "neighbor3": "16"
+        },
+        "neighbors_list": [
+            "03",
+            "07",
+            "16"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node10": {
+        "_id": "10",
+        "active_links": {
+            "link1": "0310",
+            "link2": "1011",
+            "link3": "1012",
+            "link4": "1016",
+            "link5": "1017"
+        },
+        "active_links_list": [
+            "0310",
+            "1011",
+            "1012",
+            "1016",
+            "1017"
+        ],
+        "active_neighbors": {
+            "neighbor1": "03",
+            "neighbor2": "11",
+            "neighbor3": "12",
+            "neighbor4": "16",
+            "neighbor5": "17"
+        },
+        "active_neighbors_list": [
+            "03",
+            "11",
+            "12",
+            "16",
+            "17"
+        ],
+        "links": {
+            "link1": "0310",
+            "link2": "1011",
+            "link3": "1012",
+            "link4": "1016",
+            "link5": "1017"
+        },
+        "links_list": [
+            "0310",
+            "1011",
+            "1012",
+            "1016",
+            "1017"
+        ],
+        "neighbors": {
+            "neighbor1": "03",
+            "neighbor2": "11",
+            "neighbor3": "12",
+            "neighbor4": "16",
+            "neighbor5": "17"
+        },
+        "neighbors_list": [
+            "03",
+            "11",
+            "12",
+            "16",
+            "17"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node11": {
+        "_id": "11",
+        "active_links": {
+            "link1": "0311",
+            "link2": "1011"
+        },
+        "active_links_list": [
+            "0311",
+            "1011"
+        ],
+        "active_neighbors": {
+            "neighbor1": "03",
+            "neighbor2": "10"
+        },
+        "active_neighbors_list": [
+            "03",
+            "10"
+        ],
+        "links": {
+            "link1": "0311",
+            "link2": "1011"
+        },
+        "links_list": [
+            "0311",
+            "1011"
+        ],
+        "neighbors": {
+            "neighbor1": "03",
+            "neighbor2": "10"
+        },
+        "neighbors_list": [
+            "03",
+            "10"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node12": {
+        "_id": "12",
+        "active_links": {
+            "link1": "0212",
+            "link2": "1012",
+            "link3": "1222"
+        },
+        "active_links_list": [
+            "0212",
+            "1012",
+            "1222"
+        ],
+        "active_neighbors": {
+            "neighbor1": "02",
+            "neighbor2": "10",
+            "neighbor3": "22"
+        },
+        "active_neighbors_list": [
+            "02",
+            "10",
+            "22"
+        ],
+        "links": {
+            "link1": "0212",
+            "link2": "1012",
+            "link3": "1222"
+        },
+        "links_list": [
+            "0212",
+            "1012",
+            "1222"
+        ],
+        "neighbors": {
+            "neighbor1": "02",
+            "neighbor2": "10",
+            "neighbor3": "22"
+        },
+        "neighbors_list": [
+            "02",
+            "10",
+            "22"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node13": {
+        "_id": "13",
+        "active_links": {
+            "link1": "0213",
+            "link2": "1314",
+            "link3": "1317",
+            "link4": "1319"
+        },
+        "active_links_list": [
+            "0213",
+            "1314",
+            "1317",
+            "1319"
+        ],
+        "active_neighbors": {
+            "neighbor1": "02",
+            "neighbor2": "14",
+            "neighbor3": "17",
+            "neighbor4": "19"
+        },
+        "active_neighbors_list": [
+            "02",
+            "14",
+            "17",
+            "19"
+        ],
+        "links": {
+            "link1": "0213",
+            "link2": "1314",
+            "link3": "1317",
+            "link4": "1319"
+        },
+        "links_list": [
+            "0213",
+            "1314",
+            "1317",
+            "1319"
+        ],
+        "neighbors": {
+            "neighbor1": "02",
+            "neighbor2": "14",
+            "neighbor3": "17",
+            "neighbor4": "19"
+        },
+        "neighbors_list": [
+            "02",
+            "14",
+            "17",
+            "19"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node14": {
+        "_id": "14",
+        "active_links": {
+            "link1": "0314",
+            "link2": "1314"
+        },
+        "active_links_list": [
+            "0314",
+            "1314"
+        ],
+        "active_neighbors": {
+            "neighbor1": "03",
+            "neighbor2": "13"
+        },
+        "active_neighbors_list": [
+            "03",
+            "13"
+        ],
+        "links": {
+            "link1": "0314",
+            "link2": "1314"
+        },
+        "links_list": [
+            "0314",
+            "1314"
+        ],
+        "neighbors": {
+            "neighbor1": "03",
+            "neighbor2": "13"
+        },
+        "neighbors_list": [
+            "03",
+            "13"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node15": {
+        "_id": "15",
+        "active_links": {
+            "link1": "0915",
+            "link2": "1520"
+        },
+        "active_links_list": [
+            "0915",
+            "1520"
+        ],
+        "active_neighbors": {
+            "neighbor1": "09",
+            "neighbor2": "20"
+        },
+        "active_neighbors_list": [
+            "09",
+            "20"
+        ],
+        "links": {
+            "link1": "0915",
+            "link2": "1520"
+        },
+        "links_list": [
+            "0915",
+            "1520"
+        ],
+        "neighbors": {
+            "neighbor1": "09",
+            "neighbor2": "20"
+        },
+        "neighbors_list": [
+            "09",
+            "20"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node16": {
+        "_id": "16",
+        "active_links": {
+            "link1": "0116",
+            "link2": "0416",
+            "link3": "0516",
+            "link4": "0916",
+            "link5": "1016"
+        },
+        "active_links_list": [
+            "0116",
+            "0416",
+            "0516",
+            "0916",
+            "1016"
+        ],
+        "active_neighbors": {
+            "neighbor1": "01",
+            "neighbor2": "04",
+            "neighbor3": "05",
+            "neighbor4": "09",
+            "neighbor5": "10"
+        },
+        "active_neighbors_list": [
+            "01",
+            "04",
+            "05",
+            "09",
+            "10"
+        ],
+        "links": {
+            "link1": "0116",
+            "link2": "0416",
+            "link3": "0516",
+            "link4": "0916",
+            "link5": "1016"
+        },
+        "links_list": [
+            "0116",
+            "0416",
+            "0516",
+            "0916",
+            "1016"
+        ],
+        "neighbors": {
+            "neighbor1": "01",
+            "neighbor2": "04",
+            "neighbor3": "05",
+            "neighbor4": "09",
+            "neighbor5": "10"
+        },
+        "neighbors_list": [
+            "01",
+            "04",
+            "05",
+            "09",
+            "10"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node17": {
+        "_id": "17",
+        "active_links": {
+            "link1": "0717",
+            "link2": "1017",
+            "link3": "1317",
+            "link4": "1720",
+            "link5": "1723"
+        },
+        "active_links_list": [
+            "0717",
+            "1017",
+            "1317",
+            "1720",
+            "1723"
+        ],
+        "active_neighbors": {
+            "neighbor1": "07",
+            "neighbor2": "10",
+            "neighbor3": "13",
+            "neighbor4": "20",
+            "neighbor5": "23"
+        },
+        "active_neighbors_list": [
+            "07",
+            "10",
+            "13",
+            "20",
+            "23"
+        ],
+        "links": {
+            "link1": "0717",
+            "link2": "1017",
+            "link3": "1317",
+            "link4": "1720",
+            "link5": "1723"
+        },
+        "links_list": [
+            "0717",
+            "1017",
+            "1317",
+            "1720",
+            "1723"
+        ],
+        "neighbors": {
+            "neighbor1": "07",
+            "neighbor2": "10",
+            "neighbor3": "13",
+            "neighbor4": "20",
+            "neighbor5": "23"
+        },
+        "neighbors_list": [
+            "07",
+            "10",
+            "13",
+            "20",
+            "23"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node18": {
+        "_id": "18",
+        "active_links": {
+            "link1": "0218",
+            "link2": "1821"
+        },
+        "active_links_list": [
+            "0218",
+            "1821"
+        ],
+        "active_neighbors": {
+            "neighbor1": "02",
+            "neighbor2": "21"
+        },
+        "active_neighbors_list": [
+            "02",
+            "21"
+        ],
+        "links": {
+            "link1": "0218",
+            "link2": "1821"
+        },
+        "links_list": [
+            "0218",
+            "1821"
+        ],
+        "neighbors": {
+            "neighbor1": "02",
+            "neighbor2": "21"
+        },
+        "neighbors_list": [
+            "02",
+            "21"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node19": {
+        "_id": "19",
+        "active_links": {
+            "link1": "0619",
+            "link2": "0719",
+            "link3": "1319"
+        },
+        "active_links_list": [
+            "0619",
+            "0719",
+            "1319"
+        ],
+        "active_neighbors": {
+            "neighbor1": "06",
+            "neighbor2": "07",
+            "neighbor3": "13"
+        },
+        "active_neighbors_list": [
+            "06",
+            "07",
+            "13"
+        ],
+        "links": {
+            "link1": "0619",
+            "link2": "0719",
+            "link3": "1319"
+        },
+        "links_list": [
+            "0619",
+            "0719",
+            "1319"
+        ],
+        "neighbors": {
+            "neighbor1": "06",
+            "neighbor2": "07",
+            "neighbor3": "13"
+        },
+        "neighbors_list": [
+            "06",
+            "07",
+            "13"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node2": {
+        "_id": "02",
+        "active_links": {
+            "link1": "0204",
+            "link2": "0207",
+            "link3": "0212",
+            "link4": "0213",
+            "link5": "0218",
+            "link6": "0223"
+        },
+        "active_links_list": [
+            "0204",
+            "0207",
+            "0212",
+            "0213",
+            "0218",
+            "0223"
+        ],
+        "active_neighbors": {
+            "neighbor1": "04",
+            "neighbor2": "07",
+            "neighbor3": "12",
+            "neighbor4": "13",
+            "neighbor5": "18",
+            "neighbor6": "23"
+        },
+        "active_neighbors_list": [
+            "04",
+            "07",
+            "12",
+            "13",
+            "18",
+            "23"
+        ],
+        "links": {
+            "link1": "0204",
+            "link2": "0207",
+            "link3": "0212",
+            "link4": "0213",
+            "link5": "0218",
+            "link6": "0223"
+        },
+        "links_list": [
+            "0204",
+            "0207",
+            "0212",
+            "0213",
+            "0218",
+            "0223"
+        ],
+        "neighbors": {
+            "neighbor1": "04",
+            "neighbor2": "07",
+            "neighbor3": "12",
+            "neighbor4": "13",
+            "neighbor5": "18",
+            "neighbor6": "23"
+        },
+        "neighbors_list": [
+            "04",
+            "07",
+            "12",
+            "13",
+            "18",
+            "23"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node20": {
+        "_id": "20",
+        "active_links": {
+            "link1": "1520",
+            "link2": "1720",
+            "link3": "2022"
+        },
+        "active_links_list": [
+            "1520",
+            "1720",
+            "2022"
+        ],
+        "active_neighbors": {
+            "neighbor1": "15",
+            "neighbor2": "17",
+            "neighbor3": "22"
+        },
+        "active_neighbors_list": [
+            "15",
+            "17",
+            "22"
+        ],
+        "links": {
+            "link1": "1520",
+            "link2": "1720",
+            "link3": "2022"
+        },
+        "links_list": [
+            "1520",
+            "1720",
+            "2022"
+        ],
+        "neighbors": {
+            "neighbor1": "15",
+            "neighbor2": "17",
+            "neighbor3": "22"
+        },
+        "neighbors_list": [
+            "15",
+            "17",
+            "22"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node21": {
+        "_id": "21",
+        "active_links": {
+            "link1": "0321",
+            "link2": "0721",
+            "link3": "1821"
+        },
+        "active_links_list": [
+            "0321",
+            "0721",
+            "1821"
+        ],
+        "active_neighbors": {
+            "neighbor1": "03",
+            "neighbor2": "07",
+            "neighbor3": "18"
+        },
+        "active_neighbors_list": [
+            "03",
+            "07",
+            "18"
+        ],
+        "links": {
+            "link1": "0321",
+            "link2": "0721",
+            "link3": "1821"
+        },
+        "links_list": [
+            "0321",
+            "0721",
+            "1821"
+        ],
+        "neighbors": {
+            "neighbor1": "03",
+            "neighbor2": "07",
+            "neighbor3": "18"
+        },
+        "neighbors_list": [
+            "03",
+            "07",
+            "18"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node22": {
+        "_id": "22",
+        "active_links": {
+            "link1": "1222",
+            "link2": "2022"
+        },
+        "active_links_list": [
+            "1222",
+            "2022"
+        ],
+        "active_neighbors": {
+            "neighbor1": "12",
+            "neighbor2": "20"
+        },
+        "active_neighbors_list": [
+            "12",
+            "20"
+        ],
+        "links": {
+            "link1": "1222",
+            "link2": "2022"
+        },
+        "links_list": [
+            "1222",
+            "2022"
+        ],
+        "neighbors": {
+            "neighbor1": "12",
+            "neighbor2": "20"
+        },
+        "neighbors_list": [
+            "12",
+            "20"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node23": {
+        "_id": "23",
+        "active_links": {
+            "link1": "0223",
+            "link2": "1723"
+        },
+        "active_links_list": [
+            "0223",
+            "1723"
+        ],
+        "active_neighbors": {
+            "neighbor1": "02",
+            "neighbor2": "17"
+        },
+        "active_neighbors_list": [
+            "02",
+            "17"
+        ],
+        "links": {
+            "link1": "0223",
+            "link2": "1723"
+        },
+        "links_list": [
+            "0223",
+            "1723"
+        ],
+        "neighbors": {
+            "neighbor1": "02",
+            "neighbor2": "17"
+        },
+        "neighbors_list": [
+            "02",
+            "17"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node3": {
+        "_id": "03",
+        "active_links": {
+            "link1": "0103",
+            "link2": "0310",
+            "link3": "0311",
+            "link4": "0314",
+            "link5": "0321"
+        },
+        "active_links_list": [
+            "0103",
+            "0310",
+            "0311",
+            "0314",
+            "0321"
+        ],
+        "active_neighbors": {
+            "neighbor1": "01",
+            "neighbor2": "10",
+            "neighbor3": "11",
+            "neighbor4": "14",
+            "neighbor5": "21"
+        },
+        "active_neighbors_list": [
+            "01",
+            "10",
+            "11",
+            "14",
+            "21"
+        ],
+        "links": {
+            "link1": "0103",
+            "link2": "0310",
+            "link3": "0311",
+            "link4": "0314",
+            "link5": "0321"
+        },
+        "links_list": [
+            "0103",
+            "0310",
+            "0311",
+            "0314",
+            "0321"
+        ],
+        "neighbors": {
+            "neighbor1": "01",
+            "neighbor2": "10",
+            "neighbor3": "11",
+            "neighbor4": "14",
+            "neighbor5": "21"
+        },
+        "neighbors_list": [
+            "01",
+            "10",
+            "11",
+            "14",
+            "21"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node4": {
+        "_id": "04",
+        "active_links": {
+            "link1": "0204",
+            "link2": "0416"
+        },
+        "active_links_list": [
+            "0204",
+            "0416"
+        ],
+        "active_neighbors": {
+            "neighbor1": "02",
+            "neighbor2": "16"
+        },
+        "active_neighbors_list": [
+            "02",
+            "16"
+        ],
+        "links": {
+            "link1": "0204",
+            "link2": "0416"
+        },
+        "links_list": [
+            "0204",
+            "0416"
+        ],
+        "neighbors": {
+            "neighbor1": "02",
+            "neighbor2": "16"
+        },
+        "neighbors_list": [
+            "02",
+            "16"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node5": {
+        "_id": "05",
+        "active_links": {
+            "link1": "0508",
+            "link2": "0516"
+        },
+        "active_links_list": [
+            "0508",
+            "0516"
+        ],
+        "active_neighbors": {
+            "neighbor1": "08",
+            "neighbor2": "16"
+        },
+        "active_neighbors_list": [
+            "08",
+            "16"
+        ],
+        "links": {
+            "link1": "0508",
+            "link2": "0516"
+        },
+        "links_list": [
+            "0508",
+            "0516"
+        ],
+        "neighbors": {
+            "neighbor1": "08",
+            "neighbor2": "16"
+        },
+        "neighbors_list": [
+            "08",
+            "16"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node6": {
+        "_id": "06",
+        "active_links": {
+            "link1": "0607",
+            "link2": "0619"
+        },
+        "active_links_list": [
+            "0607",
+            "0619"
+        ],
+        "active_neighbors": {
+            "neighbor1": "07",
+            "neighbor2": "19"
+        },
+        "active_neighbors_list": [
+            "07",
+            "19"
+        ],
+        "links": {
+            "link1": "0607",
+            "link2": "0619"
+        },
+        "links_list": [
+            "0607",
+            "0619"
+        ],
+        "neighbors": {
+            "neighbor1": "07",
+            "neighbor2": "19"
+        },
+        "neighbors_list": [
+            "07",
+            "19"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node7": {
+        "_id": "07",
+        "active_links": {
+            "link1": "0107",
+            "link2": "0207",
+            "link3": "0607",
+            "link4": "0717",
+            "link5": "0719",
+            "link6": "0721"
+        },
+        "active_links_list": [
+            "0107",
+            "0207",
+            "0607",
+            "0717",
+            "0719",
+            "0721"
+        ],
+        "active_neighbors": {
+            "neighbor1": "01",
+            "neighbor2": "02",
+            "neighbor3": "06",
+            "neighbor4": "17",
+            "neighbor5": "19",
+            "neighbor6": "21"
+        },
+        "active_neighbors_list": [
+            "01",
+            "02",
+            "06",
+            "17",
+            "19",
+            "21"
+        ],
+        "links": {
+            "link1": "0107",
+            "link2": "0207",
+            "link3": "0607",
+            "link4": "0717",
+            "link5": "0719",
+            "link6": "0721"
+        },
+        "links_list": [
+            "0107",
+            "0207",
+            "0607",
+            "0717",
+            "0719",
+            "0721"
+        ],
+        "neighbors": {
+            "neighbor1": "01",
+            "neighbor2": "02",
+            "neighbor3": "06",
+            "neighbor4": "17",
+            "neighbor5": "19",
+            "neighbor6": "21"
+        },
+        "neighbors_list": [
+            "01",
+            "02",
+            "06",
+            "17",
+            "19",
+            "21"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node8": {
+        "_id": "08",
+        "active_links": {
+            "link1": "0508",
+            "link2": "0809"
+        },
+        "active_links_list": [
+            "0508",
+            "0809"
+        ],
+        "active_neighbors": {
+            "neighbor1": "05",
+            "neighbor2": "09"
+        },
+        "active_neighbors_list": [
+            "05",
+            "09"
+        ],
+        "links": {
+            "link1": "0508",
+            "link2": "0809"
+        },
+        "links_list": [
+            "0508",
+            "0809"
+        ],
+        "neighbors": {
+            "neighbor1": "05",
+            "neighbor2": "09"
+        },
+        "neighbors_list": [
+            "05",
+            "09"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    },
+    "node9": {
+        "_id": "09",
+        "active_links": {
+            "link1": "0809",
+            "link2": "0915",
+            "link3": "0916"
+        },
+        "active_links_list": [
+            "0809",
+            "0915",
+            "0916"
+        ],
+        "active_neighbors": {
+            "neighbor1": "08",
+            "neighbor2": "15",
+            "neighbor3": "16"
+        },
+        "active_neighbors_list": [
+            "08",
+            "15",
+            "16"
+        ],
+        "links": {
+            "link1": "0809",
+            "link2": "0915",
+            "link3": "0916"
+        },
+        "links_list": [
+            "0809",
+            "0915",
+            "0916"
+        ],
+        "neighbors": {
+            "neighbor1": "08",
+            "neighbor2": "15",
+            "neighbor3": "16"
+        },
+        "neighbors_list": [
+            "08",
+            "15",
+            "16"
+        ],
+        "pop": {
+            "city": "N.A.",
+            "nation": "N.A."
+        },
+        "role": "NR"
+    }
+}

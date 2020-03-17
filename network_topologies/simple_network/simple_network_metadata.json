@@ -1,0 +1,229 @@
+{
+    "nodes": {
+        "node1": {
+            "_id": "s1", 
+            "links": { 
+                "link2": "s1s2", 
+                "link3": "s1s3"
+            }, 
+            "neighbors": { 
+                "neighbor2": "s2", 
+                "neighbor3": "s3"
+            },
+            "pop": {
+                    "city": "Palermo",
+                    "nation": "Italy"
+                },
+                "role": "NR"
+            }, 
+        "node2": {
+            "_id": "s2", 
+            "links": {
+                "link1": "s1s2", 
+                "link2": "s2s3", 
+                "link3": "s2s5", 
+                "link4": "s2s4"
+            }, 
+            "neighbors": {
+                "neighbor1": "s1", 
+                "neighbor2": "s3", 
+                "neighbor3": "s5", 
+                "neighbor4": "s4"
+            },
+        "pop": {
+                "city": "Naples",
+                "nation": "Italy"
+            },
+            "role": "NR"
+        }, 
+        "node3": {
+            "_id": "s3", 
+            "links": {
+                "link1": "s1s3", 
+                "link2": "s3s5", 
+                "link3": "s3s4", 
+                "link4": "s2s3"
+            }, 
+            "neighbors": {
+                "neighbor1": "s1", 
+                "neighbor2": "s5", 
+                "neighbor3": "s4", 
+                "neighbor4": "s2"
+            },
+        "pop": {
+                "city": "Rome",
+                "nation": "Italy"
+            },
+            "role": "NR"
+        }, 
+        "node4": {
+            "_id": "s4", 
+            "links": {
+                "link1": "s4s6", 
+                "link2": "s4s5", 
+                "link3": "s3s4", 
+                "link4": "s2s4"
+            }, 
+            "neighbors": {
+                "neighbor1": "s6", 
+                "neighbor2": "s5", 
+                "neighbor3": "s3", 
+                "neighbor4": "s2"
+            },
+        "pop": {
+                "city": "Turin",
+                "nation": "Italy"
+            },
+            "role": "NR"
+        }, 
+        "nodee5": {
+            "_id": "s5", 
+            "links": {
+                "link1": "s4s5", 
+                "link2": "s3s5", 
+                "link3": "s5s6", 
+                "link4": "s2s5"
+            }, 
+            "neighbors": {
+                "neighbor1": "s4", 
+                "neighbor2": "s3", 
+                "neighbor3": "s6", 
+                "neighbor4": "s2"
+            },
+        "pop": {
+                "city": "Milan",
+                "nation": "Italy"
+            },
+            "role": "NR"
+        }, 
+        "node6": {
+            "_id": "s6", 
+            "links": { 
+                "link3": "s4s6", 
+                "link4": "s5s6"
+            }, 
+            "neighbors": { 
+                "neighbor3": "s4", 
+                "neighbor4": "s5"
+            },
+        "pop": {
+                "city": "Venice",
+                "nation": "Italy"
+            },
+            "role": "NR"
+        }
+    },
+    "links": {
+        "link1": {
+            "_id": "s3s4", 
+            "bw": 100000, 
+            "bw_usage": 0, 
+            "delay": 0, 
+            "jitter": 0, 
+            "loss": 0, 
+            "node1": "s3", 
+            "node2": "s4",
+        "status": "on"
+        }, 
+        "link2": {
+            "_id": "s5s6", 
+            "bw": 50000, 
+            "bw_usage": 0, 
+            "delay": 0, 
+            "jitter": 0, 
+            "loss": 0, 
+            "node1": "s5", 
+            "node2": "s6",
+        "status": "on"
+        }, 
+        "link3": {
+            "_id": "s2s3", 
+            "bw": 50000, 
+            "bw_usage": 0, 
+            "delay": 0, 
+            "jitter": 0, 
+            "loss": 0, 
+            "node1": "s2", 
+            "node2": "s3",
+        "status": "on"
+        }, 
+        "link4": {
+            "_id": "s2s5", 
+            "bw": 100000, 
+            "bw_usage": 0, 
+            "delay": 0, 
+            "jitter": 0, 
+            "loss": 0, 
+            "node1": "s2", 
+            "node2": "s5",
+        "status": "on"
+        }, 
+        "link5": {
+            "_id": "s2s4", 
+            "bw": 100000, 
+            "bw_usage": 0, 
+            "delay": 0, 
+            "jitter": 0, 
+            "loss": 0, 
+            "node1": "s2", 
+            "node2": "s4",
+        "status": "on"
+        },  
+        "link6": {
+            "_id": "s1s2", 
+            "bw": 50000, 
+            "bw_usage": 0, 
+            "delay": 0, 
+            "jitter": 0, 
+            "loss": 0, 
+            "node1": "s1", 
+            "node2": "s2",
+        "status": "on"
+        }, 
+        "link7": {
+            "_id": "s1s3", 
+            "bw": 50000, 
+            "bw_usage": 0, 
+            "delay": 0, 
+            "jitter": 0, 
+            "loss": 0, 
+            "node1": "s1", 
+            "node2": "s3",
+        "status": "on"
+        },  
+        "link8": {
+            "_id": "s4s6", 
+            "bw": 50000, 
+            "bw_usage": 0, 
+            "delay": 0, 
+            "jitter": 0, 
+            "loss": 0, 
+            "node1": "s4", 
+            "node2": "s6",
+        "status": "on"
+        }, 
+        "link9": {
+            "_id": "s4s5", 
+            "bw": 50000, 
+            "bw_usage": 0, 
+            "delay": 0, 
+            "jitter": 0, 
+            "loss": 0, 
+            "node1": "s4", 
+            "node2": "s5",
+        "status": "on"
+        }, 
+        "link10": {
+            "_id": "s3s5", 
+            "bw": 100000, 
+            "bw_usage": 0, 
+            "delay": 0, 
+            "jitter": 0, 
+            "loss": 0, 
+            "node1": "s3", 
+            "node2": "s5",
+        "status": "on"
+        }
+    }   
+
+}

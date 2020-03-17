@@ -1,0 +1,1543 @@
+{
+    "nodes": {
+        "node1": {
+            "_id": "AT",
+            "pop": {
+                "city": "Vienna",
+                "nation": "Austria" 
+            },  
+            "links": { 
+                "link1": "ATPL",
+                "link2": "PLAT",
+                "link3": "ATCZ",
+                "link4": "CZAT",
+                "link5": "ATHU",
+                "link6": "HUAT",
+                "link7": "ATSK",
+                "link8": "SKAT",
+                "link9": "ATHR",
+                "link10": "HRAT",
+                "link11": "ATBG",
+                "link12": "BGAT",
+                "link13": "ATGC",
+                "link14": "GCAT",
+                "link15": "ATIT",
+                "link16": "ITAT"
+            }, 
+            "neighbors": {
+                "neighbor1": "PL",
+                "neighbor2": "CZ",
+                "neighbor3": "HU",
+                "neighbor4": "SK",
+                "neighbor5": "HR",
+                "neighbor6": "BG",
+                "neighbor7": "GC",
+                "neighbor8": "IT"  
+            }
+        },
+        "node2": {
+            "_id": "BE",
+            "pop": {
+                "city": "Brussels",
+                "nation": "Belgium" 
+            }, 
+            "links": { 
+                "link1": "BENL",
+                "link2": "NLBE",
+                "link3": "BEUK",
+                "link4": "UKBE" 
+            }, 
+            "neighbors": {
+                "neighbor1": "NL",
+                "neighbor2": "UK"
+            }
+        },
+        "node3": {
+            "_id": "BG",
+            "pop": {
+                "city": "Sofia",
+                "nation": "Bulgaria" 
+            }, 
+            "links": { 
+                "link1": "BGRO",
+                "link2": "ROBG",
+                "link3": "ATBG",
+                "link4": "BGAT"
+            }, 
+            "neighbors": {
+                "neighbor1": "RO",
+                "neighbor2": "AT" 
+            }
+        },
+        "node4": {
+            "_id": "CH",
+            "pop": {
+                "city": "Geneva",
+                "nation": "Switzerland" 
+            }, 
+            "links": { 
+                "link1": "CHDE",
+                "link2": "DECH",
+                "link3": "CHIT",
+                "link4": "ITCH",
+                "link5": "CHFN",
+                "link6": "FNCH",
+                "link7": "CHES",
+                "link8": "ESCH",
+                "link9": "CHFR",
+                "link10": "FRCH"
+            }, 
+            "neighbors": {
+                "neighbor1": "DE",
+                "neighbor2": "IT",
+                "neighbor3": "FN",
+                "neighbor4": "ES",
+                "neighbor5": "FR"  
+            }
+        },
+        "node5": {
+            "_id": "CZ",
+            "pop": {
+                "city": "Prague",
+                "nation": "Czech Republic" 
+            }, 
+            "links": { 
+                "link1": "CZHU",
+                "link2": "HUCZ",
+                "link3": "ATCZ",
+                "link4": "CZAT",
+                "link5": "CZDE",
+                "link6": "DECZ" 
+            }, 
+            "neighbors": {
+                "neighbor1": "HU",
+                "neighbor2": "AT",
+                "neighbor3": "DE"  
+            }
+        },
+        "node6": {
+            "_id": "DE",
+            "pop": {
+                "city": "Frankfurt",
+                "nation": "Germany" 
+            }, 
+            "links": { 
+                "link1": "DENL",
+                "link2": "NLDE",
+                "link3": "DEDU",
+                "link4": "DUDE",
+                "link5": "DEPL",
+                "link6": "PLDE",
+                "link7": "CZDE",
+                "link8": "DECZ",
+                "link9": "CHDE",
+                "link10": "DECH"
+            }, 
+            "neighbors": {
+                "neighbor1": "NL",
+                "neighbor2": "DU",
+                "neighbor3": "PL",
+                "neighbor4": "CZ",
+                "neighbor5": "CH"  
+            }
+        },
+        "node7": {
+            "_id": "EE",
+            "pop": {
+                "city": "Tallin",
+                "nation": "Estonia" 
+            },  
+            "links": { 
+                "link1": "EEET",
+                "link2": "ETEE",
+                "link3": "DUEE",
+                "link4": "EEDU"             
+            }, 
+            "neighbors": {
+                "neighbor1": "ET",
+                "neighbor2": "DU"  
+            }
+        },
+        "node8": {
+            "_id": "ET",
+            "pop": {
+                "city": "Tallin",
+                "nation": "Estonia" 
+            },  
+            "links": { 
+                "link1": "EEET",
+                "link2": "ETEE",
+                "link3": "ETLV",
+                "link4": "LVET"             
+            }, 
+            "neighbors": {
+                "neighbor1": "EE",
+                "neighbor2": "LV"  
+            }
+        },
+        "node9": {
+            "_id": "ES",
+            "pop": {
+                "city": "Madrid",
+                "nation": "Spain" 
+            },  
+            "links": { 
+                "link1": "ESFR",
+                "link2": "FRES",
+                "link3": "CHES",
+                "link4": "ESCH",
+                "link5": "ESPR",
+                "link6": "PRES" 
+            }, 
+            "neighbors": {
+                "neighbor1": "FR",
+                "neighbor2": "CH",
+                "neighbor3":"PR"  
+            }
+        },
+        "node10": {
+            "_id": "FN",
+            "pop": {
+                "city": "Marseilles",
+                "nation": "France" 
+            },  
+            "links": { 
+                "link1": "CHFN",
+                "link2": "FNCH",
+                "link3": "FNIT",
+                "link4": "ITFN" 
+            }, 
+            "neighbors": {
+                "neighbor1": "CH",
+                "neighbor2": "IT"  
+            }
+        },
+        "node11": {
+            "_id": "FR",
+            "pop": {
+                "city": "Paris",
+                "nation": "France" 
+            },  
+            "links": { 
+                "link1": "CHFR",
+                "link2": "FRCH",
+                "link3": "ESFR",
+                "link4": "FRES",
+                "link5": "FRUI",
+                "link6": "UIFR" 
+            }, 
+            "neighbors": {
+                "neighbor1": "CH",
+                "neighbor2": "ES",
+                "neighbor3": "UI"  
+            }
+        },
+        "node12": {
+            "_id": "GR",
+            "pop": {
+                "city": "Athens",
+                "nation": "Greece" 
+            },  
+            "links": { 
+                "link1": "GCGR",
+                "link2": "GRGC",
+                "link3": "GRIT",
+                "link4": "ITGR" 
+            }, 
+            "neighbors": {
+                "neighbor1": "GC",
+                "neighbor2": "IT"  
+            }
+        },
+        "node13": {
+            "_id": "GC",
+            "pop": {
+                "city": "Athens",
+                "nation": "Greece" 
+            },  
+            "links": { 
+                "link1": "GCGR",
+                "link2": "GRGC",
+                "link3": "ATGC",
+                "link4": "GCAT" 
+            }, 
+            "neighbors": {
+                "neighbor1": "GR",
+                "neighbor2": "AT"  
+            }
+        },
+        "node14": {
+            "_id": "HR",
+            "pop": {
+                "city": "Zagreb",
+                "nation": "Croatia" 
+            },  
+            "links": { 
+                "link1": "ATHR",
+                "link2": "HRAT",
+                "link3": "HRHU",
+                "link4": "HUHR" 
+            }, 
+            "neighbors": {
+                "neighbor1": "AT",
+                "neighbor2": "HU"  
+            }
+        },
+        "node15": {
+            "_id": "HU",
+            "pop": {
+                "city": "Budapest",
+                "nation": "Hungary" 
+            },  
+            "links": { 
+                "link1": "CZHU",
+                "link2": "HUCZ",
+                "link3": "HURO",
+                "link4": "ROHU",
+                "link5": "HUSI",
+                "link6": "SIHU",
+                "link7": "HRHU",
+                "link8": "HUHR",
+                "link9": "HUSK",
+                "link10": "SKHU",
+                "link11": "ATHU",
+                "link12": "HUAT"
+            }, 
+            "neighbors": {
+                "neighbor1": "CZ",
+                "neighbor2": "RO",
+                "neighbor3": "SI",
+                "neighbor4": "HR",
+                "neighbor5": "SK",
+                "neighbor6": "AT"
+            }
+        },
+        "node16": {
+            "_id": "IE",
+            "pop": {
+                "city": "Dublin",
+                "nation": "Ireland" 
+            },  
+            "links": { 
+                "link1": "IEUK",
+                "link2": "UKIE",
+                "link3": "IEIR",
+                "link4": "IRIE" 
+            }, 
+            "neighbors": {
+                "neighbor1": "UK",
+                "neighbor2": "IR"  
+            }
+        },
+        "node17": {
+            "_id": "IR",
+            "pop": {
+                "city": "Dublin",
+                "nation": "Ireland" 
+            },  
+            "links": { 
+                "link1": "IRUI",
+                "link2": "UIIR",
+                "link3": "IEIR",
+                "link4": "IRIE" 
+            }, 
+            "neighbors": {
+                "neighbor1": "UI",
+                "neighbor2": "IE"  
+            }
+        },
+        "node18": {
+            "_id": "IT",
+            "pop": {
+                "city": "Milan",
+                "nation": "Italy" 
+            },  
+            "links": { 
+                "link1": "CHIT",
+                "link2": "ITCH",
+                "link3": "ATIT",
+                "link4": "ITAT",
+                "link5": "ITSI",
+                "link6": "SIIT",
+                "link7": "GRIT",
+                "link8": "ITGR",
+                "link9": "FNIT",
+                "link10": "ITFN" 
+            },
+            "neighbors": {
+                "neighbor1": "CH",
+                "neighbor2": "AT",
+                "neighbor3": "SI",
+                "neighbor4": "GR",
+                "neighbor5": "FN"  
+            }
+        },
+        "node19": {
+            "_id": "LT",
+            "pop": {
+                "city": "Kaunas",
+                "nation": "Lithuania" 
+            },  
+            "links": { 
+                "link1": "LNLT",
+                "link2": "LTLN",
+                "link3": "LTPL",
+                "link4": "PLLT" 
+            }, 
+            "neighbors": {
+                "neighbor1": "LN",
+                "neighbor2": "PL"  
+            }
+        },
+        "node20": {
+            "_id": "LN",
+            "pop": {
+                "city": "Kaunas",
+                "nation": "Lithuania" 
+            },  
+            "links": { 
+                "link1": "LNLT",
+                "link2": "LTLN",
+                "link3": "LNLV",
+                "link4": "LVLN" 
+            }, 
+            "neighbors": {
+                "neighbor1": "LT",
+                "neighbor2": "LV"  
+            }
+        },
+        "node21": {
+            "_id": "LV",
+            "pop": {
+                "city": "Riga",
+                "nation": "Latvia" 
+            },   
+            "links": { 
+                "link1": "ETLV",
+                "link2": "LVET",
+                "link3": "LNLV",
+                "link4": "LVLN" 
+            }, 
+            "neighbors": {
+                "neighbor1": "ET",
+                "neighbor2": "LN"  
+            }
+        },
+        "node22": {
+            "_id": "NL",
+            "pop": {
+                "city": "Amsterdam",
+                "nation": "Netherlands" 
+            },   
+            "links": { 
+                "link1": "DUNL",
+                "link2": "NLDU",
+                "link3": "DENL",
+                "link4": "NLDE",
+                "link5": "BENL",
+                "link6": "NLBE",
+                "link7": "NLUK",
+                "link8": "UKNL" 
+            }, 
+            "neighbors": {
+                "neighbor1": "DU",
+                "neighbor2": "DE",
+                "neighbor3": "BE",
+                "neighbor4": "UK"  
+            }
+        },
+        "node23": {
+            "_id": "PL",
+            "pop": {
+                "city": "Poznan",
+                "nation": "Poland" 
+            }, 
+            "links": { 
+                "link1": "LTPL",
+                "link2": "PLLT",
+                "link3": "ATPL",
+                "link4": "PLAT",
+                "link5": "DEPL",
+                "link6": "PLDE" 
+            }, 
+            "neighbors": {
+                "neighbor1": "LT",
+                "neighbor2": "AT",
+                "neighbor3": "DE"  
+            }
+        },
+        "node24": {
+            "_id": "PT",
+            "pop": {
+                "city": "Lisbon",
+                "nation": "Portugal" 
+            }, 
+            "links": { 
+                "link1": "PTUK",
+                "link2": "UKPT",
+                "link3": "PRPT",
+                "link4": "PTPR" 
+            }, 
+            "neighbors": {
+                "neighbor1": "UK",
+                "neighbor2": "PR"  
+            }
+        },
+        "node25": {
+            "_id": "PR",
+            "pop": {
+                "city": "Lisbon",
+                "nation": "Portugal" 
+            }, 
+            "links": { 
+                "link1": "PRPT",
+                "link2": "PTPR",
+                "link3": "ESPR",
+                "link4": "PRES" 
+            }, 
+            "neighbors": {
+                "neighbor1": "PT",
+                "neighbor2": "ES"  
+            }
+        },
+        "node26": {
+            "_id": "RO",
+            "pop": {
+                "city": "Bucharest",
+                "nation": "Romania" 
+            }, 
+            "links": { 
+                "link1": "BGRO",
+                "link2": "ROBG",
+                "link3": "HURO",
+                "link4": "ROHU" 
+            }, 
+            "neighbors": {
+                "neighbor1": "BG",
+                "neighbor2": "HU"  
+            }
+        },
+        "node27": {
+            "_id": "SI",
+            "pop": {
+                "city": "Ljubljana",
+                "nation": "Slovenia" 
+            }, 
+            "links": { 
+                "link1": "ITSI",
+                "link2": "SIIT",
+                "link3": "HUSI",
+                "link4": "SIHU"
+            }, 
+            "neighbors": {
+                "neighbor1": "IT",
+                "neighbor2": "HU"  
+            }
+        },
+        "node28": {
+            "_id": "SK",
+            "pop": {
+                "city": "Bratislava",
+                "nation": "Slovakia" 
+            }, 
+            "links": { 
+                "link1": "HUSK",
+                "link2": "SKHU",
+                "link3": "ATSK",
+                "link4": "SKAT" 
+            }, 
+            "neighbors": {
+                "neighbor1": "HU",
+                "neighbor2": "AT"  
+            }
+        },
+        "node29": {
+            "_id": "UK",
+            "pop": {
+                "city": "London",
+                "nation": "United Kingdom" 
+            }, 
+            "links": { 
+                "link1": "NLUK",
+                "link2": "UKNL",
+                "link3": "BEUK",
+                "link4": "UKBE",
+                "link5": "UIUK",
+                "link6": "UKUI",
+                "link7": "IEUK",
+                "link8": "UKIE",
+                "link9": "PTUK",
+                "link10": "UKPT" 
+            }, 
+            "neighbors": {
+                "neighbor1": "NL",
+                "neighbor2": "BE",
+                "neighbor3": "UI",
+                "neighbor4": "IE",
+                "neighbor5": "PT"  
+            }
+        },
+        "node30": {
+            "_id": "UI",
+            "pop": {
+                "city": "London",
+                "nation": "United Kingdom" 
+            }, 
+            "links": { 
+                "link1": "UIUK",
+                "link2": "UKUI",
+                "link3": "FRUI",
+                "link4": "UIFR",
+                "link5": "IRUI",
+                "link6": "UIIR" 
+            }, 
+            "neighbors": {
+                "neighbor1": "UK",
+                "neighbor2": "FR",
+                "neighbor3": "IR"  
+            }
+        },
+        "node31": {
+            "_id": "DU",
+            "pop": {
+                "city": "Hamburg",
+                "nation": "Germany" 
+            }, 
+            "links": { 
+                "link1": "DUEE",
+                "link2": "EEDU",
+                "link3": "DEDU",
+                "link4": "DUDE",
+                "link5": "DUNL",
+                "link6": "NLDU" 
+            }, 
+            "neighbors": {
+                "neighbor1": "EE",
+                "neighbor2": "DE",
+                "neighbor3": "NL"  
+            }
+        }
+    },
+    "links": {
+        "link1": {
+            "_id": "PRPT",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "PR",
+            "node2": "PT"
+        },
+        "link2": {
+            "_id": "PTPR",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "PT",
+            "node2": "PR"
+        },
+        "link3": {
+            "_id": "PTUK",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "PT",
+            "node2": "UK"
+        },
+        "link4": {
+            "_id": "UKPT",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "UK",
+            "node2": "PT"
+        },
+        "link5": {
+            "_id": "ESPR",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "ES",
+            "node2": "PR"
+        },
+        "link6": {
+            "_id": "PRES",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "PR",
+            "node2": "ES"
+        },
+        "link7": {
+            "_id": "ESFR",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "ES",
+            "node2": "FR"
+        },
+        "link8": {
+            "_id": "FRES",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "FR",
+            "node2": "ES"
+        },
+        "link9": {
+            "_id": "FRUI",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "FR",
+            "node2": "UI"
+        },
+        "link10": {
+            "_id": "UIFR",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "UI",
+            "node2": "FR"
+        },
+        "link11": {
+            "_id": "UIUK",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "UI",
+            "node2": "UK"
+        },
+        "link12": {
+            "_id": "UKUI",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "UK",
+            "node2": "UI"
+        },
+        "link13": {
+            "_id": "IRUI",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "IR",
+            "node2": "UI"
+        },
+        "link14": {
+            "_id": "UIIR",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "UI",
+            "node2": "IR"
+        },
+        "link15": {
+            "_id": "IEIR",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "IE",
+            "node2": "IR"
+        },
+        "link16": {
+            "_id": "IRIE",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "IR",
+            "node2": "IE"
+        },
+        "link17": {
+            "_id": "IEUK",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "IE",
+            "node2": "UK"
+        },
+        "link18": {
+            "_id": "UKIE",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "UK",
+            "node2": "IE"
+        },
+        "link19": {
+            "_id": "NLUK",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "NL",
+            "node2": "UK"
+        },
+        "link20": {
+            "_id": "UKNL",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "UK",
+            "node2": "NL"
+        },
+        "link21": {
+            "_id": "BEUK",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "BE",
+            "node2": "UK"
+        },
+        "link22": {
+            "_id": "UKBE",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "UK",
+            "node2": "BE"
+        },
+        "link23": {
+            "_id": "BENL",
+            "bw": 30000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "BE",
+            "node2": "NL"
+        },
+        "link24": {
+            "_id": "NLBE",
+            "bw": 30000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "NL",
+            "node2": "BE"
+        },
+        "link25": {
+            "_id": "CHFR",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "CH",
+            "node2": "FR"
+        },
+        "link26": {
+            "_id": "FRCH",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "FR",
+            "node2": "CH"
+        },
+        "link27": {
+            "_id": "CHES",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "CH",
+            "node2": "ES"
+        },
+        "link28": {
+            "_id": "ESCH",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "ES",
+            "node2": "CH"
+        },
+        "link29": {
+            "_id": "CHFN",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "CH",
+            "node2": "FN"
+        },
+        "link30": {
+            "_id": "FNCH",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "FN",
+            "node2": "CH"
+        },
+        "link31": {
+            "_id": "CHDE",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "CH",
+            "node2": "DE"
+        },
+        "link32": {
+            "_id": "DECH",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "DE",
+            "node2": "CH"
+        },
+        "link33": {
+            "_id": "CHIT",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "CH",
+            "node2": "IT"
+        },
+        "link34": {
+            "_id": "ITCH",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "IT",
+            "node2": "CH"
+        },
+        "link35": {
+            "_id": "FNIT",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "FN",
+            "node2": "IT"
+        },
+        "link36": {
+            "_id": "ITFN",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "IT",
+            "node2": "FN"
+        },
+        "link37": {
+            "_id": "ATIT",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "AT",
+            "node2": "IT"
+        },
+        "link38": {
+            "_id": "ITAT",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "IT",
+            "node2": "AT"
+        },
+        "link39": {
+            "_id": "GRIT",
+            "bw": 30000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "GR",
+            "node2": "IT"
+        },
+        "link40": {
+            "_id": "ITGR",
+            "bw": 30000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "IT",
+            "node2": "GR"
+        },
+        "link41": {
+            "_id": "GCGR",
+            "bw": 30000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "GC",
+            "node2": "GR"
+        },
+        "link42": {
+            "_id": "GRGC",
+            "bw": 30000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "GR",
+            "node2": "GC"
+        },
+        "link43": {
+            "_id": "ATGC",
+            "bw": 30000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "AT",
+            "node2": "GC"
+        },
+        "link44": {
+            "_id": "GCAT",
+            "bw": 30000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "GC",
+            "node2": "AT"
+        },
+        "link45": {
+            "_id": "ITSI",
+            "bw": 200000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "IT",
+            "node2": "SI"
+        },
+        "link46": {
+            "_id": "SIIT",
+            "bw": 200000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "SI",
+            "node2": "IT"
+        },
+        "link47": {
+            "_id": "ATHU",
+            "bw": 200000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "AT",
+            "node2": "HU"
+        },
+        "link48": {
+            "_id": "HUAT",
+            "bw": 200000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "HU",
+            "node2": "AT"
+        },
+        "link49": {
+            "_id": "ATBG",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "AT",
+            "node2": "BG"
+        },
+        "link50": {
+            "_id": "BGAT",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "BG",
+            "node2": "AT"
+        },
+        "link51": {
+            "_id": "BGRO",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "BG",
+            "node2": "RO"
+        },
+        "link52": {
+            "_id": "ROBG",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "RO",
+            "node2": "BG"
+        },
+        "link53": {
+            "_id": "ATSK",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "AT",
+            "node2": "SK"
+        },
+        "link54": {
+            "_id": "SKAT",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "SK",
+            "node2": "AT"
+        },
+        "link55": {
+            "_id": "ATHR",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "AT",
+            "node2": "HR"
+        },
+        "link56": {
+            "_id": "HRAT",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "HR",
+            "node2": "AT"
+        },
+        "link57": {
+            "_id": "ATCZ",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "AT",
+            "node2": "CZ"
+        },
+        "link58": {
+            "_id": "CZAT",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "CZ",
+            "node2": "AT"
+        },
+        "link59": {
+            "_id": "CZHU",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "CZ",
+            "node2": "HU"
+        },
+        "link60": {
+            "_id": "HUCZ",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "HU",
+            "node2": "CZ"
+        },
+        "link61": {
+            "_id": "HURO",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "HU",
+            "node2": "RO"
+        },
+        "link62": {
+            "_id": "ROHU",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "RO",
+            "node2": "HU"
+        },
+        "link63": {
+            "_id": "HUSI",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "HU",
+            "node2": "SI"
+        },
+        "link64": {
+            "_id": "SIHU",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "SI",
+            "node2": "HU"
+        },
+        "link65": {
+            "_id": "HRHU",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "HR",
+            "node2": "HU"
+        },
+        "link66": {
+            "_id": "HUHR",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "HU",
+            "node2": "HR"
+        },
+        "link67": {
+            "_id": "HUSK",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "HU",
+            "node2": "SK"
+        },
+        "link68": {
+            "_id": "SKHU",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "SK",
+            "node2": "HU"
+        },
+        "link69": {
+            "_id": "CZDE",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "CZ",
+            "node2": "DE"
+        },
+        "link70": {
+            "_id": "DECZ",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "DE",
+            "node2": "CZ"
+        },
+        "link71": {
+            "_id": "ATPL",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "AT",
+            "node2": "PL"
+        },
+        "link72": {
+            "_id": "PLAT",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "PL",
+            "node2": "AT"
+        },
+        "link73": {
+            "_id": "DEPL",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "DE",
+            "node2": "PL"
+        },
+        "link74": {
+            "_id": "PLDE",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "PL",
+            "node2": "DE"
+        },
+        "link75": {
+            "_id": "DENL",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "DE",
+            "node2": "NL"
+        },
+        "link76": {
+            "_id": "NLDE",
+            "bw": 300000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "NL",
+            "node2": "DE"
+        },
+        "link77": {
+            "_id": "DEDU",
+            "bw": 200000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "DE",
+            "node2": "DU"
+        },
+        "link78": {
+            "_id": "DUDE",
+            "bw": 200000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "DU",
+            "node2": "DE"
+        },
+        "link79": {
+            "_id": "DUNL",
+            "bw": 200000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "DU",
+            "node2": "NL"
+        },
+        "link80": {
+            "_id": "NLDU",
+            "bw": 200000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "NL",
+            "node2": "DU"
+        },
+        "link81": {
+            "_id": "DUEE",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "DU",
+            "node2": "EE"
+        },
+        "link82": {
+            "_id": "EEDU",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "EE",
+            "node2": "DU"
+        },
+        "link83": {
+            "_id": "EEET",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "EE",
+            "node2": "ET"
+        },
+        "link84": {
+            "_id": "ETEE",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "ET",
+            "node2": "EE"
+        },
+        "link85": {
+            "_id": "ETLV",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "ET",
+            "node2": "LV"
+        },
+        "link86": {
+            "_id": "LVET",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "LV",
+            "node2": "ET"
+        },
+        "link87": {
+            "_id": "LNLV",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "LN",
+            "node2": "LV"
+        },
+        "link88": {
+            "_id": "LVLN",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "LV",
+            "node2": "LN"
+        },
+        "link89": {
+            "_id": "LNLT",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "LN",
+            "node2": "LT"
+        },
+        "link90": {
+            "_id": "LTLN",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "LT",
+            "node2": "LN"
+        },
+        "link91": {
+            "_id": "LTPL",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "LT",
+            "node2": "PL"
+        },
+        "link92": {
+            "_id": "PLLT",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "PL",
+            "node2": "LT"
+        }
+    }
+}

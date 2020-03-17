@@ -1,0 +1,126 @@
+{
+    "node1": {
+        "_id": "s1",
+        "links": {
+            "link2": "s1s2",
+            "link3": "s1s3"
+        },
+        "neighbors": {
+            "neighbor2": "s2",
+            "neighbor3": "s3"
+        },
+        "pop": {
+            "city": "Palermo",
+            "latitude": 38.1112268,
+            "longitude": 13.3524434,
+            "nation": "Italy"
+        },
+        "role": "NR"
+    },
+    "node2": {
+        "_id": "s2",
+        "links": {
+            "link1": "s1s2",
+            "link2": "s2s3",
+            "link3": "s2s5",
+            "link4": "s2s4"
+        },
+        "neighbors": {
+            "neighbor1": "s1",
+            "neighbor2": "s3",
+            "neighbor3": "s5",
+            "neighbor4": "s4"
+        },
+        "pop": {
+            "city": "Naples",
+            "latitude": 40.8359336,
+            "longitude": 14.2487826,
+            "nation": "Italy"
+        },
+        "role": "NR"
+    },
+    "node3": {
+        "_id": "s3",
+        "links": {
+            "link1": "s1s3",
+            "link2": "s3s5",
+            "link3": "s3s4",
+            "link4": "s2s3"
+        },
+        "neighbors": {
+            "neighbor1": "s1",
+            "neighbor2": "s5",
+            "neighbor3": "s4",
+            "neighbor4": "s2"
+        },
+        "pop": {
+            "city": "Rome",
+            "latitude": 41.894802,
+            "longitude": 12.4853384,
+            "nation": "Italy"
+        },
+        "role": "NR"
+    },
+    "node4": {
+        "_id": "s4",
+        "links": {
+            "link1": "s4s6",
+            "link2": "s4s5",
+            "link3": "s3s4",
+            "link4": "s2s4"
+        },
+        "neighbors": {
+            "neighbor1": "s6",
+            "neighbor2": "s5",
+            "neighbor3": "s3",
+            "neighbor4": "s2"
+        },
+        "pop": {
+            "city": "Turin",
+            "latitude": 45.0677551,
+            "longitude": 7.6824892,
+            "nation": "Italy"
+        },
+        "role": "NR"
+    },
+    "node6": {
+        "_id": "s6",
+        "links": {
+            "link3": "s4s6",
+            "link4": "s5s6"
+        },
+        "neighbors": {
+            "neighbor3": "s4",
+            "neighbor4": "s5"
+        },
+        "pop": {
+            "city": "Venice",
+            "latitude": 45.4371908,
+            "longitude": 12.3345898,
+            "nation": "Italy"
+        },
+        "role": "NR"
+    },
+    "nodee5": {
+        "_id": "s5",
+        "links": {
+            "link1": "s4s5",
+            "link2": "s3s5",
+            "link3": "s5s6",
+            "link4": "s2s5"
+        },
+        "neighbors": {
+            "neighbor1": "s4",
+            "neighbor2": "s3",
+            "neighbor3": "s6",
+            "neighbor4": "s2"
+        },
+        "pop": {
+            "city": "Milan",
+            "latitude": 45.4668,
+            "longitude": 9.1905,
+            "nation": "Italy"
+        },
+        "role": "NR"
+    }
+}

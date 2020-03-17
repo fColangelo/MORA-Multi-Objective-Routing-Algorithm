@@ -1,0 +1,814 @@
+{
+    "nodes": {
+        "node1": {
+            "_id": "01",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            }, 
+            "links": { 
+                "link1": "0103",
+                "link2": "0107" ,
+                "link3": "0116"
+            }, 
+            "neighbors": {
+                "neighbor1": "03",
+                "neighbor2": "07",
+                "neighbor3": "16"
+            }
+        },
+        "node2": {
+            "_id": "02",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            },  
+            "links": { 
+                "link1": "0204",
+                "link2": "0207",
+                "link3": "0212",
+                "link4": "0213",
+                "link5": "0218",
+                "link6": "0223" 
+            }, 
+            "neighbors": {
+                "neighbor1": "04",
+                "neighbor2": "07",
+                "neighbor3": "12",
+                "neighbor4": "13",
+                "neighbor5": "18",
+                "neighbor6": "23"  
+            }
+        },
+        "node3": {
+            "_id": "03",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            },  
+            "links": { 
+                "link1": "0103",
+                "link2": "0310",
+                "link3": "0311",
+                "link4": "0314",
+                "link5": "0321"
+            }, 
+            "neighbors": {
+                "neighbor1": "01",
+                "neighbor2": "10",
+                "neighbor3": "11",
+                "neighbor4": "14",
+                "neighbor5": "21"  
+            }
+        },
+        "node4": {
+            "_id": "04",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            }, 
+            "links": { 
+                "link1": "0204",
+                "link2": "0416" 
+            }, 
+            "neighbors": {
+                "neighbor1": "02",
+                "neighbor2": "16"  
+            }
+        },
+        "node5": {
+            "_id": "05",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            }, 
+            "links": { 
+                "link1": "0508",
+                "link2": "0516" 
+            }, 
+            "neighbors": {
+                "neighbor1": "08",
+                "neighbor2": "16"
+            }
+        },
+        "node6": {
+            "_id": "06",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            }, 
+            "links": { 
+                "link1": "0607",
+                "link2": "0619" 
+            }, 
+            "neighbors": {
+                "neighbor1": "07",
+                "neighbor2": "19" 
+            }
+        },
+        "node7": {
+            "_id": "07",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            }, 
+            "links": { 
+                "link1": "0107",
+                "link2": "0207",
+                "link3": "0607",
+                "link4": "0717",
+                "link5": "0719",
+                "link6": "0721" 
+            }, 
+            "neighbors": {
+                "neighbor1": "01",
+                "neighbor2": "02",
+                "neighbor3": "06",
+                "neighbor4": "17",
+                "neighbor5": "19",
+                "neighbor6": "21"  
+            }
+        },
+        "node8": {
+            "_id": "08",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            }, 
+            "links": { 
+                "link1": "0508",
+                "link2": "0809"
+            }, 
+            "neighbors": {
+                "neighbor1": "05",
+                "neighbor2": "09"  
+            }
+        },
+        "node9": {
+            "_id": "09",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            }, 
+            "links": { 
+                "link1": "0809",
+                "link2": "0915",
+                "link3": "0916" 
+            }, 
+            "neighbors": {
+                "neighbor1": "08",
+                "neighbor2": "15",
+                "neighbor3": "16"  
+            }
+        },
+        "node10": {
+            "_id": "10",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            }, 
+            "links": { 
+                "link1": "0310",
+                "link2": "1011",
+                "link3": "1012",
+                "link4": "1016",
+                "link5": "1017" 
+            }, 
+            "neighbors": {
+                "neighbor1": "03",
+                "neighbor2": "11",
+                "neighbor3": "12",
+                "neighbor4": "16",
+                "neighbor5": "17"  
+            }
+        },
+        "node11": {
+            "_id": "11",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            }, 
+            "links": { 
+                "link1": "0311",
+                "link2": "1011"
+            }, 
+            "neighbors": {
+                "neighbor1": "03",
+                "neighbor2": "10"  
+            }
+        },
+        "node12": {
+            "_id": "12",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            },  
+            "links": { 
+                "link1": "0212",
+                "link2": "1012",
+                "link3": "1222" 
+            }, 
+            "neighbors": {
+                "neighbor1": "02",
+                "neighbor2": "10",
+                "neighbor3": "22"  
+            }
+        },
+        "node13": {
+            "_id": "13",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            },  
+            "links": { 
+                "link1": "0213",
+                "link2": "1314",
+                "link3": "1317",
+                "link4": "1319"             
+            }, 
+            "neighbors": {
+                "neighbor1": "02",
+                "neighbor2": "14",
+                "neighbor3": "17",
+                "neighbor4": "19"  
+            }
+        },
+        "node14": {
+            "_id": "14",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            },  
+            "links": { 
+                "link1": "0314",
+                "link2": "1314" 
+            }, 
+            "neighbors": {
+                "neighbor1": "03",
+                "neighbor2": "13" 
+            }
+        },
+        "node15": {
+            "_id": "15",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            },  
+            "links": { 
+                "link1": "0915",
+                "link2": "1520" 
+            }, 
+            "neighbors": {
+                "neighbor1": "09",
+                "neighbor2": "20"  
+            }
+        },
+        "node16": {
+            "_id": "16",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            },  
+            "links": { 
+                "link1": "0116",
+                "link2": "0416",
+                "link3": "0516",
+                "link4": "0916",
+                "link5": "1016" 
+            }, 
+            "neighbors": {
+                "neighbor1": "01",
+                "neighbor2": "04",
+                "neighbor3": "05",
+                "neighbor4": "09",
+                "neighbor5": "10"  
+            }
+        },
+        "node17": {
+            "_id": "17",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            },  
+            "links": { 
+                "link1": "0717",
+                "link2": "1017",
+                "link3": "1317",
+                "link4": "1720",
+                "link5": "1723" 
+            }, 
+            "neighbors": {
+                "neighbor1": "07",
+                "neighbor2": "10",
+                "neighbor3": "13",
+                "neighbor4": "20",
+                "neighbor5": "23"  
+            }
+        },
+        "node18": {
+            "_id": "18",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            },  
+            "links": { 
+                "link1": "0218",
+                "link2": "1821" 
+            }, 
+            "neighbors": {
+                "neighbor1": "02",
+                "neighbor2": "21"
+            }
+        },
+        "node19": {
+            "_id": "19",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            },  
+            "links": { 
+                "link1": "0619",
+                "link2": "0719",
+                "link3": "1319" 
+            }, 
+            "neighbors": {
+                "neighbor1": "06",
+                "neighbor2": "07",
+                "neighbor3": "13"  
+            }
+        },
+        "node20": {
+            "_id": "20",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            },  
+            "links": { 
+                "link1": "1520",
+                "link2": "1720",
+                "link3": "2022" 
+            }, 
+            "neighbors": {
+                "neighbor1": "15",
+                "neighbor2": "17",
+                "neighbor3": "22"  
+            }
+        },
+        "node21": {
+            "_id": "21",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            },  
+            "links": { 
+                "link1": "0321",
+                "link2": "0721",
+                "link3": "1821"
+            }, 
+            "neighbors": {
+                "neighbor1": "03",
+                "neighbor2": "07",
+                "neighbor3": "18"
+            }
+        },
+        "node22": {
+            "_id": "22",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            },  
+            "links": { 
+                "link1": "1222",
+                "link2": "2022" 
+            }, 
+            "neighbors": {
+                "neighbor1": "12",
+                "neighbor2": "20"
+            }
+        },
+        "node23": {
+            "_id": "23",
+            "pop": {
+                "city": "N.A.",
+                "nation": "N.A." 
+            },  
+            "links": { 
+                "link1": "0223",
+                "link2": "1723" 
+            }, 
+            "neighbors": {
+                "neighbor1": "02",
+                "neighbor2": "17"  
+            }
+        }
+    },
+    "links": {
+        "link1": {
+            "_id": "0103",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "01",
+            "node2": "03",
+            "power_consumption": 0
+        },
+        "link10": {
+            "_id": "0310",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "03",
+            "node2": "10",
+            "power_consumption": 0
+        },
+        "link11": {
+            "_id": "0311",
+            "bw": 2000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "03",
+            "node2": "11",
+            "power_consumption": 0
+        },
+        "link12": {
+            "_id": "0314",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "03",
+            "node2": "14",
+            "power_consumption": 0
+        },
+        "link13": {
+            "_id": "0321",
+            "bw": 1000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "03",
+            "node2": "21",
+            "power_consumption": 0
+        },
+        "link14": {
+            "_id": "0416",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "04",
+            "node2": "16",
+            "power_consumption": 0
+        },
+        "link15": {
+            "_id": "0508",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "05",
+            "node2": "08",
+            "power_consumption": 0
+        },
+        "link16": {
+            "_id": "0516",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "05",
+            "node2": "16",
+            "power_consumption": 0
+        },
+        "link17": {
+            "_id": "0607",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "06",
+            "node2": "07",
+            "power_consumption": 0
+        },
+        "link18": {
+            "_id": "0619",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "06",
+            "node2": "19",
+            "power_consumption": 0
+        },
+        "link19": {
+            "_id": "0717",
+            "bw": 1000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "07",
+            "node2": "17",
+            "power_consumption": 0
+        },
+        "link2": {
+            "_id": "0107",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "01",
+            "node2": "07",
+            "power_consumption": 0
+        },
+        "link20": {
+            "_id": "0719",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "07",
+            "node2": "19",
+            "power_consumption": 0
+        },
+        "link21": {
+            "_id": "0721",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "07",
+            "node2": "21",
+            "power_consumption": 0
+        },
+        "link22": {
+            "_id": "0809",
+            "bw": 2400,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "08",
+            "node2": "09",
+            "power_consumption": 0
+        },
+        "link23": {
+            "_id": "0915",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "09",
+            "node2": "15",
+            "power_consumption": 0
+        },
+        "link24": {
+            "_id": "0916",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "09",
+            "node2": "16",
+            "power_consumption": 0
+        },
+        "link25": {
+            "_id": "1011",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "10",
+            "node2": "11",
+            "power_consumption": 0
+        },
+        "link26": {
+            "_id": "1012",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "10",
+            "node2": "12",
+            "power_consumption": 0
+        },
+        "link27": {
+            "_id": "1016",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "10",
+            "node2": "16",
+            "power_consumption": 0
+        },
+        "link28": {
+            "_id": "1017",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "10",
+            "node2": "17",
+            "power_consumption": 0
+        },
+        "link29": {
+            "_id": "1222",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "12",
+            "node2": "22",
+            "power_consumption": 0
+        },
+        "link3": {
+            "_id": "0116",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "01",
+            "node2": "16",
+            "power_consumption": 0
+        },
+        "link30": {
+            "_id": "1314",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "13",
+            "node2": "14",
+            "power_consumption": 0
+        },
+        "link31": {
+            "_id": "1317",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "13",
+            "node2": "17",
+            "power_consumption": 0
+        },
+        "link32": {
+            "_id": "1319",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "13",
+            "node2": "19",
+            "power_consumption": 0
+        },
+        "link33": {
+            "_id": "1520",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "15",
+            "node2": "20",
+            "power_consumption": 0
+        },
+        "link34": {
+            "_id": "1720",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "17",
+            "node2": "20",
+            "power_consumption": 0
+        },
+        "link35": {
+            "_id": "1723",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "17",
+            "node2": "23",
+            "power_consumption": 0
+        },
+        "link36": {
+            "_id": "1821",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "18",
+            "node2": "21",
+            "power_consumption": 0
+        },
+        "link37": {
+            "_id": "2022",
+            "bw": 1000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "20",
+            "node2": "22",
+            "power_consumption": 0
+        },
+        "link4": {
+            "_id": "0204",
+            "bw": 1000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "02",
+            "node2": "04",
+            "power_consumption": 0
+        },
+        "link5": {
+            "_id": "0207",
+            "bw": 40000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "02",
+            "node2": "07",
+            "power_consumption": 0
+        },
+        "link6": {
+            "_id": "0212",
+            "bw": 100000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "02",
+            "node2": "12",
+            "power_consumption": 0
+        },
+        "link7": {
+            "_id": "0213",
+            "bw": 20000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "02",
+            "node2": "13",
+            "power_consumption": 0
+        },
+        "link8": {
+            "_id": "0218",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "02",
+            "node2": "18",
+            "power_consumption": 0
+        },
+        "link9": {
+        	"_id": "0223",
+            "bw": 10000,
+            "bw_usage": 0.0,
+            "delay": 0,
+            "jitter": 0,
+            "loss": 0,
+            "node1": "02",
+            "node2": "23",
+            "power_consumption": 0
+        }
+    }
+}

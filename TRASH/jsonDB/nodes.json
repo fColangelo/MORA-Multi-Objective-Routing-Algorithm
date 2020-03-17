@@ -1,0 +1,20 @@
+{
+    "node1": {
+        "_id": "IT",
+        "links": {
+            "link1": "ITFR"
+        },
+        "neighbors": {
+            "neighbor1": "FR"
+        }
+    },
+    "node2": {
+        "_id": "FR",
+        "links": {
+            "link1": "ITFR"
+        },
+        "neighbors": {
+            "neighbor1": "IT"
+        }
+    }
+}

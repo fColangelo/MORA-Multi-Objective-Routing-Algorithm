@@ -1,0 +1,122 @@
+{
+    "link1": {
+        "_id": "s3s4",
+        "bw": 100000,
+        "bw_usage": 0,
+        "delay": 2.6,
+        "jitter": 0,
+        "loss": 0,
+        "node1": "s3",
+        "node2": "s4",
+        "power_consumption": 600.0,
+        "status": "on"
+    },
+    "link10": {
+        "_id": "s3s5",
+        "bw": 100000,
+        "bw_usage": 0,
+        "delay": 2.4,
+        "jitter": 0,
+        "loss": 0,
+        "node1": "s3",
+        "node2": "s5",
+        "power_consumption": 500.0,
+        "status": "on"
+    },
+    "link2": {
+        "_id": "s5s6",
+        "bw": 50000,
+        "bw_usage": 0,
+        "delay": 1.2,
+        "jitter": 0,
+        "loss": 0,
+        "node1": "s5",
+        "node2": "s6",
+        "power_consumption": 300.0,
+        "status": "on"
+    },
+    "link3": {
+        "_id": "s2s3",
+        "bw": 50000,
+        "bw_usage": 0,
+        "delay": 0.9,
+        "jitter": 0,
+        "loss": 0,
+        "node1": "s2",
+        "node2": "s3",
+        "power_consumption": 200.0,
+        "status": "on"
+    },
+    "link4": {
+        "_id": "s2s5",
+        "bw": 100000,
+        "bw_usage": 0,
+        "delay": 3.3,
+        "jitter": 0,
+        "loss": 0,
+        "node1": "s2",
+        "node2": "s5",
+        "power_consumption": 800.0,
+        "status": "on"
+    },
+    "link5": {
+        "_id": "s2s4",
+        "bw": 100000,
+        "bw_usage": 0,
+        "delay": 3.6,
+        "jitter": 0,
+        "loss": 0,
+        "node1": "s2",
+        "node2": "s4",
+        "power_consumption": 800.0,
+        "status": "on"
+    },
+    "link6": {
+        "_id": "s1s2",
+        "bw": 50000,
+        "bw_usage": 0,
+        "delay": 1.6,
+        "jitter": 0,
+        "loss": 0,
+        "node1": "s1",
+        "node2": "s2",
+        "power_consumption": 300.0,
+        "status": "on"
+    },
+    "link7": {
+        "_id": "s1s3",
+        "bw": 50000,
+        "bw_usage": 0,
+        "delay": 2.1,
+        "jitter": 0,
+        "loss": 0,
+        "node1": "s1",
+        "node2": "s3",
+        "power_consumption": 500.0,
+        "status": "on"
+    },
+    "link8": {
+        "_id": "s4s6",
+        "bw": 50000,
+        "bw_usage": 0,
+        "delay": 1.8,
+        "jitter": 0,
+        "loss": 0,
+        "node1": "s4",
+        "node2": "s6",
+        "power_consumption": 400.0,
+        "status": "on"
+    },
+    "link9": {
+        "_id": "s4s5",
+        "bw": 50000,
+        "bw_usage": 0,
+        "delay": 0.6,
+        "jitter": 0,
+        "loss": 0,
+        "node1": "s4",
+        "node2": "s5",
+        "power_consumption": 100.0,
+        "status": "on"
+    }
+}
