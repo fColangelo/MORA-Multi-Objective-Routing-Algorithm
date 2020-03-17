@@ -305,27 +305,14 @@ class Topology:
         Returns:
             [list] -- Topology Adjacency matrix. 
         """
-        
-        # Initialize adj_matrix (i: rows index, j: columns index)
         adj_matrix = [[ 0 for i in range(len(self.nodes))] for j in range(len(self.nodes))]
-
-        # Consider i-th row:
+        sorted_nodes = sorted(self.node_names)
         for i in range(len(self.nodes)):
-            # get i-th node from node_names..
-            node_i = self.node_names[i]
-
+            node_i = sorted_nodes[i]
             for j in range(len(self.nodes)):
-                # ..and get j-th node from node_names too.
-                node_j = self.node_names[j]
-                
-                # Consider the following link id:
-                link_name = node_i + node_j
-                
-                # If it is in 'link_names' list..
-                if link_name in self.link_names:
-                    adj_matrix[i][j] = 1  # ..link exists: 1
-                else:
-                    adj_matrix[i][j] = 0  #..otherwise, link doesn't exists: 0.
+                node_j = sorted_nodes[j]
+                if self.is_connection_possible(node_i, node_j):
+                    adj_matrix[sorted_nodes.index(node_i)][sorted_nodes.index(node_j)] = 1
         
         return adj_matrix
 
@@ -353,14 +340,26 @@ class Topology:
                 # ..and get j-th node from node_names too.
                 node_j = self.node_names[j]
                 
-                # Consider the following link id:
+                #TODO: this is a trick -> to be improved
+                # Now, consider the following link ids:
                 link_name = node_i + node_j
+                eman_knil = node_j + node_i
 
-                # If it is in 'link_names' list..
+                # If one of the two previous ids is in 'link_names' list..
                 if link_name in self.link_names:
                     # ..link exists...
                     
                     link = self.get_one_link(link_name)
+
+                    if link.status == 'on':
+                        op_adj_matrix[i][j] = 1  # ..and it is turned on: 1
+                    else:
+                        op_adj_matrix[i][j] = 0  # ..but it is switched off: 0
+
+                elif eman_knil in self.link_names:
+                    # ..link exists...
+                    
+                    link = self.get_one_link(eman_knil)
 
                     if link.status == 'on':
                         op_adj_matrix[i][j] = 1  # ..and it is turned on: 1
@@ -371,6 +370,29 @@ class Topology:
                     op_adj_matrix[i][j] = 0  #..otherwise, link doesn't exists: 0.
         
         return op_adj_matrix
+    
+    def __repr__(self):
+        
+        adj_matrix=self.get_adjacency_matrix()        
+        rep = '**** ADJACENCY MATRIX ****\n'  
+        rep += '\n' 
+        node_names = sorted(self.node_names)
+        rep += '     '
+        for i in range(len(adj_matrix)):
+            rep += node_names[i] + '    '
+        rep +=  '\n'    
+        for i in range(len(adj_matrix)):
+            rep +=' ' + node_names[i]
+            for j in range(len(adj_matrix)):
+                if adj_matrix[i][j] == 1:
+                    rep += ' [xx] '
+                else:
+                    rep += ' [  ] '
+            rep +=  '\n'
+        
+        rep += '**************************'
+        
+        return rep
 
 
     def pretty_print_adjacency_matrix(self, adj_matrix):
@@ -476,6 +498,39 @@ class Topology:
         node.role = role
         self.update_node_info(node)
 
+    # ************ MORA ANCILLARY METHODS ************
+
+    def is_connection_possible(self, node_1, node_2):
+        node_1_links = self.get_valid_links(node_1)
+        if node_2 in node_1_links:
+            return True
+        else:
+            return False
+
+
+    def get_valid_links(self, node):
+        #valid_links = []
+        """
+        node_links = self.get_operational_adjacency_matrix()[int(node)]
+        for idx in range(len(node_links)):
+            if node_links[idx] != 0:
+                valid_links.append(idx)
+        """
+        n = [x for x in self.nodes if x.name == node][0]
+        node_links = n.neighbors_list
+
+        return sorted(node_links)
+
+ 
+    def has_loops(self, path):
+        has_loops = (len(path) != len(set(path)))                                                                     
+        return has_loops 
+
+    def is_valid(self, path):
+        for idx in range(len(path)-1):
+            if path[idx+1] not in self.get_valid_links(path[idx]):
+                return False
+        return True
 
 class Node:
  
