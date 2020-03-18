@@ -10,44 +10,38 @@ def eval_bandwidth_single_link(percentage):
 
     return cost
 def get_evaluate_individual(topology, flow):
-    def evaluate_individual(individual, topology):
+    initial_consumption = topology.get_power_consumption()
+    def evaluate_individual(individual):
         latency = 0
-        #packet_loss = 0 # Percentage [0 1]
-        #jitter = 0
-        delta_power_consumption = topology.get_current_cosumption()
-        link_reliability_cost = []
-        
+        topology.apply_service_on_network(flow, individual)
+        delta_power_consumption = topology.get_power_consumption() - initial_consumption
+        reliability_score = topology.get_reliability_score()
         for idx in range(len(individual)-1):
             # TODO consider multiple links
-            link = topology.get_link_between_neighbors(individual[idx], individual[idx+1])#.switch_topology_matrix[individual[idx]][individual[idx+1]][0]
-            latency +=  link.latency
-            #jitter += link.jitter
-            #packet_loss += float(link.loss)/100
-            link_delta_power = link.get_power_consumption(link.consumed_bandwidth) + link.get_power_consumption(link.consumed_bandwidth + flow.bandwidth)
-            delta_power_consumption += link.get_power_consumption(link.consumed_bandwidth + )
-            link_reliability_cost.append(eval_bandwidth_single_link(link.bandwidth_usage))
-            # latency, jitter, packet_loss, 
-        return len(individual), latency, power_consumption, max(link_reliability_cost)
+            link = topology.get_link_between_neighbors(individual[idx], individual[idx+1])
+            latency +=  link.latency 
+        topology.remove_service_from_network(flow, individual)
+        return len(individual), latency, delta_power_consumption, reliability_score
     return evaluate_individual
 
-def get_evaluate_SLA(SLA_terms, topology):
+def get_evaluate_SLA(SLA_terms, topology, evaluate_individual):
     def evaluate_SLA(individual):
-        #evaluation = evaluate_individual(individual, topology)
-        #if evaluation[0] > SLA_terms.latency or \
+        evaluation = evaluate_individual(individual)
+        if evaluation[0] > SLA_terms.latency: #or \
         #    evaluation[1] > SLA_terms.jitter or \
         #            evaluation[3] > 0.8:
-        #    return False
+            return False
         return True
     return evaluate_SLA
 
 
-def get_penalty(SLA_terms, topology):
+def get_penalty(SLA_terms, topology, evaluate_individual):
     def penalty(individual):
-        evaluation = evaluate_individual(individual, topology)
+        evaluation = evaluate_individual(individual)
         p1 = (evaluation[0] - SLA_terms.latency )**2
-        p2 = (evaluation[1] - SLA_terms.jitter)**3
-        p3 = ((evaluation[3] - 0.8)*10)**2
-        return (p1+p2+p3)
+        #p2 = (evaluation[1] - SLA_terms.jitter)**3
+        #p3 = ((evaluation[3] - 0.8)*10)**2
+        return p1#+p2+p3)
     return penalty
 
 def compare_individuals(indi1, indi2):

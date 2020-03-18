@@ -3,6 +3,7 @@ import sys
 sys.dont_write_bytecode
 import json
 import os
+from routing_algorithms.mora import eval_bandwidth_single_link
 from routing_algorithms.dijkstra import dijkstra_cost
 
 
@@ -272,6 +273,14 @@ class Topology:
             self.update_link_info(link)
         self.save_topology_info()        
 
+    def get_reliability_score(self):
+        reliabilities = [eval_bandwidth_single_link(x.bandwidth_usage) for x in self.links]
+        return max(reliabilities)
+
+    def get_power_consumption(self):
+        powers = [x.power_consumption_MORA for x in self.links]
+        return sum(powers)
+
     ## TOPO OBJECT
 
     def save_topology_info(self):
@@ -507,7 +516,6 @@ class Topology:
         else:
             return False
 
-
     def get_valid_links(self, node):
         #valid_links = []
         """
@@ -521,7 +529,6 @@ class Topology:
 
         return sorted(node_links)
 
- 
     def has_loops(self, path):
         has_loops = (len(path) != len(set(path)))                                                                     
         return has_loops 
@@ -739,6 +746,7 @@ class Link:
         self.bandwidth_usage = 0.0          # used capacity [%]
         self.service_flows = []             # flows coupled to this Link
         self.power_consumption = 0.0        # power consumption [Kwh]
+        self.power_consumption_MORA = 0.0   # power consumption [W]
         #
         # ---------------------------------------------------------------------
 
@@ -829,4 +837,11 @@ class Link:
         else:
             self.bandwidth_usage = self.consumed_bandwidth/self.total_bandwidth       
 
+        # Updating power consumption based on new link occupation
+        self.power_consumption_MORA = self.get_power_consumption(self.consumed_bandwidth)
         self.update_info()
+
+    def get_power_consumption(self, x, delta = 180, rho = 5e-4, mu = 1e-03, alpha = 1.4, n_l = 1):
+        # See paper "A Hop-by-Hop Routing Mechanismfor Green Internet"
+        # Link energy model used for "hop by hop..." and MORA
+        return 2*n_l*(delta + rho*(x/n_l) + mu * ((x/n_l)**alpha))
