@@ -110,7 +110,7 @@ def main():
     #####################################################
     #
     start_time = time.time()
-    #
+    # 
     ER_degree_threshold = 2
     ear(topo, ER_degree_threshold)
     #

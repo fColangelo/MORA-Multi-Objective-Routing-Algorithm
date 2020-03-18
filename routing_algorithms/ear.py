@@ -120,7 +120,7 @@ def ear(topo, thrs):
     # 2) My degree is < thrs
     #
     # ATTENTION: by default all nodes are NR
-   
+    
     # Init degree_ranked_nodes
     degree_ranked_nodes = [None] * len(nodes)
 
@@ -150,6 +150,7 @@ def ear(topo, thrs):
             if node.role != 'IR' and neighbor.role == 'ER':
                 # ...if so, current node is an IR
                 topo.change_node_role(node, 'IR')
+                break
             else:
                 # ...if not, increase notERneighbors
                 notERneighbors += 1
@@ -159,7 +160,7 @@ def ear(topo, thrs):
         if notERneighbors == len(neighbors) and degree > thrs:
             # ...current node is an ER
             topo.change_node_role(node, 'ER')
-        # otherwise it remains an NR            
+        # otherwise it remains an NR/IR            
     
     #### PHASE 2: MPT EVALUATION
 
@@ -177,6 +178,7 @@ def ear(topo, thrs):
         # Get the i-th node
         node_i = topo.nodes[i]
 
+        ## Shortest Path Tree (SPT) calculation for ER and NR nodes
         # If it is an ER or a NR...
         if node_i.role != 'IR':
             
@@ -191,8 +193,20 @@ def ear(topo, thrs):
             
             # Assign to node_i the calculated SPT
             node_i.spt = spt
+        """
+        ## Modified Shortest Path Tree (MPT) calculation for IR nodes
+        # If it is an IR...
+        else:
 
+            # ...find the nearest ER
+            myER = find_my_ER(node_i, topo, distances_matrix)
+            
+            # ...and calculate the MPT.
+            mpt = spt2mpt(myER, node_i)
 
+            # Assign to node_i the calculated MPT (as if it was an SPT) 
+            node_i.spt = mpt
+        """
     ## Modified Shortest Path Tree (MPT) calculation for IR nodes
     for i in range(len(nodes)):
 
@@ -210,6 +224,7 @@ def ear(topo, thrs):
 
             # Assign to node_i the calculated MPT (as if it was an SPT) 
             node_i.spt = mpt
+    
 
     ## SWITCH OFF unused links
         
