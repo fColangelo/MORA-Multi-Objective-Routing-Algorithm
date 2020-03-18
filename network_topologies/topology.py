@@ -640,7 +640,7 @@ class Node:
         self.info = info
 
 
-    def shutdown_link(self, link):
+        def shutdown_link(self, link):
         # TODO: write docstrings
         """
         
@@ -653,17 +653,14 @@ class Node:
         """
 
         # Check if provided link belongs to this node and get this node neighbor...
-        if link.node1 == self.name:
-            neighbor = link.node2
-        elif link.node2 == self.name:
-            neighbor = link.node1
+        if link.id in self.active_links_list:
+            self.active_links_list.remove(link.id)
         else:
             # ...otherwise raise exception.
             raise Exception("*** LINK {} DOES NOT BELONG TO THIS NODE {}".format(link.name, self.name))
         
         # ------------ UPDATE LINKS -----------------
         #
-        self.active_links_list.remove(link.id)
         
         self.active_links = {}  # re-initialize active_links
         i = 1
@@ -676,14 +673,18 @@ class Node:
 
         # ------------ UPDATE NEIGHBORS -----------------
         #
-        self.active_neighbors_list.remove(neighbor)
+        # Find neighbor
+        if link.node1 == self.name:
+            neighbor = link.node2
 
-        self.active_neighbors = {}  # re-initialize active_neighbors
-        i = 1
+            self.active_neighbors_list.remove(neighbor)
 
-        for act_neighbor in self.active_neighbors_list:
-            self.active_neighbors["neighbor{}".format(i)] = act_neighbor
-            i+=1
+            self.active_neighbors = {}  # re-initialize active_neighbors
+            i = 1
+
+            for act_neighbor in self.active_neighbors_list:
+                self.active_neighbors["neighbor{}".format(i)] = act_neighbor
+                i+=1
         #
         #-------------------------------------------------
 
