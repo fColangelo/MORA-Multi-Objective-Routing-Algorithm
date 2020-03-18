@@ -19,7 +19,9 @@ class TrafficGenerator():
         self.flows = {}
         self.interval = interval
         self.topo = topology
-        
+        self.old_path_archive = []
+        self.new_path_archive = []
+
         #### TRAFFIC MATRICES ####
         self.path = os.path.join(path, 'traffic_matrices')
 
@@ -121,59 +123,94 @@ class TrafficGenerator():
         # init constant
         bw_delta_thrs = 100  # Mbps
 
-        current_flows = self.topo.get_current_flows().copy()
+        #old_flows = self.topo.get_current_flows().copy()
         
-        if current_flows == []:
+        if not self.old_path_archive:
 
-            ## APPLY FLOWS ON NETWORK
-            for key, flow in self.flows.items():
-
-                node1 = flow["node1"]
-                node2 = flow["node2"]
-                flow_path = self.topo.get_path(node1, node2)
+            ## APPLY FLOWS ON NETWORK (THE NETWORK IS EMPTY)
+            for _, flow in self.flows.items():
+                #node1 = flow["node1"]
+                #node2 = flow["node2"]
+                #flow_path = self.topo.get_shortest_path(node1, node2)
+                flow_path = self.topo.get_path(flow)
+                self.new_path_archive.append((flow, flow_path))
                 self.topo.apply_service_on_network(flow, flow_path)
         
         else:
 
             ## APPLY/MODIFY FLOWS ON NETWORK
-            for key, flow in self.flows.items():
-
-                node1 = flow["node1"]
-                node2 = flow["node2"]
-                flow_path = self.topo.get_path(node1, node2)
-                
-                presence_flag = False
+            # Topology not empty, evaluate if new flows correspond to old flows
+            for _, flow in self.flows.items():
+                #node1 = flow["node1"]
+                #node2 = flow["node2"]
+                #flow_path = self.topo.get_path(node1, node2)
+                #presence_flag = False
                 # Check if flow is currently applied on topology...
-                for cf in current_flows:
-                    if not presence_flag and flow["_id"] == cf["_id"]:
-                        # ...if so, set presence_flag and evaluate bandwidth delta 
-                        # between this flow and the same flow 'self.interval' seconds ago..
-                        presence_flag = True
-                        bw_delta = abs(flow["bandwidth"] - cf["bandwidth"])
-                        applied_flow = cf
-                
-                if presence_flag:  # presence_flag: TRUE -> flow already applied, FALSE -> vice versa
-                    # Check if bandwidth delta is greater than the threshold...
-                    if bw_delta > bw_delta_thrs:
-                        # ..if so, remove it and apply new flow
-                        cf_path = self.topo.get_path(applied_flow["node1"], applied_flow["node2"])
-                        self.topo.remove_service_from_network(applied_flow, cf_path)
-                        self.topo.apply_service_on_network(flow, flow_path)    
+
+                flow_exist = [x for x in self.old_path_archive if x[0]["_id"] == flow["_id"]]
+
+                if flow_exist: 
+                    # A flow with the same id exist, check if it's a random fluctuation
+                    #presence_flag = True
+                    old_entry = flow_exist[0]
+                    if abs(old_entry[0]["bandwidth"] - flow["bandwidth"]) > bw_delta_thrs:
+                        # It's a new flow, discard the old one and route this one                    
+                        self.topo.remove_service_from_network(old_entry[0], old_entry[1])
+                        self.old_path_archive.remove()
+                        flow_path = self.topo.get_path(flow)
+                        self.new_path_archive.append((flow, flow_path))
+                        self.topo.apply_service_on_network(flow, flow_path)
+                    else:
+                        # It's an old flow, remove it from old list, put it into new list                    
+                        self.old_path_archive.remove(old_entry)
+                        self.new_path_archive.append(old_entry)
+                    """
+                    for cf in current_flows:
+                        if not presence_flag and flow["_id"] == cf["_id"]:
+                            # ...if so, set presence_flag and evaluate bandwidth delta 
+                            # between this flow and the same flow 'self.interval' seconds ago..
+                            presence_flag = True
+                            bw_delta = abs(flow["bandwidth"] - cf["bandwidth"])
+                            applied_flow = cf
+                    
+
+                    if presence_flag:  # presence_flag: TRUE -> flow already applied, FALSE -> vice versa
+                        # Check if bandwidth delta is greater than the threshold...
+                        if bw_delta > bw_delta_thrs:
+                            # ..if so, remove it and apply new flow
+                            #flow_path = self.topo.get_shortest_path(node1, node2)
+                            flow_path = self.topo.get_path(flow)
+                            cf_path = self.topo.get_path(applied_flow["node1"], applied_flow["node2"])
+                            self.topo.remove_service_from_network(applied_flow, cf_path)
+                            self.topo.apply_service_on_network(flow, flow_path) 
+                    """   
                 else:  
-                    # ..otherwise, apply this flow on topology
+                    # It's a new flow, route it and log it
+                    flow_path = self.topo.get_path(flow)
+                    self.new_path_archive.append((flow, flow_path))
                     self.topo.apply_service_on_network(flow, flow_path)
 
             ## REMOVE TERMINED FLOWS FROM NETWORK
-            flows_ids = []
-            for key, flow, in self.flows.items():
-                flows_ids.append(flow["_id"])
+
+            # Remove all flows that are not alive anymroe
+            # All old flows that are not matched in new flows
+            # Everything left in old flows
+            #flows_ids = [x for x in old_flows if x]
+            #for _, flow, in self.flows.items():
+            #    flows_ids.append(flow["_id"])
             
-            for cf in current_flows:
+
+            for entry in self.old_path_archive:
+                self.topo.remove_service_from_network(entry[0], entry[1])
+                """
                 if cf["_id"] not in flows_ids:
                     node1 = cf["node1"]
                     node2 = cf["node2"]
                     cf_path = self.topo.get_path(node1, node2)
                     self.topo.remove_service_from_network(cf, cf_path)
+                """
+        self.old_path_archive = self.new_path_archive
+        self.new_path_archive = []
 
 
 def read_from_json(json_path):

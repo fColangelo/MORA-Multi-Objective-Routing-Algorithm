@@ -4,36 +4,30 @@ import numpy as np
 from deap import algorithms, base, creator, tools, algorithms
 import json
 import collections
+from utils.network_objects import *
 
 def eval_bandwidth_single_link(percentage):
     cost = 6.25*(percentage**2) + 7.5 *(percentage) + 2.25
 
     return cost
 def get_evaluate_individual(topology, flow):
-    initial_consumption = topology.get_power_consumption()
     def evaluate_individual(individual):
         latency = 0
         power = 0
         reliability = 0
-        #topology.apply_service_on_network(flow, individual)
-        #delta_power_consumption = topology.get_power_consumption() - initial_consumption
-        #reliability_score = topology.get_reliability_score()
         for idx in range(len(individual)-1):
             # TODO consider multiple links
             link = topology.get_link_between_neighbors(individual[idx], individual[idx+1])
             latency +=  link.latency 
             power += (link.get_power_consumption(link.consumed_bandwidth+ flow['bandwidth'])-link.power_consumption_MORA) 
             reliability = eval_bandwidth_single_link((link.consumed_bandwidth+ flow['bandwidth'])/link.total_bandwidth)
-        #topology.remove_service_from_network(flow, individual)
         return len(individual), latency, power, reliability
     return evaluate_individual
 
 def get_evaluate_SLA(SLA_terms, topology, evaluate_individual):
     def evaluate_SLA(individual):
         evaluation = evaluate_individual(individual)
-        if evaluation[0] > SLA_terms.latency: #or \
-        #    evaluation[1] > SLA_terms.jitter or \
-        #            evaluation[3] > 0.8:
+        if evaluation[0] > SLA_terms.latency:
             return False
         return True
     return evaluate_SLA
@@ -213,36 +207,34 @@ def mutate_path(individual, topology, indi_class):
     else:
         return individual,
 
-def optimize_route(topology, flow):
-    
+def optimize_route(topology, flow_dic):
+    flow_obj = Flow(flow_dic)
     # number of weights in the tuple -> number of objective functions
-    creator.create("FitnessMultiObj", base.Fitness, weights=(-1.0, -1.0)) 
+    creator.create("FitnessMultiObj", base.Fitness, weights=(-1.0, -1.0, -1.0, -1.0,)) 
     creator.create("Individual", list, fitness=creator.FitnessMultiObj)
     toolbox = base.Toolbox()
-    toolbox.register("individual", generate_individual, creator.Individual, flow.starting_node, flow.ending_node, topology)
+    toolbox.register("individual", generate_individual, creator.Individual, flow_obj.starting_node, flow_obj.ending_node, topology)
     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
     toolbox.register("mate", crossover_one_point, topology=topology, ind_class=creator.Individual, toolbox=toolbox)
     toolbox.register("select", tools.selNSGA2)
     toolbox.register("mutate", mutate_path, topology=topology, indi_class=creator.Individual)
     
-    # FIXME
-    toolbox.register("evaluate", evaluate_individual, topology=topology)
-    evaluate_SLA = get_evaluate_SLA(flow.SLA, topology)
-    penalty = get_penalty(flow.SLA, topology) 
+    evaluate_individual = get_evaluate_individual(topology, flow_dic)
+    toolbox.register("evaluate", evaluate_individual)
+    evaluate_SLA = get_evaluate_SLA(flow_obj.SLA, topology, evaluate_individual)
+    penalty = get_penalty(flow_obj.SLA, topology, evaluate_individual) 
     toolbox.decorate("evaluate", tools.DeltaPenality(evaluate_SLA, 20.0, penalty))
 
-    pop = toolbox.population(n=100)
-    #FIXME
-    hof = tools.ParetoFront(1, similar=np.array_equal)
-    
+    pop = toolbox.population(n=50)
+    hof = tools.ParetoFront(similar = compare_individuals)
     stats = tools.Statistics(lambda ind: ind.fitness.values)
 
-    stats.register("avg", np.mean)
-    stats.register("std", np.std)
-    stats.register("min", np.min)
-    stats.register("max", np.max)
+    stats.register("avg", np.mean, axis=0)
+    #stats.register("std", np.std, axis=0)
+    stats.register("min", np.min, axis=0)
+    stats.register("max", np.max, axis=0)
 
-    algorithms.eaSimple(pop, toolbox, cxpb=0.5, mutpb=0.2, ngen=4, stats=stats, halloffame=hof)
+    algorithms.eaSimple(pop, toolbox, cxpb=0.5, mutpb=0.2, ngen=10, stats=stats, halloffame=hof)
 
 
     return hof

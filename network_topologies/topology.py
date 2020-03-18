@@ -3,7 +3,7 @@ import sys
 sys.dont_write_bytecode
 import json
 import os
-from routing_algorithms.mora import eval_bandwidth_single_link
+from routing_algorithms.mora import eval_bandwidth_single_link, optimize_route
 from routing_algorithms.dijkstra import dijkstra_cost
 
 
@@ -26,7 +26,7 @@ def write_to_json(data, filename, json_path):
 
 class Topology:
 
-    def __init__(self, name='topology', node_dict={}, link_dict={}):
+    def __init__(self, name='topology', node_dict={}, link_dict={}, routing_method = 'Dijkstra'):
         """
         Initialization Method of Topology object.
 
@@ -48,6 +48,9 @@ class Topology:
         self.current_flows = []     # list of currently applied flows on this Topology
 
         self.create_topology(node_dict, link_dict)
+
+        self.routing_method = routing_method
+        self.init_routing_method(routing_method)
 
     # ************ GENERAL PURPOSE METHODS ************
 
@@ -236,12 +239,14 @@ class Topology:
 
     ## SERVICES
 
-    def get_path(self, src_name, dst_name):
+    def get_shortest_path(self, flow):
         # TODO: write docstrings
 
+        src_name = flow['node1']
+        dst_name = flow['node2']
         src = self.get_one_node(src_name)
     
-        for key, path in src.spt.items():
+        for _, path in src.spt.items():
             if path[0] == src_name and path[-1] == dst_name:
                 return path
 
@@ -418,6 +423,22 @@ class Topology:
         
         print('**************************')
 
+    # ************ GENERAL ROUTING METHODS ************
+    def init_routing_method(self, routing_method):
+        if routing_method == 'Dijkstra':
+            self.init_Dijkstra()
+            self.get_path = self.get_shortest_path
+        elif routing_method == 'EAR':
+            self.init_EAR()
+            self.get_path = None #EAR_get_path()
+        elif routing_method == 'MORA':
+            self.init_MORA()
+            self.get_path = optimize_route
+        elif routing_method == 'Hop_by_hop':
+            self.init_Hop_by_hop()
+            self.get_path = None #Hop_get_path
+        else:
+            raise NotImplementedError
 
     # ************ DIJKSTRA ANCILLARY METHODS ************
 
@@ -454,6 +475,9 @@ class Topology:
 
         return cost_matrix
 
+    def init_Dijkstra(self):
+        pass
+
     # ************ EAR ANCILLARY METHODS ******************
 
     def switch_off_link(self, link):
@@ -472,7 +496,6 @@ class Topology:
         node2_obj.shutdown_link(link)
         self.update_node_info(node2_obj)
 
-
     def turn_on_link(self,link):
         # TODO: write docstrings
 
@@ -489,13 +512,17 @@ class Topology:
         node2_obj.shutdown_link(link)
         self.update_node_info(node2_obj)
 
-
     def change_node_role(self, node, role):
         # TODO: write docstrings
 
         node.role = role
         self.update_node_info(node)
 
+    def init_EAR(self):
+        #TODO implement
+        raise NotImplementedError
+
+        return
     # ************ MORA ANCILLARY METHODS ************
 
     def is_connection_possible(self, node_1, node_2):
@@ -522,12 +549,22 @@ class Topology:
         has_loops = (len(path) != len(set(path)))                                                                     
         return has_loops 
 
-
     def is_valid(self, path):
         for idx in range(len(path)-1):
             if path[idx+1] not in self.get_valid_links(path[idx]):
                 return False
         return True
+
+    def init_MORA(self):
+        pass
+
+    # ************ HOP BY HOP ANCILLARY METHODS ************
+
+    def init_Hop_by_hop(self):
+        #TODO implement
+        raise NotImplementedError
+
+        return
 
 class Node:
  
