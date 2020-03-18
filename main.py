@@ -13,7 +13,7 @@ from network_topologies.geant import Geant
 #from routing_algorithms.dijkstra import dijkstra
 #from routing_algorithms.dijkstra import calculate_path
 from routing_algorithms.dijkstra import set_spt
-#from routing_algorithms.ear import ear
+from routing_algorithms.ear import ear
 # SERVICES
 from service_flows.traffic_generator import TrafficGenerator
 
@@ -99,19 +99,23 @@ def main():
     #           SIMPLE DIJKSTRA (OSPF-like)             #
     #####################################################
     #
-    start_time = time.time()
+    #start_time = time.time()
     #
-    set_spt(topo)
+    #set_spt(topo)
     #
-    print("--- %s seconds to set STPs ---" % (time.time() - start_time))
+    #print("--- %s seconds to set up DIJKSTRA ---" % (time.time() - start_time))
     #
     #####################################################
     #            ENERGY AWARE ROUTING (EAR)             #
     #####################################################
-
-    # ER_degree_threshold = 2
-    # ear(topo, ER_degree_threshold)
-
+    #
+    start_time = time.time()
+    #
+    ER_degree_threshold = 2
+    ear(topo, ER_degree_threshold)
+    #
+    print("--- %s seconds to set up DIJKSTRA ---" % (time.time() - start_time))
+    
     """
     ********* SERVICES example *********
     """
@@ -120,11 +124,8 @@ def main():
     tg = TrafficGenerator(interval=300, topology=topo)  # 300 s = 5 minutes
     
     
-    seconds = 0
     while True:
-        print("****************** {} seconds have passed! *****************".format(seconds))
-        time.sleep(30)
-        seconds += 30
+        pass
 
 
 if __name__ == "__main__":

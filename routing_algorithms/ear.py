@@ -124,13 +124,13 @@ def ear(topo, thrs):
     # Init degree_ranked_nodes
     degree_ranked_nodes = [None] * len(nodes)
 
-    # Calculate the degree of each node and rank (reverse order) them by this value
+    ## Calculate the degree of each node and rank (reverse order) them by this value
     for i in range(len(nodes)):
         node_i = topo.nodes[i]
         degree_ranked_nodes[i] = [get_degree(node_i), node_i.name]
     degree_ranked_nodes.sort(reverse=True)
 
-    # Define nodes' roles
+    ## Define nodes' roles
     for element in degree_ranked_nodes:
 
         # Init notERneighbors for the current element
