@@ -13,15 +13,19 @@ def get_evaluate_individual(topology, flow):
     initial_consumption = topology.get_power_consumption()
     def evaluate_individual(individual):
         latency = 0
-        topology.apply_service_on_network(flow, individual)
-        delta_power_consumption = topology.get_power_consumption() - initial_consumption
-        reliability_score = topology.get_reliability_score()
+        power = 0
+        reliability = 0
+        #topology.apply_service_on_network(flow, individual)
+        #delta_power_consumption = topology.get_power_consumption() - initial_consumption
+        #reliability_score = topology.get_reliability_score()
         for idx in range(len(individual)-1):
             # TODO consider multiple links
             link = topology.get_link_between_neighbors(individual[idx], individual[idx+1])
             latency +=  link.latency 
-        topology.remove_service_from_network(flow, individual)
-        return len(individual), latency, delta_power_consumption, reliability_score
+            power += (link.get_power_consumption(link.consumed_bandwidth+ flow['bandwidth'])-link.power_consumption_MORA) 
+            reliability = eval_bandwidth_single_link((link.consumed_bandwidth+ flow['bandwidth'])/link.total_bandwidth)
+        #topology.remove_service_from_network(flow, individual)
+        return len(individual), latency, power, reliability
     return evaluate_individual
 
 def get_evaluate_SLA(SLA_terms, topology, evaluate_individual):
