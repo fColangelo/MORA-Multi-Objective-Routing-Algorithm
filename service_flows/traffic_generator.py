@@ -3,8 +3,10 @@ import sys
 sys.dont_write_bytecode
 import json
 import threading
-import time
+import time, datetime
 import os
+import pandas as pd
+import numpy as np 
 
 class TrafficGenerator():
 
@@ -14,6 +16,9 @@ class TrafficGenerator():
         self.p_part = 0.16
         self.a_part = 0.67
         self.be_part = 1 - (self.p_part + self.a_part)  # 0.17
+
+        self.premium_thresh = 150 #ms
+        self.assured_thresh = 400 #ms
 
         #### ATTRIBUTES ####
         self.flows = {}
@@ -28,11 +33,22 @@ class TrafficGenerator():
         # Get Traffic files & sort them
         self.traffic_files = [f for f in os.listdir(self.path)]
         self.traffic_files.sort(key=str.lower)
-        
+
         # Create thread
         thread = threading.Thread(target=self.generate_flows, args=())
         thread.daemon = True
         thread.start()
+
+        ### LOGGING ###
+        self.starting_time = datetime.datetime.now()
+        self.log_file_name = "log_{}_{}.csv".format(\
+                self.starting_time.strftime("%Y-%m-%d %H:%M:%S"), topology.routing_method)
+
+        df = pd.DataFrame(columns=['Routing algorithm', 'Power consumption [W]', 'Reliability score (Max)',\
+                            'Reliability score (Mean)', 'Mean latency (premium) [ms]',\
+                            'Mean latency (assured) [ms]: ', 'Premium SLA violations:', 'Assured SLA violations:',
+                            'Mean Premium SLA violations:' , 'Mean Assured SLA violations:'])
+        df.to_csv(self.log_file_name, mode='w', header=True)
 
     def generate_flows(self):
         
@@ -120,11 +136,10 @@ class TrafficGenerator():
 
     def apply_flows(self):
 
-        # init constant
-        bw_delta_thrs = 100  # Mbps
-
-        #old_flows = self.topo.get_current_flows().copy()
-        
+        # Bandwidth threshold: if two flows with equal source-destination are found between
+        # two time intervals, check their bandwidth
+        # If difference > threshold, then consider them as different flows
+        bw_delta_thrs = 100  # Mbps        
         if not self.old_path_archive:
 
             ## APPLY FLOWS ON NETWORK (THE NETWORK IS EMPTY)
@@ -163,27 +178,7 @@ class TrafficGenerator():
                     else:
                         # It's an old flow, remove it from old list, put it into new list                    
                         self.old_path_archive.remove(old_entry)
-                        self.new_path_archive.append(old_entry)
-                    """
-                    for cf in current_flows:
-                        if not presence_flag and flow["_id"] == cf["_id"]:
-                            # ...if so, set presence_flag and evaluate bandwidth delta 
-                            # between this flow and the same flow 'self.interval' seconds ago..
-                            presence_flag = True
-                            bw_delta = abs(flow["bandwidth"] - cf["bandwidth"])
-                            applied_flow = cf
-                    
-
-                    if presence_flag:  # presence_flag: TRUE -> flow already applied, FALSE -> vice versa
-                        # Check if bandwidth delta is greater than the threshold...
-                        if bw_delta > bw_delta_thrs:
-                            # ..if so, remove it and apply new flow
-                            #flow_path = self.topo.get_shortest_path(node1, node2)
-                            flow_path = self.topo.get_path(flow)
-                            cf_path = self.topo.get_path(applied_flow["node1"], applied_flow["node2"])
-                            self.topo.remove_service_from_network(applied_flow, cf_path)
-                            self.topo.apply_service_on_network(flow, flow_path) 
-                    """   
+                        self.new_path_archive.append(old_entry)  
                 else:  
                     # It's a new flow, route it and log it
                     flow_path = self.topo.get_path(flow)
@@ -191,27 +186,71 @@ class TrafficGenerator():
                     self.topo.apply_service_on_network(flow, flow_path)
 
             ## REMOVE TERMINED FLOWS FROM NETWORK
-
             # Remove all flows that are not alive anymroe
             # All old flows that are not matched in new flows
             # Everything left in old flows
-            #flows_ids = [x for x in old_flows if x]
-            #for _, flow, in self.flows.items():
-            #    flows_ids.append(flow["_id"])
-            
-
             for entry in self.old_path_archive:
                 self.topo.remove_service_from_network(entry[0], entry[1])
-                """
-                if cf["_id"] not in flows_ids:
-                    node1 = cf["node1"]
-                    node2 = cf["node2"]
-                    cf_path = self.topo.get_path(node1, node2)
-                    self.topo.remove_service_from_network(cf, cf_path)
-                """
+
         self.old_path_archive = self.new_path_archive
         self.new_path_archive = []
 
+        self.log_stats()
+
+    def log_stats(self):
+        """
+        Called at the end of every new flow cycle, log network wide stats
+        * Network-wide energy consumption
+        * Network-wide reliability score (max and mean)
+        * # of SLA violation
+        * Mean latency per flow class
+        * ?
+        """ 
+        max_rel, mean_rel = self.topo.get_reliability_score()
+        premium_lat = []
+        assured_lat = [] 
+        premium_violations = 0
+        assured_violations = 0
+        mean_premium_violations = []
+        mean_assured_violations = []
+
+        for f in self.old_path_archive:
+            if 'premium' in f[0]['_id']:
+                path_lat = []
+                for j in range(len(f[1])-1):
+                    link = self.topo.get_link_between_neighbors(f[1][j], f[1][j+1])
+                    path_lat.append(link.latency)
+                    path_lat = np.mean(path_lat)
+                    premium_lat.append(path_lat)
+                    if path_lat > self.premium_thresh:
+                        premium_violations += 1
+                        mean_premium_violations.append(abs(path_lat - self.premium_thresh))
+
+            elif 'assured' in f[0]['_id']:
+                path_lat = []
+                for j in range(len(f[1])-1):
+                    link = self.topo.get_link_between_neighbors(f[1][j], f[1][j+1])
+                    path_lat.append(link.latency)
+                    path_lat = np.mean(path_lat)
+                    assured_lat.append(path_lat)
+                    if path_lat > self.assured_thresh:
+                        assured_violations += 1
+                        mean_assured_violations.append(abs(path_lat - self.assured_thresh))
+
+        header = {'Routing algorithm':[self.topo.routing_method], \
+                  'Power consumption [W] ':[self.topo.get_power_consumption()], \
+                  'Reliability score (Max)':[max_rel], 'Reliability score (Mean)':[mean_rel],\
+                  'Mean latency (premium)': [np.mean(premium_lat)], \
+                  'Mean latency (assured):': [np.mean(assured_lat)], \
+                  'Premium SLA violations:': [premium_violations], \
+                  'Assured SLA violations:': [assured_violations], \
+                  'Mean Premium SLA violations:': [np.mean(mean_premium_violations)],\
+                  'Mean Assured SLA violations:': [np.mean(mean_assured_violations)]} 
+
+        df = pd.DataFrame(header)
+        df.to_csv(self.log_file_name, mode='a', header=False)
+
+        return
 
 def read_from_json(json_path):
     """

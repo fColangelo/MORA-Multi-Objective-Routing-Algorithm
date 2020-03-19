@@ -236,5 +236,8 @@ def optimize_route(topology, flow_dic):
 
     algorithms.eaSimple(pop, toolbox, cxpb=0.5, mutpb=0.2, ngen=10, stats=stats, halloffame=hof)
 
+    min_attr = 1e15
+    for p in hof:
+        if evaluate_individual(p)[topology.me]
 
     return hof

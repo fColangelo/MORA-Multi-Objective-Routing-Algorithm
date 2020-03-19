@@ -5,7 +5,7 @@ import json
 import os
 from routing_algorithms.mora import eval_bandwidth_single_link, optimize_route
 from routing_algorithms.dijkstra import dijkstra_cost
-
+import numpy as np
 
 def write_to_json(data, filename, json_path):
     """
@@ -280,11 +280,11 @@ class Topology:
 
     def get_reliability_score(self):
         reliabilities = [eval_bandwidth_single_link(x.bandwidth_usage) for x in self.links]
-        return max(reliabilities)
+        return np.max(reliabilities), np.mean(reliabilities)
 
     def get_power_consumption(self):
         powers = [x.power_consumption_MORA for x in self.links]
-        return sum(powers)
+        return np.sum(powers)
 
     ## TOPO OBJECT
 
@@ -555,8 +555,17 @@ class Topology:
                 return False
         return True
 
-    def init_MORA(self):
-        pass
+    def init_MORA(self, favored_attr = 'Reliability'):
+        if favored_attr == 'Shortest path':
+            self.meta_heuristic = 0
+        elif favored_attr == 'Latency'
+            self.meta_heuristic = 1        
+        elif favored_attr == 'Power consumption':
+            self.meta_heuristic = 2
+        elif favored_attr == 'Reliability':
+            self.meta_heuristic = 3
+
+        return 
 
     # ************ HOP BY HOP ANCILLARY METHODS ************
 
@@ -640,7 +649,7 @@ class Node:
         self.info = info
 
 
-        def shutdown_link(self, link):
+    def shutdown_link(self, link):
         # TODO: write docstrings
         """
         
