@@ -237,6 +237,14 @@ class Topology:
         
         raise Exception("*** UNEXPECTED ERROR: {} AND {} ARE NEIGHBORS BUT NO LINK BETWEEN THEM WAS FOUND!".format(nodeA_name, nodeB_name))
 
+    def update_link_status(self):
+        for l in self.links:
+            if l.consumed_bandwidth == 0:
+                l.status('off')
+            else:
+                l.status('on')
+        return
+
     ## SERVICES
 
     def get_shortest_path(self, flow):
@@ -279,11 +287,11 @@ class Topology:
         self.save_topology_info()        
 
     def get_reliability_score(self):
-        reliabilities = [eval_bandwidth_single_link(x.bandwidth_usage) for x in self.links]
+        reliabilities = [eval_bandwidth_single_link(x.bandwidth_usage) for x in self.links if x.status == 'on']
         return np.max(reliabilities), np.mean(reliabilities)
 
     def get_power_consumption(self):
-        powers = [x.power_consumption_MORA for x in self.links]
+        powers = [x.power_consumption_MORA for x in self.links if x.status == 'on']
         return np.sum(powers)
 
     ## TOPO OBJECT
@@ -558,7 +566,7 @@ class Topology:
     def init_MORA(self, favored_attr = 'Reliability'):
         if favored_attr == 'Shortest path':
             self.meta_heuristic = 0
-        elif favored_attr == 'Latency'
+        elif favored_attr == 'Latency':
             self.meta_heuristic = 1        
         elif favored_attr == 'Power consumption':
             self.meta_heuristic = 2

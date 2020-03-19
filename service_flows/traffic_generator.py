@@ -194,7 +194,7 @@ class TrafficGenerator():
 
         self.old_path_archive = self.new_path_archive
         self.new_path_archive = []
-
+        self.topo.update_link_status()
         self.log_stats()
 
     def log_stats(self):
