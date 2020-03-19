@@ -237,7 +237,11 @@ def optimize_route(topology, flow_dic):
     algorithms.eaSimple(pop, toolbox, cxpb=0.5, mutpb=0.2, ngen=10, stats=stats, halloffame=hof)
 
     min_attr = 1e15
+    
+    meta_att = topology.meta_att
     for p in hof:
-        if evaluate_individual(p)[topology.me]
-
-    return hof
+        evaluation = evaluate_individual(p)
+        if evaluation[meta_att] < min_attr:
+            meta_best = p
+            min_attr = evaluation[meta_att]
+    return meta_best
