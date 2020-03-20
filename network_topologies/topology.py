@@ -87,7 +87,6 @@ class Topology:
         # Add node to this Topology
         self.add_node(node)
 
-
     def add_node(self,node):
         """
         Add 'node' to this Topology.
@@ -105,7 +104,6 @@ class Topology:
         
         # ...add it to this Topology node info dictionary 'node_dict'
         self.node_dict['node{}'.format(len(self.node_dict) + 1)] = node.info
-
 
     def get_one_node(self, node_name):
         """
@@ -126,7 +124,6 @@ class Topology:
                 return node
         
         raise Exception('*** NODE {} IS NOT IN THIS TOPOLOGY! ***'.format(node_name))
-
 
     def update_node_info(self, node):
         
@@ -152,7 +149,6 @@ class Topology:
         # Add link to this Topology
         self.add_link(link)
 
-
     def add_link(self, link):
         """
         Add 'link' to this Topology.
@@ -169,7 +165,6 @@ class Topology:
         
         # ... add it to this Topology link info dictionary 'link_dict'
         self.link_dict['link{}'.format(len(self.link_dict) + 1)] = link.info
-
 
     def get_one_link(self, link_name):
         """
@@ -191,7 +186,6 @@ class Topology:
         
         raise Exception('*** LINK {} IS NOT IN THIS TOPOLOGY! ***'.format(link_name))
     
-
     def update_link_info(self, link):
         
         link_id = link.id
@@ -199,7 +193,6 @@ class Topology:
             if  link_id in self.link_dict[l]['_id']:
                 self.link_dict[l] = link.info
                 break
-    
     
     def get_link_between_neighbors(self, nodeA_name, nodeB_name):
         # TODO: write docstrings
@@ -258,10 +251,8 @@ class Topology:
             if path[0] == src_name and path[-1] == dst_name:
                 return path
 
-
     def get_current_flows(self):
         return self.current_flows
-
 
     def apply_service_on_network(self, service_flow, path):
         
@@ -273,7 +264,6 @@ class Topology:
             link.apply_service_on_link(service_flow)
             self.update_link_info(link) 
         self.save_topology_info()     
-
 
     def remove_service_from_network(self, service_flow, path):
         
