@@ -3,9 +3,16 @@ import sys
 sys.dont_write_bytecode
 import json
 import os
-from routing_algorithms.mora import eval_bandwidth_single_link, optimize_route
-from routing_algorithms.dijkstra import dijkstra_cost
 import numpy as np
+## ROUTING ALGORITHMS
+# MORA
+from routing_algorithms.mora import eval_bandwidth_single_link, optimize_route
+# DIJKSTRA
+from routing_algorithms.dijkstra import dijkstra_cost
+from routing_algorithms.dijkstra import set_spt
+# EAR
+from routing_algorithms.ear import ear
+
 
 def write_to_json(data, filename, json_path):
     """
@@ -328,7 +335,6 @@ class Topology:
         
         return adj_matrix
 
-
     def get_operational_adjacency_matrix(self):
         """
         Return Topology operational adjacency matrix.
@@ -371,7 +377,6 @@ class Topology:
         
         return op_adj_matrix
 
-
     def __repr__(self):
         
         adj_matrix=self.get_adjacency_matrix()        
@@ -394,7 +399,6 @@ class Topology:
         rep += '**************************'
         
         return rep
-
 
     def pretty_print_adjacency_matrix(self, adj_matrix):
         """
@@ -422,13 +426,15 @@ class Topology:
         print('**************************')
 
     # ************ GENERAL ROUTING METHODS ************
+
     def init_routing_method(self, routing_method):
+
         if routing_method == 'Dijkstra':
             self.init_Dijkstra()
             self.get_path = self.get_shortest_path
         elif routing_method == 'EAR':
             self.init_EAR()
-            self.get_path = None #EAR_get_path()
+            self.get_path = self.get_shortest_path
         elif routing_method == 'MORA':
             self.init_MORA()
             self.get_path = optimize_route
@@ -439,6 +445,9 @@ class Topology:
             raise NotImplementedError
 
     # ************ DIJKSTRA ANCILLARY METHODS ************
+
+    def init_Dijkstra(self):
+        set_spt(self)
 
     def dijkstra_cost_matrix(self):
         # TODO: write docstrings
@@ -473,10 +482,11 @@ class Topology:
 
         return cost_matrix
 
-    def init_Dijkstra(self):
-        pass
-
     # ************ EAR ANCILLARY METHODS ******************
+
+    def init_EAR(self):
+        ER_degree_threshold = 2
+        ear(self, ER_degree_threshold)
 
     def switch_off_link(self, link):
         # TODO: write docstrings
@@ -494,7 +504,7 @@ class Topology:
         node2_obj.shutdown_link(link)
         self.update_node_info(node2_obj)
 
-    def turn_on_link(self,link):
+    def turn_on_link(self,link):  # DA ELIMINARE
         # TODO: write docstrings
 
         link.status = 'on'
@@ -515,12 +525,7 @@ class Topology:
 
         node.role = role
         self.update_node_info(node)
-
-    def init_EAR(self):
-        #TODO implement
-        raise NotImplementedError
-
-        return
+       
     # ************ MORA ANCILLARY METHODS ************
 
     def is_connection_possible(self, node_1, node_2):
@@ -698,7 +703,7 @@ class Node:
         self.update_info()
 
     
-    def startup_link(self, link):
+    def startup_link(self, link):  # DA ELIMINARE
         # TODO: write docstrings
         """[summary]
         

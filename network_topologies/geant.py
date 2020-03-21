@@ -26,15 +26,15 @@ def read_from_json(json_path):
 
 class Geant(Topology):
     
-    def __init__(self, node_dict={}, link_dict={}):
+    def __init__(self, node_dict={}, link_dict={}, routing_method = 'Dijkstra'):
 
         topo_name = "geant"
-        #preprocess_metadata(topo_name)
+        preprocess_metadata(topo_name)
 
         current_dir = os.path.dirname(__file__)
         db_path = os.path.join(current_dir, topo_name , topo_name + "DB")
         node_dict = read_from_json(db_path + "/nodes.json")
         link_dict = read_from_json(db_path + "/links.json")
 
-        super().__init__(name=topo_name, node_dict=node_dict, link_dict=link_dict)     
+        super().__init__(name=topo_name, node_dict=node_dict, link_dict=link_dict, routing_method=routing_method)     
         

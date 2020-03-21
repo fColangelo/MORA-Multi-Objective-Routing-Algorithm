@@ -63,9 +63,10 @@ def main():
     #
     start_time = time.time()
     #
-    topo = Geant()
+    routing_algo = 'EAR'
+    topo = Geant(routing_method=routing_algo)
     #
-    print("--- %s seconds to build GEANT Topology ---" % (time.time() - start_time))
+    print("--- {} seconds to build {} Topology with {} routing algorithm ---".format((time.time() - start_time), topo.name.upper(), topo.routing_method))
 
     #####################################################
     # Uncomment next lines to work with SIMPLE Topology #
@@ -109,12 +110,12 @@ def main():
     #            ENERGY AWARE ROUTING (EAR)             #
     #####################################################
     #
-    start_time = time.time()
+    #start_time = time.time()
     # 
-    ER_degree_threshold = 2
-    ear(topo, ER_degree_threshold)
+    #ER_degree_threshold = 2
+    #ear(topo, ER_degree_threshold)
     #
-    print("--- %s seconds to set up DIJKSTRA ---" % (time.time() - start_time))
+    #print("--- %s seconds to set up EAR ---" % (time.time() - start_time))
     
     """
     ********* SERVICES example *********
