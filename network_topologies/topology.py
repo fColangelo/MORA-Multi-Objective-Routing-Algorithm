@@ -440,7 +440,7 @@ class Topology:
             self.get_path = optimize_route
         elif routing_method == 'Hop_by_hop':
             self.init_Hop_by_hop()
-            self.get_path = None #Hop_get_path
+            self.get_path = get_path_hop_by_hop
         else:
             raise NotImplementedError
 
@@ -573,10 +573,51 @@ class Topology:
     # ************ HOP BY HOP ANCILLARY METHODS ************
 
     def init_Hop_by_hop(self):
-        #TODO implement
-        raise NotImplementedError
-
+        for node in self.nodes:
+            input_capacity = 0
+            for neighbor in node.neighbors_list:
+                input_capacity += self.get_link_between_neighbors(neighbor, node).total_bandwidth
+            node.x0 = input_capacity/800
         return
+            
+    def get_path_hop_by_hop(self, path):
+        dest = path[-1]
+        source = pat[0]
+        node_weight = {}
+        node_paths = {}
+        for n in topo.nodes:
+            if n.name is not dest:
+                node_paths_weights{n.name} = np.Inf
+            else:
+                node_paths_weights.append((n.name, 0))
+            node_paths_weights{n.name} = np.Inf
+            node_paths{n.name} = []
+        condition = True 
+        # Set looping condition
+        while condition:
+        # Get node with minimum weigth # What exactly are the w
+            cn = sorted(node_paths_weights, key=operator.itemgetter(1))[0]
+        # if current node == source
+            if cn == source:
+                node_paths[source].append(source)
+                return node_paths[source]
+            
+            # Get neighbors of n. For each neighbor...
+            for ne in c.neighbors_list:
+                # Get link between nodes
+                link = self.get_link_between_neighbors(c, ne)
+                x_m = link.mean_traffic
+                #weigth
+                cl = link.get_power_consumption(x_m + c.x_0) - link.get_power_consumption(x_m)
+                if node_paths_weights{cn} + cl < node_paths_weights{ne}:
+                #    if W is less than current W:
+                #        set new W, set new path
+                    node_paths{cl}.append(cl) 
+                    node_paths_weights{ne} = node_paths_weights{cn} + cl
+                    
+            if [x[1] fo x in node_paths if x[1] == []] == []:
+                break
+
 
 class Node:
  
