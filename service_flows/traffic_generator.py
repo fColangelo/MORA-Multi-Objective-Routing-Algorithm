@@ -10,7 +10,7 @@ import numpy as np
 
 class TrafficGenerator():
 
-    def __init__(self, interval, topology, path=os.path.dirname(__file__)):
+    def __init__(self, interval, topology, path=os.path.dirname(__file__), faults = 0):
         
         #### CONSTANT PARAMETERS ####
         self.p_part = 0.16
@@ -34,6 +34,9 @@ class TrafficGenerator():
         self.traffic_files = [f for f in os.listdir(self.path)]
         self.traffic_files.sort(key=str.lower)
 
+        # Program node faults
+        self.faults_number = faults
+        self.fault_generator()
         # Create thread
         thread = threading.Thread(target=self.generate_flows, args=())
         thread.daemon = True
@@ -55,9 +58,15 @@ class TrafficGenerator():
         i = 0
         
         while i < len(self.traffic_files):
-            
-            flows = {}
+            # Check if any node must fail
+            for _, fault in enumerate(self.faults):
+                if fault[0] == i:
+                    # TODO topology.node_fault(fault[1])
+                    self.topo.faulty_node_list.append(fault[1])     
 
+
+
+            flows = {}
             f_path = os.path.join(self.path, self.traffic_files[i])
             f = read_from_json(f_path)
 
@@ -152,10 +161,14 @@ class TrafficGenerator():
                 self.topo.apply_service_on_network(flow, flow_path)
         
         else:
-
             ## APPLY/MODIFY FLOWS ON NETWORK
             # Topology not empty, evaluate if new flows correspond to old flows
             for _, flow in self.flows.items():
+                
+                # If the current flow source/destination has faulted, the flow is not considered
+                if flow["node1"] in self.topo.faulty_node_list \
+                    or flow["node2"] in self.topo.faulty_node_list:
+                    continue
                 #node1 = flow["node1"]
                 #node2 = flow["node2"]
                 #flow_path = self.topo.get_path(node1, node2)
@@ -250,6 +263,21 @@ class TrafficGenerator():
         df = pd.DataFrame(header)
         df.to_csv(self.log_file_name, mode='a', header=False)
 
+        return
+
+    def fault_generator(self):
+        # When are the faults going to occur?
+        if self.faults_number is not 0:
+            self.faults = []
+            fault_times = np.random.choice(len(self.traffic_files), size = self.faults, replace = False)
+        # Which nodes are going to fault?
+        faulty_nodes = np.random.choice(len(self.topo.nodes), size = len(fault_times), replace = False)
+        # Create the structure of faults
+        # Format: 
+        # fault time = i -> the node is going to fail before loading traffic file i
+        # faulty_nodes = j -> the j node is going to fail at time i
+        for n in self.faults_number:
+            self.faults.append((fault_times[n], self.topo.nodes(faulty_nodes[n].name)))
         return
 
 def read_from_json(json_path):

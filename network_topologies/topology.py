@@ -53,6 +53,7 @@ class Topology:
         self.node_dict = {}         # dictionary of nodes and nodes' properties
         self.link_dict = {}         # dictionary of links and links' properties
         self.current_flows = []     # list of currently applied flows on this Topology
+        self.faulty_node_list = []  
 
         self.create_topology(node_dict, link_dict)
 
