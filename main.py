@@ -118,6 +118,12 @@ def main():
     #print("--- %s seconds to set up EAR ---" % (time.time() - start_time))
     
     """
+    ********* SHUTDOWN NODE TEST *********
+    """
+    node_to_shut = topo.get_one_node('BE')
+    topo.shutdown_node(node_to_shut)
+
+    """
     ********* SERVICES example *********
     """
 

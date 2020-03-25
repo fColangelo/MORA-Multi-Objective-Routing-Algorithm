@@ -78,6 +78,22 @@ class Topology:
         for link_info in link_dict:
             self.create_link(info=link_dict[link_info])
 
+    def shutdown_node(self, node):
+        """[summary]
+        
+        Arguments:
+            node {[type]} -- [description]
+        """
+        
+        node.status = 'ko'
+        self.update_node_info(node)
+
+        # Get currently active node's links and shutdown them
+        links_to_shut = node.active_links_list.copy()
+        for link in links_to_shut:
+            link_obj = self.get_one_link(link)
+            self.switch_off_link(link_obj)
+
     ## NODES
 
     def create_node(self, info):
@@ -505,7 +521,7 @@ class Topology:
         node2_obj.shutdown_link(link)
         self.update_node_info(node2_obj)
 
-    def turn_on_link(self,link):  # DA ELIMINARE
+    def turn_on_link(self,link):
         # TODO: write docstrings
 
         link.status = 'on'
@@ -580,7 +596,7 @@ class Topology:
                 input_capacity += self.get_link_between_neighbors(neighbor, node).total_bandwidth
             node.x0 = input_capacity/800
         return
-            
+                
     def get_path_hop_by_hop(self, path):
         dest = path[-1]
         source = pat[0]
@@ -588,11 +604,11 @@ class Topology:
         node_paths = {}
         for n in topo.nodes:
             if n.name is not dest:
-                node_paths_weights{n.name} = np.Inf
+                node_paths_weights[n.name] = np.Inf
             else:
                 node_paths_weights.append((n.name, 0))
-            node_paths_weights{n.name} = np.Inf
-            node_paths{n.name} = []
+            node_paths_weights[n.name] = np.Inf
+            node_paths[n.name] = []
         condition = True 
         # Set looping condition
         while condition:
@@ -610,14 +626,15 @@ class Topology:
                 x_m = link.mean_traffic
                 #weigth
                 cl = link.get_power_consumption(x_m + c.x_0) - link.get_power_consumption(x_m)
-                if node_paths_weights{cn} + cl < node_paths_weights{ne}:
+                if node_paths_weights[cn] + cl < node_paths_weights[ne]:
                 #    if W is less than current W:
                 #        set new W, set new path
-                    node_paths{cl}.append(cl) 
-                    node_paths_weights{ne} = node_paths_weights{cn} + cl
+                    node_paths[cl].append(cl) 
+                    node_paths_weights[ne] = node_paths_weights[cn] + cl
                     
-            if [x[1] fo x in node_paths if x[1] == []] == []:
+            if [x[1] for x in node_paths if x[1] == []] == []:
                 break
+    
 
 
 class Node:
@@ -645,6 +662,7 @@ class Node:
 
         # --------------------- OPERATIONAL STATE -----------------------------
         #
+        self._status = 'ok'                 # status: ok/ko
         self.active_links = self.links.copy()
         self.active_links_list = self.links_list.copy()
         self.active_neighbors = self.neighbors.copy()
@@ -657,6 +675,23 @@ class Node:
         self._info = {}  # initialize self.info
 
         self.update_info()
+
+
+    @property
+    def status(self):
+        return self._status
+    
+
+    @status.setter
+    def status(self, new_value):
+        
+        possible_values = ['ok', 'ko']
+
+        if new_value in possible_values:
+            self._status = new_value
+            self.update_info()
+        else:
+            raise Exception("*** {} IS NOT A VALID STATUS! ***".format(new_value))
 
 
     @property
@@ -688,7 +723,8 @@ class Node:
                 "neighbors_list": self.neighbors_list,
                 "active_neighbors": self.active_neighbors,
                 "active_neighbors_list": self.active_neighbors_list,
-                "role": self.role
+                "role": self.role,
+                "status": self.status
                 }
                 
         self.info = info
@@ -706,16 +742,16 @@ class Node:
             Exception: [description]
         """
 
-        # Check if provided link belongs to this node and get this node neighbor...
-        if link.id in self.active_links_list:
+        # Check if link belongs to this node and it is an active...
+        if link.id in self.links_list and link.id in self.active_links_list:
+            # ...if so, remove it from active_links_list
             self.active_links_list.remove(link.id)
         else:
             # ...otherwise raise exception.
-            raise Exception("*** LINK {} DOES NOT BELONG TO THIS NODE {}".format(link.name, self.name))
+            raise Exception("*** LINK {} DOES NOT BELONG TO THIS NODE {}, OR IT IS ALREADY SHUT DOWN ***".format(link.name, self.name))
         
         # ------------ UPDATE LINKS -----------------
-        #
-        
+        # 
         self.active_links = {}  # re-initialize active_links
         i = 1
         
@@ -727,7 +763,7 @@ class Node:
 
         # ------------ UPDATE NEIGHBORS -----------------
         #
-        # Find neighbor
+        # Remove neighbor only if this node is link's node1
         if link.node1 == self.name:
             neighbor = link.node2
 
@@ -745,7 +781,7 @@ class Node:
         self.update_info()
 
     
-    def startup_link(self, link):  # DA ELIMINARE
+    def startup_link(self, link):
         # TODO: write docstrings
         """[summary]
         
@@ -754,19 +790,16 @@ class Node:
             Exception: [description]
         """
 
-        # Check if provided link belongs to this node and get this node neighbor...
-        if link.node1 == self.name:
-            neighbor = link.node2
-        elif link.node2 == self.name:
-            neighbor = link.node1
+        # Check if link belongs to this node and it is not active...
+        if link.id in self.links_list and link.id not in self.active_links_list:
+            # ...if so, add it from active_links_list
+            self.active_links_list.append(link.id)
         else:
             # ...otherwise raise exception.
-            raise Exception("*** LINK {} DOES NOT BELONG TO THIS NODE {}".format(link.name, self.name))
+            raise Exception("*** LINK {} DOES NOT BELONG TO THIS NODE {}, OR IT IS ALREADY TURNED ON ***".format(link.name, self.name))
         
         # ------------ UPDATE LINKS -----------------
-        #
-        self.active_links_list.append(link.id)
-        
+        #      
         self.active_links = {}  # re-initialize active_links
         i = 1
         
@@ -778,14 +811,18 @@ class Node:
 
         # ------------ UPDATE NEIGHBORS -----------------
         #
-        self.active_neighbors_list.append(neighbor)
+        # Add neighbor only if this node is link's node1
+        if link.node1 == self.name:
+            neighbor = link.node2
 
-        self.active_neighbors = {}  # re-initialize active_neighbors
-        i = 1
+            self.active_neighbors_list.append(neighbor)
 
-        for act_neighbor in self.active_neighbors_list:
-            self.active_neighbors["neighbor{}".format(i)] = act_neighbor
-            i+=1
+            self.active_neighbors = {}  # re-initialize active_neighbors
+            i = 1
+
+            for act_neighbor in self.active_neighbors_list:
+                self.active_neighbors["neighbor{}".format(i)] = act_neighbor
+                i+=1
         #
         #-------------------------------------------------
 
