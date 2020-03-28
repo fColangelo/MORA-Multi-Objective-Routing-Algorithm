@@ -5,6 +5,7 @@ import json
 import os
 from geopy.geocoders import Nominatim  # https://github.com/geopy/geopy
 from geopy.distance import great_circle
+from service_flows.data_processor import get_mean_link_bw
 import time
 
 OLA_POWER_CONSUMPTION = 100  # kWh (average...a caso. Da dimensionare)
@@ -57,13 +58,28 @@ def preprocess_metadata(topo_name):
     node_dict = meta['nodes']
     link_dict = meta['links']
 
+    print(" *** PREPROCESSING METADATA *** ")
+    
+    print(" *** ADDING GEO-COORDINATES and LINK LATENCY ***")
     add_geo_coordinates(node_dict)
     calculate_latency(link_dict, node_dict)
+
+    print(" *** SETTING AVERAGE LINK USAGE (ALU) *** ")
+    set_average_link_usage(link_dict)
 
     #calculate_power_consumption(link_dict, node_dict)
 
     save_topology_info(topo_name, node_dict, link_dict)
 
+def set_average_link_usage(link_dict):
+
+    mean_link_bw = get_mean_link_bw()
+
+    for link in link_dict:
+        link_dict[link]["alu"] = 0.0
+        for link_bw in mean_link_bw:
+            if link_dict[link]["_id"] == link_bw:
+                link_dict[link]["alu"] = round(mean_link_bw[link_bw]/1e6,0)
 
 def add_geo_coordinates(node_dict):
     """[summary]
@@ -86,7 +102,6 @@ def add_geo_coordinates(node_dict):
         node_dict[node]['pop']['longitude'] = location.longitude
         time.sleep(1)
     
-
 def calculate_latency(link_dict, node_dict):
     """[summary]
     
@@ -117,7 +132,6 @@ def calculate_latency(link_dict, node_dict):
         link_dict[link]['delay'] = delay  # ms
         link_dict[link]['len'] = round(distance, 3)  # Km
 
-
 def calculate_power_consumption(link_dict, node_dict):
     
 
@@ -140,7 +154,6 @@ def calculate_power_consumption(link_dict, node_dict):
 
         # OUTPUT
         link_dict[link]["power_consumption"] = link_power_consumption
-
 
 def save_topology_info(topo_name, node_dict, link_dict):
     """

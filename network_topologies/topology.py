@@ -869,6 +869,12 @@ class Link:
         #
         # ---------------------------------------------------------------------
 
+        # --------------------- HISTORICAL PARAMETER --------------------------
+        #
+        self.average_link_usage = info["alu"]  # average link usage [Mbps]
+        #
+        # ---------------------------------------------------------------------
+
         self.update_info()
 
 
@@ -907,7 +913,8 @@ class Link:
                 "bw_usage": self.bandwidth_usage,
                 "consumed_bw": self.consumed_bandwidth,
                 "service_flows": self.service_flows,
-                "power_consumption": self.power_consumption
+                "power_consumption": self.power_consumption,
+                "alu": self.average_link_usage
                 }
                 
         self.info = info

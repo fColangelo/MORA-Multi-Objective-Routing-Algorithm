@@ -120,8 +120,8 @@ def main():
     """
     ********* SHUTDOWN NODE TEST *********
     """
-    node_to_shut = topo.get_one_node('BE')
-    topo.shutdown_node(node_to_shut)
+    #node_to_shut = topo.get_one_node('BE')
+    #topo.shutdown_node(node_to_shut)
 
     """
     ********* SERVICES example *********

@@ -29,7 +29,7 @@ class Geant(Topology):
     def __init__(self, node_dict={}, link_dict={}, routing_method = 'Dijkstra'):
 
         topo_name = "geant"
-        #preprocess_metadata(topo_name)
+        preprocess_metadata(topo_name)
 
         current_dir = os.path.dirname(__file__)
         db_path = os.path.join(current_dir, topo_name , topo_name + "DB")

@@ -6,7 +6,7 @@ import shutil
 import webbrowser
 import time
 from datetime import date
-import csv
+from data_processor import process_data
 
 # START DATE: 10 FEBBRAIO 2020 - GRAPH START = 1581292860
 # STEP 86400 (= SECONDI IN UN GIORNO 60*60*24)
@@ -72,9 +72,6 @@ def main():
         "ATHR": ["https://tools.geant.org/portal/links/p-cacti/graph_xport.php?local_graph_id=47883&rra_id=0&view_type=tree&graph_start={}&graph_end={}".format(START_TIME, END_TIME), "vie-zag", 1],
     }
 
-    # Create Dataset Folder
-    create_folder('dataset_geant')
-
     # Create Today's Data Folder
     create_today_folder()
 
@@ -82,10 +79,17 @@ def main():
     download_data(link_url)
 
     # Move downloaded files in the correct folder
-    move_downloaded_data()
+    raw_data_path = move_downloaded_data()
+
+    print(" *** FINISHED DOWNLOADING. PROCESSING DATA, PLEASE WAIT. *** ")
+
+    # Create Dataset Folder
+    dataset_path = create_folder('dataset_geant')
 
     # Process downloaded data
-    process_data(link_url)
+    process_data( link_url, raw_data_path, dataset_path )
+
+    print(" *** PROCESSING COMPLETE. *** ")
 
 
 def download_data(urls):
@@ -115,10 +119,12 @@ def create_today_folder():
 def move_downloaded_data():
 
     source_path = '/home/' + os.getlogin() + '/Downloads'
+
     current_dir = os.path.dirname(__file__)
     today_string = str(date.today())
-    destination_path = os.path.join(current_dir, 'geant_daily_data', today_string) 
-    #destination_path = create_today_folder()
+    destination_folder = os.path.join(current_dir, 'geant_daily_data')
+    destination_path = os.path.join(destination_folder, today_string) 
+
     files = os.listdir(source_path)
 
     for f in files:
@@ -126,107 +132,7 @@ def move_downloaded_data():
             source_file = os.path.join(source_path, f)
             shutil.move(source_file, destination_path)
 
-def process_data(urls):
-
-    # init variable
-    dataset_path = create_folder('dataset_geant')
-
-    ## READ TODAY DATA
-    current_dir = os.path.dirname(__file__)
-    today_folder = create_today_folder()
-    source_path = os.path.join(current_dir, today_folder)
-    files = os.listdir(source_path)
-
-    ## FIND LINK FILE 
-    for link in urls:
-        link_id = urls[link][1]
-        for f in files:
-            if link_id in f:
-                # Import Data
-                csvfile = os.path.join(source_path, f)
-                csvdata = import_csv(csvfile)
-                # Export Data to correct location
-                destination_path = os.path.join(dataset_path, f)
-                export_csv(destination_path, csvdata[12:])
-    
-    ## VALIDATE DATA
-    validate_data(dataset_path, urls)
-                
-def import_csv(csvfilename):
-    data = []
-    with open(csvfilename, "r", encoding="utf-8", errors="ignore") as scraped:
-        reader = csv.reader(scraped, delimiter=',')
-        for row in reader:
-            if row:  # avoid blank lines
-                data.append(row)
-    return data
-
-def export_csv(path, data):
-
-    # Append data to file @ path if file exists, otherwise create it.
-    with open(path, 'a+') as f:
-        writer = csv.writer(f)
-        for row in data:
-            writer.writerow(row)
-
-def validate_data(path, urls):
-
-    files = os.listdir(path)
-
-    for f in files:
-        ## IMPORT FILE DATA
-        csvfile = os.path.join(path, f)
-        csvdata = import_csv(csvfile)
-
-        ## DELETE DUPLICATE ROWS
-        # Find rows with same date and time
-        for i in range(len(csvdata)):
-            for j in range(len(csvdata[0:i])):
-                # if date is equal to previous row date
-                if csvdata[i][0] == csvdata[j][0]:
-                    # ...copy this row to that row
-                    csvdata[j] = csvdata[i]
-        # Delete all equal rows
-        foo_csvdata_set = set(tuple(x) for x in csvdata)
-        foo_csvdata = [list(x) for x in foo_csvdata_set]
-        foo_csvdata.sort(key = lambda x: csvdata.index(x))
-
-        csvdata = foo_csvdata.copy()
-
-        ## SET NaN ELEMENTS TO 0
-        for row in csvdata:
-            for index, value in enumerate(row):
-                if value == 'NaN':
-                    row[index] = '0'
-
-        ## ADD HEADING
-        # Find Link
-        for link in urls:
-            if urls[link][1] in f:
-                link_name = get_key_from_value(urls, urls[link][1])
-                eman_knil = link_name[len(link)//2:] + link[:len(link)//2]
-                # Check if data is coherent (straight = 1) or vice versa (reverse = 0)
-                if urls[link][2] == 1:
-                    heading = ['DATE', '{}'.format(link_name), '{}_peak'.format(link_name), '{}'.format(eman_knil), '{}_peak'.format(link_name) ]
-                else:
-                    heading = ['DATE', '{}'.format(eman_knil), '{}_peak'.format(eman_knil), '{}'.format(link_name), '{}_peak'.format(link_name) ]
-                break
-
-        # Insert heading on top
-        if csvdata[0][0] != 'DATE':
-            csvdata.insert(0, heading)
-
-        ## SAVE FILE
-        with open(csvfile, 'w') as csvf:
-            writer = csv.writer(csvf)
-            for row in csvdata:
-                writer.writerow(row)
-
-def get_key_from_value(dictionary, val):
-    
-    for k, v in dictionary.items():
-        if v[1] == val:
-            return k
+    return destination_folder
 
 
 if __name__ == "__main__":
