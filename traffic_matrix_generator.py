@@ -86,7 +86,6 @@ def get_timeline():
     
     return timeline  
 
-
 def generate_traffic_directions(nodes):
     """
     This function returns all possible traffic directions on the network topology.

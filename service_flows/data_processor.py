@@ -39,31 +39,13 @@ def process_data(urls, raw_data_path, refined_data_path):
                     csvfile = os.path.join(source_path, f)
                     csvdata = import_csv(csvfile)
                     # Export Data to correct location
-                    destination_path = os.path.join(refined_data_path, f)
+                    fname = link + '_' + link_id + '_traffic.csv'
+                    destination_path = os.path.join(refined_data_path, fname)
                     export_csv(destination_path, csvdata[12:])
     
         ## VALIDATE DATA
         validate_data(refined_data_path, urls)
     
-    """
-    # ********* CALCULATE LINK'S MEAN BANDWIDTH ******** #
-    links_mean_bw = {}
-    files = os.listdir(mean_bw_path)
-    for link in urls:
-        link_id = urls[link][1]
-        for f in files:
-            if link_id in f:
-                # Import Data
-                csvfile = os.path.join(mean_bw_path, f)
-                csvdata = import_csv(csvfile)
-
-                link_direction_1, link_direction_2 = compute_mean_bw(csvdata)
-
-                link_mean_bw.update({ link_direction_1[0] : link_direction_1[1] })
-                link_mean_bw.update({ link_direction_2[0] : link_direction_2[1] })
-
-    write_to_json(link_mean_bw, "links_mean_bandwidth", mean_bw_path)
-    """
 
 def get_mean_link_bw():
     
@@ -180,6 +162,7 @@ def export_csv(path, data):
 
 def validate_data(path, urls):
 
+    
     files = os.listdir(path)
 
     for f in files:
@@ -323,7 +306,7 @@ def main():
     }
     
     current_dir = os.path.dirname(__file__)
-    raw_data_path = os.path.join(current_dir, 'geant_raw_data')
+    raw_data_path = os.path.join(current_dir, 'geant_ctrl_data')
     refined_data_path = create_folder('geant_refined_data')
     
     process_data(urls, raw_data_path, refined_data_path)

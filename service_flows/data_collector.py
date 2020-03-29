@@ -7,6 +7,7 @@ import webbrowser
 import time
 from datetime import date
 from data_processor import process_data
+import csv
 
 # START DATE: 10 FEBBRAIO 2020 - GRAPH START = 1581292860
 # STEP 86400 (= SECONDI IN UN GIORNO 60*60*24)
@@ -21,9 +22,7 @@ DAYS = DAY_DIFF.days
 START_TIME = BEGINNING_OF_TIME + (DAYS-1) * STEP - 7200  # '7200' -> Begins two hours before to fill previous day gap
 END_TIME = START_TIME + STEP + 7200
 
-def main():
-
-    link_url = {
+URLs = {
         "BENL": ["https://tools.geant.org/portal/links/p-cacti/graph_xport.php?local_graph_id=47771&rra_id=0&view_type=tree&graph_start={}&graph_end={}".format(START_TIME, END_TIME), "ams-bru", 0],
         "DENL": ["https://tools.geant.org/portal/links/p-cacti/graph_xport.php?local_graph_id=48423&rra_id=0&view_type=tree&graph_start={}&graph_end={}".format(START_TIME, END_TIME), "ams-fra", 0],
         "DUNL": ["https://tools.geant.org/portal/links/p-cacti/graph_xport.php?local_graph_id=47927&rra_id=0&view_type=tree&graph_start={}&graph_end={}".format(START_TIME, END_TIME), "ams-ham", 0],
@@ -39,7 +38,7 @@ def main():
         "HUSI": ["https://tools.geant.org/portal/links/p-cacti/graph_xport.php?local_graph_id=47789&rra_id=0&view_type=tree&graph_start={}&graph_end={}".format(START_TIME, END_TIME), "bud-lju", 1],
         "CZHU": ["https://tools.geant.org/portal/links/p-cacti/graph_xport.php?local_graph_id=47791&rra_id=0&view_type=tree&graph_start={}&graph_end={}".format(START_TIME, END_TIME), "bud-pra", 0],
         "ATHU": ["https://tools.geant.org/portal/links/p-cacti/graph_xport.php?local_graph_id=47937&rra_id=0&view_type=tree&graph_start={}&graph_end={}".format(START_TIME, END_TIME), "bud-vie", 0],
-        "HRHU": ["https://tools.geant.org/portal/links/p-cacti/graph_xport.php?local_graph_id=47787&rra_id=0&view_type=tree&graph_start={}&graph_end={}".format(START_TIME, END_TIME), "bud-zag", 0],
+        "HRHU": ["https://tools.geant.org/portal/links/p-cacti/graph_xport.php?local_graph_id=7134&rra_id=0&view_type=tree&graph_start={}&graph_end={}".format(START_TIME, END_TIME), "bud-zag", 0],
         "IEIR": ["https://tools.geant.org/portal/links/p-cacti/graph_xport.php?local_graph_id=47799&rra_id=0&view_type=tree&graph_start={}&graph_end={}".format(START_TIME, END_TIME), "dub-dub", 0], ## ricontrolla! (già fatto una volta)
         "IEUK": ["https://tools.geant.org/portal/links/p-cacti/graph_xport.php?local_graph_id=47797&rra_id=0&view_type=tree&graph_start={}&graph_end={}".format(START_TIME, END_TIME), "dub-lon", 1],
         "IRUI": ["https://tools.geant.org/portal/links/p-cacti/graph_xport.php?local_graph_id=39699&rra_id=0&view_type=tree&graph_start={}&graph_end={}".format(START_TIME, END_TIME), "dub2-lon2", 1],
@@ -72,31 +71,56 @@ def main():
         "ATHR": ["https://tools.geant.org/portal/links/p-cacti/graph_xport.php?local_graph_id=47883&rra_id=0&view_type=tree&graph_start={}&graph_end={}".format(START_TIME, END_TIME), "vie-zag", 1],
     }
 
+def main():
+  
     # Create Today's Data Folder
     create_today_folder()
 
     # Download Today's Data
-    download_data(link_url)
+    download_data()
 
     # Move downloaded files in the correct folder
     raw_data_path = move_downloaded_data()
 
-    print(" *** FINISHED DOWNLOADING. PROCESSING DATA, PLEASE WAIT. *** ")
+    print(" *** FINISHED DOWNLOADING. PROCESSING RAW DATA... *** ")
+
+    current_dir = os.path.dirname(__file__)
+    raw_data_directories = sorted(next(os.walk(os.path.join(current_dir, 'geant_daily_data')))[1])
+
+    for d in raw_data_directories:
+        raw_directory_path = os.path.join(current_dir, 'geant_daily_data', d)
+        download_sanity_check(raw_directory_path)
 
     # Create Dataset Folder
     dataset_path = create_folder('dataset_geant')
 
     # Process downloaded data
-    process_data( link_url, raw_data_path, dataset_path )
+    process_data( URLs, raw_data_path, dataset_path )
 
     print(" *** PROCESSING COMPLETE. *** ")
 
 
-def download_data(urls):
+def download_data():
     
-    for link in urls:
-        webbrowser.open(urls[link][0])
+    for link in URLs:
+        webbrowser.open(URLs[link][0])
         time.sleep(4)
+
+def download_sanity_check(raw_data_path):
+
+    files = os.listdir(raw_data_path)
+
+    for link in URLs:
+        link_id = URLs[link][1]
+        is_downloaded = False
+        for f in files:
+            if link_id in f and not is_downloaded:
+                is_downloaded = True
+        
+        if not is_downloaded:
+            print(" *** CREATING ALL-ZERO FILE: {}_allzero.csv *** ".format(link_id))
+            create_allzero_file(raw_data_path, link_id)
+
 
 def create_folder(folder_name):
     current_dir = os.path.dirname(__file__)
@@ -133,6 +157,44 @@ def move_downloaded_data():
             shutil.move(source_file, destination_path)
 
     return destination_folder
+
+def create_allzero_file(path, link_id):
+
+    files = sorted(os.listdir(path))
+    
+    allzero_file_name = '{}_allzero.csv'.format(link_id)
+    allzero_file_path = os.path.join(path, allzero_file_name)
+    # Copy first file and rename it
+
+    shutil.copy(os.path.join(path, files[0]), allzero_file_path )
+
+    # import copied file and set all the elements to 0
+    
+    csvdata = import_csv(allzero_file_path)
+
+    for i in range(12, len(csvdata)):
+        csvdata[i] = [csvdata[i][0], '0', '0', '0', '0']
+
+    # export new file
+    export_csv_modified(allzero_file_path, csvdata)
+
+def import_csv(csvfilename):
+    data = []
+    with open(csvfilename, "r", encoding="utf-8", errors="ignore") as scraped:
+        reader = csv.reader(scraped, delimiter=',')
+        for row in reader:
+            if row:  # avoid blank lines
+                data.append(row)
+    return data
+
+def export_csv_modified(path, data):
+
+    # Overwrite data to file @ path if file exists, otherwise create it.
+    with open(path, 'w+') as f:
+        writer = csv.writer(f)
+        for row in data:
+            writer.writerow(row)
+
 
 
 if __name__ == "__main__":
