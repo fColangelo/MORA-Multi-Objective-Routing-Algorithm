@@ -8,8 +8,8 @@ from utils.network_objects import *
 
 def eval_bandwidth_single_link(percentage):
     cost = 6.25*(percentage**2) + 7.5 *(percentage) + 2.25
-
     return cost
+    
 def get_evaluate_individual(topology, flow):
     def evaluate_individual(individual):
         latency = 0
