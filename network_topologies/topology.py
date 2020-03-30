@@ -529,12 +529,12 @@ class Topology:
         
         # UPDATE NODE 1
         node1_obj = self.get_one_node(link.node1)
-        node1_obj.shutdown_link(link)
+        node1_obj.startup_link(link)
         self.update_node_info(node1_obj)
 
         # UPDATE NODE 2
         node2_obj = self.get_one_node(link.node2)
-        node2_obj.shutdown_link(link)
+        node2_obj.startup_link(link)
         self.update_node_info(node2_obj)
 
     def change_node_role(self, node, role):
@@ -792,7 +792,7 @@ class Node:
 
         # Check if link belongs to this node and it is not active...
         if link.id in self.links_list and link.id not in self.active_links_list:
-            # ...if so, add it from active_links_list
+            # ...if so, add it to active_links_list
             self.active_links_list.append(link.id)
         else:
             # ...otherwise raise exception.
