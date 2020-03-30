@@ -58,10 +58,10 @@ class TrafficGenerator():
         i = 0
         
         while i < len(self.traffic_files):
-            # Check if any node must fail
+            # Check if any node will fail
             for _, fault in enumerate(self.faults):
                 if fault[0] == i:
-                    # TODO topology.node_fault(fault[1])
+                    self.topo.shutdown_node(fault[1])
                     self.topo.faulty_node_list.append(fault[1])     
 
 

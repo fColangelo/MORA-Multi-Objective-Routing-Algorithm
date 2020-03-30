@@ -2,7 +2,7 @@
 import sys
 sys.dont_write_bytecode
 import json
-import os
+import os, operator
 import numpy as np
 ## ROUTING ALGORITHMS
 # MORA
@@ -286,7 +286,7 @@ class Topology:
         for i in range(len(path)-1):
             link = self.get_link_between_neighbors(path[i], path[i+1])
             link.apply_service_on_link(service_flow)
-            self.update_link_info(link) 
+            self.update_link_info(link)
         self.save_topology_info()     
 
     def remove_service_from_network(self, service_flow, path):
@@ -599,42 +599,48 @@ class Topology:
                 
     def get_path_hop_by_hop(self, path):
         dest = path[-1]
-        source = pat[0]
-        node_weight = {}
+        source = path[0]
+        # Dictionary: for each node, the item is the current weight to get to that node
+        node_paths_weights = {}
+        # Dictionary: for each node, store the shortest path to that node
+        # Difference from paper: in the paper phi stores only the predecessor (no real difference)
         node_paths = {}
-        for n in topo.nodes:
+        node_list = []
+        for n in self.nodes:
             if n.name is not dest:
                 node_paths_weights[n.name] = np.Inf
             else:
-                node_paths_weights.append((n.name, 0))
-            node_paths_weights[n.name] = np.Inf
+                node_paths_weights[n.name] = 0
+
             node_paths[n.name] = []
-        condition = True 
+            node_list.append(n.name) 
         # Set looping condition
-        while condition:
+        processed_nodes = []
+        while processed_nodes != node_list:
         # Get node with minimum weigth # What exactly are the w
             cn = sorted(node_paths_weights, key=operator.itemgetter(1))[0]
         # if current node == source
             if cn == source:
                 node_paths[source].append(source)
                 return node_paths[source]
-            
             # Get neighbors of n. For each neighbor...
-            for ne in c.neighbors_list:
+            for ne in cn.neighbors_list:
                 # Get link between nodes
-                link = self.get_link_between_neighbors(c, ne)
-                x_m = link.mean_traffic
-                #weigth
-                cl = link.get_power_consumption(x_m + c.x_0) - link.get_power_consumption(x_m)
-                if node_paths_weights[cn] + cl < node_paths_weights[ne]:
-                #    if W is less than current W:
-                #        set new W, set new path
-                    node_paths[cl].append(cl) 
-                    node_paths_weights[ne] = node_paths_weights[cn] + cl
-                    
-            if [x[1] for x in node_paths if x[1] == []] == []:
-                break
-    
+                link = self.get_link_between_neighbors(cn, ne)
+                x_m = link.average_link_usage
+                # weight to get from cn to ne
+                w = link.get_power_consumption(x_m + ne.x_0) - link.get_power_consumption(x_m)
+                # If this path is shorter
+                if node_paths_weights[cn] + w < node_paths_weights[ne]:
+                    # The path to this node (ne) is equal to the path to cn ...
+                    node_paths[ne] = node_paths[cn]
+                    # ...plus cn
+                    node_paths[ne].append(cn)
+                    # The weight of this path is equal to the weight to cn + the weight cn->ne
+                    node_paths_weights[ne] = node_paths_weights[cn] + w
+            
+            processed_nodes.append(cn)             
+        return []       
 
 
 class Node:
@@ -842,7 +848,7 @@ class Link:
             info {dict} -- This Link properties.
 
         """
-
+        self.threshold = 0
         # Parse input 'info' and initialize object variables
 
         # ------------------------- PHYSICAL STATE ----------------------------
@@ -931,7 +937,8 @@ class Link:
 
         self.service_flows.append(service_flow_id)
         self.consume_bandwidth(service_flow_bandwidth)
-
+        if self.status == 'off':
+            self.status = 'on'
         self.update_info()
 
 
@@ -946,7 +953,8 @@ class Link:
 
         self.service_flows.remove(service_flow_id)
         self.consume_bandwidth(service_flow_bandwidth)
-
+        if self.consumed_bandwidth <= self.threshold:
+            self.status = 'off'
         self.update_info()
 
 
@@ -970,4 +978,7 @@ class Link:
     def get_power_consumption(self, x, delta = 180, rho = 5e-4, mu = 1e-03, alpha = 1.4, n_l = 1):
         # See paper "A Hop-by-Hop Routing Mechanismfor Green Internet"
         # Link energy model used for "hop by hop..." and MORA
-        return 2*n_l*(delta + rho*(x/n_l) + mu * ((x/n_l)**alpha))
+        if x == 0:
+            return 0
+        else:
+            return 2*n_l*(delta + rho*(x/n_l) + mu * ((x/n_l)**alpha))
