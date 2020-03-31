@@ -179,12 +179,12 @@ class TrafficGenerator():
 
                 if flow_exist: 
                     # A flow with the same id exist, check if it's a random fluctuation
-                    #presence_flag = True
+                    # presence_flag = True
                     old_entry = flow_exist[0]
                     if abs(old_entry[0]["bandwidth"] - flow["bandwidth"]) > bw_delta_thrs:
                         # It's a new flow, discard the old one and route this one                    
                         self.topo.remove_service_from_network(old_entry[0], old_entry[1])
-                        self.old_path_archive.remove()
+                        self.old_path_archive.remove(old_entry)
                         flow_path = self.topo.get_path(flow)
                         self.new_path_archive.append((flow, flow_path))
                         self.topo.apply_service_on_network(flow, flow_path)
