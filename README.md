@@ -6,7 +6,7 @@ This repo contains the code for the paper ....
 1. Fault generation and handling
 ⋅⋅* Aggiunta dei flows "rimossi" alla lista di quelli da instradare (in traffic generator)
 ⋅⋅* Che succede se un pezzo di topologia rimane isolata? Facciamo screening dei flows o implementiamo algoritmo per algoritmo un check? Direi la prima
-## In apply flows, check 
+
 2. Traffic generator
 ⋅⋅* Check se i problemi di clock creano problemi di simulazione (MA COME?)
 
