@@ -54,9 +54,10 @@ class Topology:
         self.link_dict = {}         # dictionary of links and links' properties
         self.current_flows = []     # list of currently applied flows on this Topology
         self.faulty_node_list = []  
-
+        
         self.create_topology(node_dict, link_dict)
 
+        self.reachability_matrix = self.get_reachability_matrix()  # this Topology reachability matrix
         self.routing_method = routing_method
         self.init_routing_method(routing_method)
 
@@ -93,6 +94,24 @@ class Topology:
         for link in links_to_shut:
             link_obj = self.get_one_link(link)
             self.switch_off_link(link_obj)
+
+    def is_reachable(self, src_node, dst_node):
+        """
+        This function states if dst_node is reachable from src_node based
+        on the current network operational status.
+        
+        Arguments:
+            src_node {str} -- Source node name.
+            dst_node {str} -- Destination node name.
+        
+        Returns:
+            [boolean] -- True if dst_node is reachable; False vice versa.
+        """
+
+        src_index = self.nodes.index(src_node)
+        dst_index = self.nodes.index(dst_node)
+
+        return self.reachability_matrix[src_index][dst_index]
 
     ## NODES
 
@@ -332,6 +351,49 @@ class Topology:
         write_to_json(self.node_dict, 'nodes', database_path)
         write_to_json(self.link_dict, 'links', database_path)
     
+    ## REACHABILITY MATRIX
+
+    def depth_first_search(self, current_node, reachable_nodes):
+        """
+        Depth-First Search (DPS) recursive function.
+
+        Arguments:
+            current_node {Node} -- [description]....
+            reachable_nodes {List} -- List of Boolean values....
+        """
+
+        # Label current_node as reachable
+        current_node_index = self.nodes.index(current_node)
+        reachable_nodes(current_node_index) = True
+
+        # For all current node's active neighbors...
+        for node in current_node.active_neighbors_list:
+            # ...if they are not already labeled as reachable...
+            current_neighbor = self.get_one_node(node)
+            current_neighbor_index = self.nodes.index(current_neighbor)
+            if not reachable_nodes(current_neighbor_index):
+                # ...recuresively call depth_first_search
+                self.depth_first_search(current_neighbor, reachable_nodes)
+
+    def get_reachability_matrix(self):
+        """[summary]
+        
+        Returns:
+            [type] -- [description]
+        """
+
+        reachablity_matrix = []
+
+        for node in self.nodes:
+
+            reachable_nodes = [False] * len(self.nodes)
+            
+            self.depth_first_search(node, reachable_nodes)
+            
+            reachablity_matrix.append(reachable_nodes)
+        
+        return reachablity_matrix
+
     ## ADJACENCY MATRICES
 
     def get_adjacency_matrix(self):
@@ -521,6 +583,9 @@ class Topology:
         node2_obj.shutdown_link(link)
         self.update_node_info(node2_obj)
 
+        # UPDATE REACHABILITY MATRIX
+        self.reachability_matrix = self.get_reachability_matrix()
+
     def turn_on_link(self,link):
         # TODO: write docstrings
 
@@ -536,6 +601,9 @@ class Topology:
         node2_obj = self.get_one_node(link.node2)
         node2_obj.startup_link(link)
         self.update_node_info(node2_obj)
+
+        # UPDATE REACHABILITY MATRIX
+        self.reachability_matrix = self.get_reachability_matrix()
 
     def change_node_role(self, node, role):
         # TODO: write docstrings
@@ -686,8 +754,7 @@ class Node:
     @property
     def status(self):
         return self._status
-    
-
+  
     @status.setter
     def status(self, new_value):
         
@@ -699,12 +766,10 @@ class Node:
         else:
             raise Exception("*** {} IS NOT A VALID STATUS! ***".format(new_value))
 
-
     @property
     def role(self):
         return self._role
     
-
     @role.setter
     def role(self, new_value):
         
@@ -715,7 +780,6 @@ class Node:
             self.update_info()
         else:
             raise Exception("*** {} IS NOT A VALID ROLE! ***".format(new_value))
-
 
     def update_info(self):
 
@@ -734,7 +798,6 @@ class Node:
                 }
                 
         self.info = info
-
 
     def shutdown_link(self, link):
         # TODO: write docstrings
@@ -785,8 +848,7 @@ class Node:
         #-------------------------------------------------
 
         self.update_info()
-
-    
+   
     def startup_link(self, link):
         # TODO: write docstrings
         """[summary]
@@ -888,7 +950,6 @@ class Link:
     def status(self):
         return self._status
     
-
     @status.setter
     def status(self, new_value):
         
@@ -899,7 +960,6 @@ class Link:
             self.update_info()
         else:
             raise Exception("*** {} IS NOT A VALID STATUS! ***".format(new_value))
-
     
     def update_info(self):
         # TODO: write docstrings
@@ -925,7 +985,6 @@ class Link:
                 
         self.info = info
 
-
     def apply_service_on_link(self, service_flow):
         # TODO: write docstrings
         """
@@ -941,7 +1000,6 @@ class Link:
             self.status = 'on'
         self.update_info()
 
-
     def remove_service_from_link(self, service_flow):
         # TODO: write docstrings
         """
@@ -956,7 +1014,6 @@ class Link:
         if self.consumed_bandwidth <= self.threshold:
             self.status = 'off'
         self.update_info()
-
 
     def consume_bandwidth(self, required_bandwidth):
         # TODO: write docstrings
