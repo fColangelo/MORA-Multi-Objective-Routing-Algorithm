@@ -89,11 +89,20 @@ class Topology:
         node.status = 'ko'
         self.update_node_info(node)
 
+        disrupted_flows_ids = []
+
         # Get currently active node's links and shutdown them
         links_to_shut = node.active_links_list.copy()
         for link in links_to_shut:
+            # Get this link object
             link_obj = self.get_one_link(link)
+            # Get flows that are going to be disrupted by this link switching off
+            disrupted_flows_ids.extend(link_obj.service_flows)
+            # Switch off this link
             self.switch_off_link(link_obj)
+        
+        # Remove duplicate elements from disrupted_flows_ids and return it
+        return list(set(disrupted_flows_ids))
 
     def is_reachable(self, src_node, dst_node):
         """
@@ -112,6 +121,17 @@ class Topology:
         dst_index = self.nodes.index(dst_node)
 
         return self.reachability_matrix[src_index][dst_index]
+
+    def clear_flow_from_network(self, flow):
+       """[summary]
+       
+       Arguments:
+           flow {[type]} -- [description]
+       """
+       
+        for link in self.links:
+            if link.status == 'on' and flow['_id'] in link.service_flows:
+                link.remove_service_from_link(flow)
 
     ## NODES
 
@@ -364,14 +384,14 @@ class Topology:
 
         # Label current_node as reachable
         current_node_index = self.nodes.index(current_node)
-        reachable_nodes(current_node_index) = True
+        reachable_nodes[current_node_index] = True
 
         # For all current node's active neighbors...
         for node in current_node.active_neighbors_list:
             # ...if they are not already labeled as reachable...
             current_neighbor = self.get_one_node(node)
             current_neighbor_index = self.nodes.index(current_neighbor)
-            if not reachable_nodes(current_neighbor_index):
+            if not reachable_nodes[current_neighbor_index]:
                 # ...recuresively call depth_first_search
                 self.depth_first_search(current_neighbor, reachable_nodes)
 
@@ -903,14 +923,14 @@ class Link:
         """
         Initialization Method of Link Object.
 
-        Link is a directed edge, from node1 to node2 edges.
+        Link is a directed edge, from node1 to node2 vertices.
         (node1) >>>>>>>> link >>>>>>>> (node2)
 
         Arguments:
             info {dict} -- This Link properties.
 
         """
-        self.threshold = 0
+        
         # Parse input 'info' and initialize object variables
 
         # ------------------------- PHYSICAL STATE ----------------------------
@@ -957,9 +977,18 @@ class Link:
 
         if new_value in possible_values:
             self._status = new_value
-            self.update_info()
         else:
             raise Exception("*** {} IS NOT A VALID STATUS! ***".format(new_value))
+        
+        # If this link has just been switched off, erase its operational status
+        if self._status == 'off':
+            self.consumed_bandwidth = 0.0       
+            self.bandwidth_usage = 0.0          
+            self.service_flows = []             
+            self.power_consumption = 0.0        
+            self.power_consumption_MORA = 0.0
+
+        self.update_info()
     
     def update_info(self):
         # TODO: write docstrings
@@ -996,8 +1025,7 @@ class Link:
 
         self.service_flows.append(service_flow_id)
         self.consume_bandwidth(service_flow_bandwidth)
-        if self.status == 'off':
-            self.status = 'on'
+
         self.update_info()
 
     def remove_service_from_link(self, service_flow):
@@ -1011,8 +1039,7 @@ class Link:
 
         self.service_flows.remove(service_flow_id)
         self.consume_bandwidth(service_flow_bandwidth)
-        if self.consumed_bandwidth <= self.threshold:
-            self.status = 'off'
+        
         self.update_info()
 
     def consume_bandwidth(self, required_bandwidth):

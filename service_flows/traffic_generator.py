@@ -58,15 +58,49 @@ class TrafficGenerator():
         i = 0
         
         while i < len(self.traffic_files):
+            
+            flows = {}
+
+            ## NODE FAILURES ####################################################################
             # Check if any node will fail
+            disrupted_flows_ids = []
             for _, fault in enumerate(self.faults):
                 if fault[0] == i:
-                    self.topo.shutdown_node(fault[1])
+                    disrupted_flows_ids.extend(self.topo.shutdown_node(fault[1]))
                     self.topo.faulty_node_list.append(fault[1])     
+            #
+            ####################################################################################
+            #
+            #
+            ## DISRUPTED FLOWS REROUTING #######################################################
+            #
+            if disrupted_flows_ids:
+                # Remove duplicates in disrupted_flows_ids
+                disrupted_flows_ids = list(set(disrupted_flows_ids))
 
-
-
-            flows = {}
+                # 1) Find disrupted_flow in old_path_archive
+                # 2) Remove it from old_path_archive
+                # 3) Add it to flows, so that it will be rerouted
+                # 4) Remove it from all the other network links
+                for disrupted_flow_id in disrupted_flows_ids:
+                    opa = self.old_path_archive.copy()  # make a copy of self.old_path_archive
+                    for flow in opa:
+                        if flow == disrupted_flow_id:  # 1)
+                            disrupted_flow = opa.pop(flow)  # 2)
+                            flows[disrupted_flow_id] = disrupted_flow  # 3)
+                            self.topo.clear_flow_from_network(disrupted_flow)  # 4)
+                # Update old_path_arhive
+                self.old_path_archive = opa
+                #
+                self.flows = flows
+                self.apply_flows()
+                flows = {}
+            #
+            ###################################################################################
+            #
+            #
+            ## GENERATE NEW FLOWS #############################################################
+            #
             f_path = os.path.join(self.path, self.traffic_files[i])
             f = read_from_json(f_path)
 
@@ -83,6 +117,9 @@ class TrafficGenerator():
             self.flows = flows
             i+=1
             self.apply_flows()
+            #
+            ####################################################################################
+            #
             time.sleep(self.interval)
 
     def get_flow(self, service_class, bandwidth, nodeA, nodeB):
@@ -208,7 +245,7 @@ class TrafficGenerator():
         self.old_path_archive = self.new_path_archive
         self.new_path_archive = []
         #self.topo.update_link_status()
-        self.log_stats()
+        #self.log_stats()
 
     def log_stats(self):
         """
@@ -269,9 +306,9 @@ class TrafficGenerator():
         # When are the faults going to occur?
         if self.faults_number is not 0:
             self.faults = []
-            fault_times = np.random.choice(len(self.traffic_files), size = self.faults, replace = False)
+            fault_times = np.random.choice(len(self.traffic_files), size = len(self.faults), replace = False)
         # Which nodes are going to fault?
-        faulty_nodes = np.random.choice(len(self.topo.nodes), size = len(fault_times), replace = False)
+        faulty_nodes = np.random.choice(len(self.topo.nodes), size = fault_times, replace = False)
         # Create the structure of faults
         # Format: 
         # fault time = i -> the node is going to fail before loading traffic file i

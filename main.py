@@ -128,7 +128,7 @@ def main():
     """
 
     # INSTANTIATE TRAFFIC GENERATOR
-    tg = TrafficGenerator(interval=300, topology=topo)  # 300 s = 5 minutes
+    tg = TrafficGenerator(interval=300, topology=topo, faults=1)  # 300 s = 5 minutes
     
     
     while True:
