@@ -1,6 +1,1468 @@
 {
     "node1": {
+        "_id": "SI",
+        "active_links": {
+            "link1": "SIIT",
+            "link2": "ITSI"
+        },
+        "active_links_list": [
+            "SIIT",
+            "ITSI"
+        ],
+        "active_neighbors": {
+            "neighbor1": "IT"
+        },
+        "active_neighbors_list": [
+            "IT"
+        ],
+        "links": {
+            "link1": "ITSI",
+            "link2": "SIIT",
+            "link3": "HUSI",
+            "link4": "SIHU"
+        },
+        "links_list": [
+            "SIIT",
+            "ITSI",
+            "SIHU",
+            "HUSI"
+        ],
+        "neighbors": {
+            "neighbor1": "IT",
+            "neighbor2": "HU"
+        },
+        "neighbors_list": [
+            "IT",
+            "HU"
+        ],
+        "pop": {
+            "city": "Ljubljana",
+            "latitude": 46.0499803,
+            "longitude": 14.5068602,
+            "nation": "Slovenia"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node10": {
+        "_id": "HU",
+        "active_links": {},
+        "active_links_list": [],
+        "active_neighbors": {},
+        "active_neighbors_list": [],
+        "links": {
+            "link1": "CZHU",
+            "link10": "SKHU",
+            "link11": "ATHU",
+            "link12": "HUAT",
+            "link2": "HUCZ",
+            "link3": "HURO",
+            "link4": "ROHU",
+            "link5": "HUSI",
+            "link6": "SIHU",
+            "link7": "HRHU",
+            "link8": "HUHR",
+            "link9": "HUSK"
+        },
+        "links_list": [
+            "HUAT",
+            "CZHU",
+            "HUSI",
+            "HURO",
+            "ATHU",
+            "HRHU",
+            "ROHU",
+            "HUHR",
+            "HUCZ",
+            "HUSK",
+            "SKHU",
+            "SIHU"
+        ],
+        "neighbors": {
+            "neighbor1": "CZ",
+            "neighbor2": "RO",
+            "neighbor3": "SI",
+            "neighbor4": "HR",
+            "neighbor5": "SK",
+            "neighbor6": "AT"
+        },
+        "neighbors_list": [
+            "SI",
+            "AT",
+            "CZ",
+            "SK",
+            "HR",
+            "RO"
+        ],
+        "pop": {
+            "city": "Budapest",
+            "latitude": 47.48138955,
+            "longitude": 19.14607278448202,
+            "nation": "Hungary"
+        },
+        "role": "NR",
+        "status": "ko"
+    },
+    "node11": {
+        "_id": "IT",
+        "active_links": {
+            "link1": "CHIT",
+            "link10": "ITFN",
+            "link2": "ITCH",
+            "link3": "ATIT",
+            "link4": "ITAT",
+            "link5": "ITSI",
+            "link6": "SIIT",
+            "link7": "GRIT",
+            "link8": "ITGR",
+            "link9": "FNIT"
+        },
+        "active_links_list": [
+            "ITCH",
+            "FNIT",
+            "CHIT",
+            "ITAT",
+            "ATIT",
+            "ITSI",
+            "GRIT",
+            "ITFN",
+            "SIIT",
+            "ITGR"
+        ],
+        "active_neighbors": {
+            "neighbor1": "CH",
+            "neighbor2": "AT",
+            "neighbor3": "SI",
+            "neighbor4": "GR",
+            "neighbor5": "FN"
+        },
+        "active_neighbors_list": [
+            "SI",
+            "FN",
+            "GR",
+            "CH",
+            "AT"
+        ],
+        "links": {
+            "link1": "CHIT",
+            "link10": "ITFN",
+            "link2": "ITCH",
+            "link3": "ATIT",
+            "link4": "ITAT",
+            "link5": "ITSI",
+            "link6": "SIIT",
+            "link7": "GRIT",
+            "link8": "ITGR",
+            "link9": "FNIT"
+        },
+        "links_list": [
+            "ITCH",
+            "FNIT",
+            "CHIT",
+            "ITAT",
+            "ATIT",
+            "ITSI",
+            "GRIT",
+            "ITFN",
+            "SIIT",
+            "ITGR"
+        ],
+        "neighbors": {
+            "neighbor1": "CH",
+            "neighbor2": "AT",
+            "neighbor3": "SI",
+            "neighbor4": "GR",
+            "neighbor5": "FN"
+        },
+        "neighbors_list": [
+            "SI",
+            "FN",
+            "GR",
+            "CH",
+            "AT"
+        ],
+        "pop": {
+            "city": "Milan",
+            "latitude": 45.4668,
+            "longitude": 9.1905,
+            "nation": "Italy"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node12": {
+        "_id": "NL",
+        "active_links": {
+            "link1": "DUNL",
+            "link2": "NLDU",
+            "link3": "DENL",
+            "link4": "NLDE",
+            "link5": "BENL",
+            "link6": "NLBE",
+            "link7": "NLUK",
+            "link8": "UKNL"
+        },
+        "active_links_list": [
+            "NLDU",
+            "DUNL",
+            "BENL",
+            "DENL",
+            "NLUK",
+            "NLBE",
+            "NLDE",
+            "UKNL"
+        ],
+        "active_neighbors": {
+            "neighbor1": "DU",
+            "neighbor2": "DE",
+            "neighbor3": "BE",
+            "neighbor4": "UK"
+        },
+        "active_neighbors_list": [
+            "BE",
+            "UK",
+            "DU",
+            "DE"
+        ],
+        "links": {
+            "link1": "DUNL",
+            "link2": "NLDU",
+            "link3": "DENL",
+            "link4": "NLDE",
+            "link5": "BENL",
+            "link6": "NLBE",
+            "link7": "NLUK",
+            "link8": "UKNL"
+        },
+        "links_list": [
+            "NLDU",
+            "DUNL",
+            "BENL",
+            "DENL",
+            "NLUK",
+            "NLBE",
+            "NLDE",
+            "UKNL"
+        ],
+        "neighbors": {
+            "neighbor1": "DU",
+            "neighbor2": "DE",
+            "neighbor3": "BE",
+            "neighbor4": "UK"
+        },
+        "neighbors_list": [
+            "BE",
+            "UK",
+            "DU",
+            "DE"
+        ],
+        "pop": {
+            "city": "Amsterdam",
+            "latitude": 52.3727598,
+            "longitude": 4.8936041,
+            "nation": "Netherlands"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node13": {
+        "_id": "FN",
+        "active_links": {
+            "link1": "CHFN",
+            "link2": "FNCH",
+            "link3": "FNIT",
+            "link4": "ITFN"
+        },
+        "active_links_list": [
+            "FNCH",
+            "CHFN",
+            "ITFN",
+            "FNIT"
+        ],
+        "active_neighbors": {
+            "neighbor1": "CH",
+            "neighbor2": "IT"
+        },
+        "active_neighbors_list": [
+            "CH",
+            "IT"
+        ],
+        "links": {
+            "link1": "CHFN",
+            "link2": "FNCH",
+            "link3": "FNIT",
+            "link4": "ITFN"
+        },
+        "links_list": [
+            "FNCH",
+            "CHFN",
+            "ITFN",
+            "FNIT"
+        ],
+        "neighbors": {
+            "neighbor1": "CH",
+            "neighbor2": "IT"
+        },
+        "neighbors_list": [
+            "CH",
+            "IT"
+        ],
+        "pop": {
+            "city": "Marseilles",
+            "latitude": 47.0706778,
+            "longitude": 3.0029271,
+            "nation": "France"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node14": {
+        "_id": "BG",
+        "active_links": {
+            "link1": "BGRO",
+            "link2": "ROBG",
+            "link3": "ATBG",
+            "link4": "BGAT"
+        },
+        "active_links_list": [
+            "ROBG",
+            "BGRO",
+            "BGAT",
+            "ATBG"
+        ],
+        "active_neighbors": {
+            "neighbor1": "RO",
+            "neighbor2": "AT"
+        },
+        "active_neighbors_list": [
+            "RO",
+            "AT"
+        ],
+        "links": {
+            "link1": "BGRO",
+            "link2": "ROBG",
+            "link3": "ATBG",
+            "link4": "BGAT"
+        },
+        "links_list": [
+            "ROBG",
+            "BGRO",
+            "BGAT",
+            "ATBG"
+        ],
+        "neighbors": {
+            "neighbor1": "RO",
+            "neighbor2": "AT"
+        },
+        "neighbors_list": [
+            "RO",
+            "AT"
+        ],
+        "pop": {
+            "city": "Sofia",
+            "latitude": 42.6978634,
+            "longitude": 23.3221789,
+            "nation": "Bulgaria"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node15": {
+        "_id": "DU",
+        "active_links": {
+            "link1": "DUEE",
+            "link2": "EEDU",
+            "link3": "DEDU",
+            "link4": "DUDE",
+            "link5": "DUNL",
+            "link6": "NLDU"
+        },
+        "active_links_list": [
+            "EEDU",
+            "DUEE",
+            "DUNL",
+            "DEDU",
+            "NLDU",
+            "DUDE"
+        ],
+        "active_neighbors": {
+            "neighbor1": "EE",
+            "neighbor2": "DE",
+            "neighbor3": "NL"
+        },
+        "active_neighbors_list": [
+            "NL",
+            "EE",
+            "DE"
+        ],
+        "links": {
+            "link1": "DUEE",
+            "link2": "EEDU",
+            "link3": "DEDU",
+            "link4": "DUDE",
+            "link5": "DUNL",
+            "link6": "NLDU"
+        },
+        "links_list": [
+            "EEDU",
+            "DUEE",
+            "DUNL",
+            "DEDU",
+            "NLDU",
+            "DUDE"
+        ],
+        "neighbors": {
+            "neighbor1": "EE",
+            "neighbor2": "DE",
+            "neighbor3": "NL"
+        },
+        "neighbors_list": [
+            "NL",
+            "EE",
+            "DE"
+        ],
+        "pop": {
+            "city": "Hamburg",
+            "latitude": 53.5437641,
+            "longitude": 10.0099133,
+            "nation": "Germany"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node16": {
+        "_id": "ET",
+        "active_links": {
+            "link1": "EEET",
+            "link2": "ETEE",
+            "link3": "ETLV",
+            "link4": "LVET"
+        },
+        "active_links_list": [
+            "ETEE",
+            "EEET",
+            "LVET",
+            "ETLV"
+        ],
+        "active_neighbors": {
+            "neighbor1": "EE",
+            "neighbor2": "LV"
+        },
+        "active_neighbors_list": [
+            "EE",
+            "LV"
+        ],
+        "links": {
+            "link1": "EEET",
+            "link2": "ETEE",
+            "link3": "ETLV",
+            "link4": "LVET"
+        },
+        "links_list": [
+            "ETEE",
+            "EEET",
+            "LVET",
+            "ETLV"
+        ],
+        "neighbors": {
+            "neighbor1": "EE",
+            "neighbor2": "LV"
+        },
+        "neighbors_list": [
+            "EE",
+            "LV"
+        ],
+        "pop": {
+            "city": "Tallin",
+            "latitude": 59.4372155,
+            "longitude": 24.7453688,
+            "nation": "Estonia"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node17": {
+        "_id": "GR",
+        "active_links": {
+            "link1": "GCGR",
+            "link2": "GRGC",
+            "link3": "GRIT",
+            "link4": "ITGR"
+        },
+        "active_links_list": [
+            "GRGC",
+            "GCGR",
+            "ITGR",
+            "GRIT"
+        ],
+        "active_neighbors": {
+            "neighbor1": "GC",
+            "neighbor2": "IT"
+        },
+        "active_neighbors_list": [
+            "GC",
+            "IT"
+        ],
+        "links": {
+            "link1": "GCGR",
+            "link2": "GRGC",
+            "link3": "GRIT",
+            "link4": "ITGR"
+        },
+        "links_list": [
+            "GRGC",
+            "GCGR",
+            "ITGR",
+            "GRIT"
+        ],
+        "neighbors": {
+            "neighbor1": "GC",
+            "neighbor2": "IT"
+        },
+        "neighbors_list": [
+            "GC",
+            "IT"
+        ],
+        "pop": {
+            "city": "Athens",
+            "latitude": 37.9839412,
+            "longitude": 23.7283052,
+            "nation": "Greece"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node18": {
+        "_id": "UI",
+        "active_links": {
+            "link1": "UIUK",
+            "link2": "UKUI",
+            "link3": "FRUI",
+            "link4": "UIFR",
+            "link5": "IRUI",
+            "link6": "UIIR"
+        },
+        "active_links_list": [
+            "UKUI",
+            "UIUK",
+            "IRUI",
+            "FRUI",
+            "UIIR",
+            "UIFR"
+        ],
+        "active_neighbors": {
+            "neighbor1": "UK",
+            "neighbor2": "FR",
+            "neighbor3": "IR"
+        },
+        "active_neighbors_list": [
+            "IR",
+            "UK",
+            "FR"
+        ],
+        "links": {
+            "link1": "UIUK",
+            "link2": "UKUI",
+            "link3": "FRUI",
+            "link4": "UIFR",
+            "link5": "IRUI",
+            "link6": "UIIR"
+        },
+        "links_list": [
+            "UKUI",
+            "UIUK",
+            "IRUI",
+            "FRUI",
+            "UIIR",
+            "UIFR"
+        ],
+        "neighbors": {
+            "neighbor1": "UK",
+            "neighbor2": "FR",
+            "neighbor3": "IR"
+        },
+        "neighbors_list": [
+            "IR",
+            "UK",
+            "FR"
+        ],
+        "pop": {
+            "city": "London",
+            "latitude": 51.5073219,
+            "longitude": -0.1276474,
+            "nation": "United Kingdom"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node19": {
+        "_id": "FR",
+        "active_links": {
+            "link1": "CHFR",
+            "link2": "FRCH",
+            "link3": "ESFR",
+            "link4": "FRES",
+            "link5": "FRUI",
+            "link6": "UIFR"
+        },
+        "active_links_list": [
+            "FRCH",
+            "CHFR",
+            "FRUI",
+            "ESFR",
+            "UIFR",
+            "FRES"
+        ],
+        "active_neighbors": {
+            "neighbor1": "CH",
+            "neighbor2": "ES",
+            "neighbor3": "UI"
+        },
+        "active_neighbors_list": [
+            "UI",
+            "CH",
+            "ES"
+        ],
+        "links": {
+            "link1": "CHFR",
+            "link2": "FRCH",
+            "link3": "ESFR",
+            "link4": "FRES",
+            "link5": "FRUI",
+            "link6": "UIFR"
+        },
+        "links_list": [
+            "FRCH",
+            "CHFR",
+            "FRUI",
+            "ESFR",
+            "UIFR",
+            "FRES"
+        ],
+        "neighbors": {
+            "neighbor1": "CH",
+            "neighbor2": "ES",
+            "neighbor3": "UI"
+        },
+        "neighbors_list": [
+            "UI",
+            "CH",
+            "ES"
+        ],
+        "pop": {
+            "city": "Paris",
+            "latitude": 48.8566969,
+            "longitude": 2.3514616,
+            "nation": "France"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node2": {
+        "_id": "UK",
+        "active_links": {
+            "link1": "NLUK",
+            "link10": "UKPT",
+            "link2": "UKNL",
+            "link3": "BEUK",
+            "link4": "UKBE",
+            "link5": "UIUK",
+            "link6": "UKUI",
+            "link7": "IEUK",
+            "link8": "UKIE",
+            "link9": "PTUK"
+        },
+        "active_links_list": [
+            "UKNL",
+            "PTUK",
+            "NLUK",
+            "UKBE",
+            "BEUK",
+            "UIUK",
+            "IEUK",
+            "UKPT",
+            "UKUI",
+            "UKIE"
+        ],
+        "active_neighbors": {
+            "neighbor1": "NL",
+            "neighbor2": "BE",
+            "neighbor3": "UI",
+            "neighbor4": "IE",
+            "neighbor5": "PT"
+        },
+        "active_neighbors_list": [
+            "UI",
+            "PT",
+            "IE",
+            "NL",
+            "BE"
+        ],
+        "links": {
+            "link1": "NLUK",
+            "link10": "UKPT",
+            "link2": "UKNL",
+            "link3": "BEUK",
+            "link4": "UKBE",
+            "link5": "UIUK",
+            "link6": "UKUI",
+            "link7": "IEUK",
+            "link8": "UKIE",
+            "link9": "PTUK"
+        },
+        "links_list": [
+            "UKNL",
+            "PTUK",
+            "NLUK",
+            "UKBE",
+            "BEUK",
+            "UIUK",
+            "IEUK",
+            "UKPT",
+            "UKUI",
+            "UKIE"
+        ],
+        "neighbors": {
+            "neighbor1": "NL",
+            "neighbor2": "BE",
+            "neighbor3": "UI",
+            "neighbor4": "IE",
+            "neighbor5": "PT"
+        },
+        "neighbors_list": [
+            "UI",
+            "PT",
+            "IE",
+            "NL",
+            "BE"
+        ],
+        "pop": {
+            "city": "London",
+            "latitude": 51.5073219,
+            "longitude": -0.1276474,
+            "nation": "United Kingdom"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node20": {
+        "_id": "PR",
+        "active_links": {
+            "link1": "PRPT",
+            "link2": "PTPR",
+            "link3": "ESPR",
+            "link4": "PRES"
+        },
+        "active_links_list": [
+            "PTPR",
+            "PRPT",
+            "PRES",
+            "ESPR"
+        ],
+        "active_neighbors": {
+            "neighbor1": "PT",
+            "neighbor2": "ES"
+        },
+        "active_neighbors_list": [
+            "PT",
+            "ES"
+        ],
+        "links": {
+            "link1": "PRPT",
+            "link2": "PTPR",
+            "link3": "ESPR",
+            "link4": "PRES"
+        },
+        "links_list": [
+            "PTPR",
+            "PRPT",
+            "PRES",
+            "ESPR"
+        ],
+        "neighbors": {
+            "neighbor1": "PT",
+            "neighbor2": "ES"
+        },
+        "neighbors_list": [
+            "PT",
+            "ES"
+        ],
+        "pop": {
+            "city": "Lisbon",
+            "latitude": 38.7077507,
+            "longitude": -9.1365919,
+            "nation": "Portugal"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node21": {
+        "_id": "LN",
+        "active_links": {
+            "link1": "LNLT",
+            "link2": "LTLN",
+            "link3": "LNLV",
+            "link4": "LVLN"
+        },
+        "active_links_list": [
+            "LTLN",
+            "LNLT",
+            "LVLN",
+            "LNLV"
+        ],
+        "active_neighbors": {
+            "neighbor1": "LT",
+            "neighbor2": "LV"
+        },
+        "active_neighbors_list": [
+            "LT",
+            "LV"
+        ],
+        "links": {
+            "link1": "LNLT",
+            "link2": "LTLN",
+            "link3": "LNLV",
+            "link4": "LVLN"
+        },
+        "links_list": [
+            "LTLN",
+            "LNLT",
+            "LVLN",
+            "LNLV"
+        ],
+        "neighbors": {
+            "neighbor1": "LT",
+            "neighbor2": "LV"
+        },
+        "neighbors_list": [
+            "LT",
+            "LV"
+        ],
+        "pop": {
+            "city": "Kaunas",
+            "latitude": 54.8982139,
+            "longitude": 23.9044817,
+            "nation": "Lithuania"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node22": {
+        "_id": "CZ",
+        "active_links": {
+            "link1": "CZDE",
+            "link2": "ATCZ",
+            "link3": "DECZ",
+            "link4": "CZAT"
+        },
+        "active_links_list": [
+            "CZDE",
+            "ATCZ",
+            "DECZ",
+            "CZAT"
+        ],
+        "active_neighbors": {
+            "neighbor1": "DE",
+            "neighbor2": "AT"
+        },
+        "active_neighbors_list": [
+            "DE",
+            "AT"
+        ],
+        "links": {
+            "link1": "CZHU",
+            "link2": "HUCZ",
+            "link3": "ATCZ",
+            "link4": "CZAT",
+            "link5": "CZDE",
+            "link6": "DECZ"
+        },
+        "links_list": [
+            "HUCZ",
+            "CZHU",
+            "CZDE",
+            "ATCZ",
+            "DECZ",
+            "CZAT"
+        ],
+        "neighbors": {
+            "neighbor1": "HU",
+            "neighbor2": "AT",
+            "neighbor3": "DE"
+        },
+        "neighbors_list": [
+            "DE",
+            "HU",
+            "AT"
+        ],
+        "pop": {
+            "city": "Prague",
+            "latitude": 50.0874654,
+            "longitude": 14.4212535,
+            "nation": "Czech Republic"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node23": {
+        "_id": "LV",
+        "active_links": {
+            "link1": "ETLV",
+            "link2": "LVET",
+            "link3": "LNLV",
+            "link4": "LVLN"
+        },
+        "active_links_list": [
+            "LVET",
+            "ETLV",
+            "LVLN",
+            "LNLV"
+        ],
+        "active_neighbors": {
+            "neighbor1": "ET",
+            "neighbor2": "LN"
+        },
+        "active_neighbors_list": [
+            "ET",
+            "LN"
+        ],
+        "links": {
+            "link1": "ETLV",
+            "link2": "LVET",
+            "link3": "LNLV",
+            "link4": "LVLN"
+        },
+        "links_list": [
+            "LVET",
+            "ETLV",
+            "LVLN",
+            "LNLV"
+        ],
+        "neighbors": {
+            "neighbor1": "ET",
+            "neighbor2": "LN"
+        },
+        "neighbors_list": [
+            "ET",
+            "LN"
+        ],
+        "pop": {
+            "city": "Riga",
+            "latitude": 56.9493977,
+            "longitude": 24.1051846,
+            "nation": "Latvia"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node24": {
+        "_id": "CH",
+        "active_links": {
+            "link1": "CHDE",
+            "link10": "FRCH",
+            "link2": "DECH",
+            "link3": "CHIT",
+            "link4": "ITCH",
+            "link5": "CHFN",
+            "link6": "FNCH",
+            "link7": "CHES",
+            "link8": "ESCH",
+            "link9": "CHFR"
+        },
+        "active_links_list": [
+            "DECH",
+            "CHFR",
+            "CHDE",
+            "ITCH",
+            "CHIT",
+            "CHFN",
+            "CHES",
+            "FRCH",
+            "FNCH",
+            "ESCH"
+        ],
+        "active_neighbors": {
+            "neighbor1": "DE",
+            "neighbor2": "IT",
+            "neighbor3": "FN",
+            "neighbor4": "ES",
+            "neighbor5": "FR"
+        },
+        "active_neighbors_list": [
+            "FN",
+            "FR",
+            "ES",
+            "DE",
+            "IT"
+        ],
+        "links": {
+            "link1": "CHDE",
+            "link10": "FRCH",
+            "link2": "DECH",
+            "link3": "CHIT",
+            "link4": "ITCH",
+            "link5": "CHFN",
+            "link6": "FNCH",
+            "link7": "CHES",
+            "link8": "ESCH",
+            "link9": "CHFR"
+        },
+        "links_list": [
+            "DECH",
+            "CHFR",
+            "CHDE",
+            "ITCH",
+            "CHIT",
+            "CHFN",
+            "CHES",
+            "FRCH",
+            "FNCH",
+            "ESCH"
+        ],
+        "neighbors": {
+            "neighbor1": "DE",
+            "neighbor2": "IT",
+            "neighbor3": "FN",
+            "neighbor4": "ES",
+            "neighbor5": "FR"
+        },
+        "neighbors_list": [
+            "FN",
+            "FR",
+            "ES",
+            "DE",
+            "IT"
+        ],
+        "pop": {
+            "city": "Geneva",
+            "latitude": 46.2017559,
+            "longitude": 6.1466014,
+            "nation": "Switzerland"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node25": {
+        "_id": "EE",
+        "active_links": {
+            "link1": "EEET",
+            "link2": "ETEE",
+            "link3": "DUEE",
+            "link4": "EEDU"
+        },
+        "active_links_list": [
+            "ETEE",
+            "EEET",
+            "EEDU",
+            "DUEE"
+        ],
+        "active_neighbors": {
+            "neighbor1": "ET",
+            "neighbor2": "DU"
+        },
+        "active_neighbors_list": [
+            "ET",
+            "DU"
+        ],
+        "links": {
+            "link1": "EEET",
+            "link2": "ETEE",
+            "link3": "DUEE",
+            "link4": "EEDU"
+        },
+        "links_list": [
+            "ETEE",
+            "EEET",
+            "EEDU",
+            "DUEE"
+        ],
+        "neighbors": {
+            "neighbor1": "ET",
+            "neighbor2": "DU"
+        },
+        "neighbors_list": [
+            "ET",
+            "DU"
+        ],
+        "pop": {
+            "city": "Tallin",
+            "latitude": 59.4372155,
+            "longitude": 24.7453688,
+            "nation": "Estonia"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node26": {
+        "_id": "ES",
+        "active_links": {
+            "link1": "ESFR",
+            "link2": "FRES",
+            "link3": "CHES",
+            "link4": "ESCH",
+            "link5": "ESPR",
+            "link6": "PRES"
+        },
+        "active_links_list": [
+            "FRES",
+            "ESFR",
+            "ESPR",
+            "CHES",
+            "PRES",
+            "ESCH"
+        ],
+        "active_neighbors": {
+            "neighbor1": "FR",
+            "neighbor2": "CH",
+            "neighbor3": "PR"
+        },
+        "active_neighbors_list": [
+            "PR",
+            "FR",
+            "CH"
+        ],
+        "links": {
+            "link1": "ESFR",
+            "link2": "FRES",
+            "link3": "CHES",
+            "link4": "ESCH",
+            "link5": "ESPR",
+            "link6": "PRES"
+        },
+        "links_list": [
+            "FRES",
+            "ESFR",
+            "ESPR",
+            "CHES",
+            "PRES",
+            "ESCH"
+        ],
+        "neighbors": {
+            "neighbor1": "FR",
+            "neighbor2": "CH",
+            "neighbor3": "PR"
+        },
+        "neighbors_list": [
+            "PR",
+            "FR",
+            "CH"
+        ],
+        "pop": {
+            "city": "Madrid",
+            "latitude": 40.4167047,
+            "longitude": -3.7035825,
+            "nation": "Spain"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node27": {
+        "_id": "IR",
+        "active_links": {
+            "link1": "IRUI",
+            "link2": "UIIR",
+            "link3": "IEIR",
+            "link4": "IRIE"
+        },
+        "active_links_list": [
+            "UIIR",
+            "IRUI",
+            "IRIE",
+            "IEIR"
+        ],
+        "active_neighbors": {
+            "neighbor1": "UI",
+            "neighbor2": "IE"
+        },
+        "active_neighbors_list": [
+            "UI",
+            "IE"
+        ],
+        "links": {
+            "link1": "IRUI",
+            "link2": "UIIR",
+            "link3": "IEIR",
+            "link4": "IRIE"
+        },
+        "links_list": [
+            "UIIR",
+            "IRUI",
+            "IRIE",
+            "IEIR"
+        ],
+        "neighbors": {
+            "neighbor1": "UI",
+            "neighbor2": "IE"
+        },
+        "neighbors_list": [
+            "UI",
+            "IE"
+        ],
+        "pop": {
+            "city": "Dublin",
+            "latitude": 53.3497645,
+            "longitude": -6.2602732,
+            "nation": "Ireland"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node28": {
+        "_id": "PT",
+        "active_links": {
+            "link1": "PTUK",
+            "link2": "UKPT",
+            "link3": "PRPT",
+            "link4": "PTPR"
+        },
+        "active_links_list": [
+            "UKPT",
+            "PTUK",
+            "PTPR",
+            "PRPT"
+        ],
+        "active_neighbors": {
+            "neighbor1": "UK",
+            "neighbor2": "PR"
+        },
+        "active_neighbors_list": [
+            "UK",
+            "PR"
+        ],
+        "links": {
+            "link1": "PTUK",
+            "link2": "UKPT",
+            "link3": "PRPT",
+            "link4": "PTPR"
+        },
+        "links_list": [
+            "UKPT",
+            "PTUK",
+            "PTPR",
+            "PRPT"
+        ],
+        "neighbors": {
+            "neighbor1": "UK",
+            "neighbor2": "PR"
+        },
+        "neighbors_list": [
+            "UK",
+            "PR"
+        ],
+        "pop": {
+            "city": "Lisbon",
+            "latitude": 38.7077507,
+            "longitude": -9.1365919,
+            "nation": "Portugal"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node29": {
+        "_id": "IE",
+        "active_links": {
+            "link1": "IEUK",
+            "link2": "UKIE",
+            "link3": "IEIR",
+            "link4": "IRIE"
+        },
+        "active_links_list": [
+            "UKIE",
+            "IEUK",
+            "IRIE",
+            "IEIR"
+        ],
+        "active_neighbors": {
+            "neighbor1": "UK",
+            "neighbor2": "IR"
+        },
+        "active_neighbors_list": [
+            "UK",
+            "IR"
+        ],
+        "links": {
+            "link1": "IEUK",
+            "link2": "UKIE",
+            "link3": "IEIR",
+            "link4": "IRIE"
+        },
+        "links_list": [
+            "UKIE",
+            "IEUK",
+            "IRIE",
+            "IEIR"
+        ],
+        "neighbors": {
+            "neighbor1": "UK",
+            "neighbor2": "IR"
+        },
+        "neighbors_list": [
+            "UK",
+            "IR"
+        ],
+        "pop": {
+            "city": "Dublin",
+            "latitude": 53.3497645,
+            "longitude": -6.2602732,
+            "nation": "Ireland"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node3": {
+        "_id": "GC",
+        "active_links": {
+            "link1": "GCGR",
+            "link2": "GRGC",
+            "link3": "ATGC",
+            "link4": "GCAT"
+        },
+        "active_links_list": [
+            "GRGC",
+            "GCGR",
+            "GCAT",
+            "ATGC"
+        ],
+        "active_neighbors": {
+            "neighbor1": "GR",
+            "neighbor2": "AT"
+        },
+        "active_neighbors_list": [
+            "GR",
+            "AT"
+        ],
+        "links": {
+            "link1": "GCGR",
+            "link2": "GRGC",
+            "link3": "ATGC",
+            "link4": "GCAT"
+        },
+        "links_list": [
+            "GRGC",
+            "GCGR",
+            "GCAT",
+            "ATGC"
+        ],
+        "neighbors": {
+            "neighbor1": "GR",
+            "neighbor2": "AT"
+        },
+        "neighbors_list": [
+            "GR",
+            "AT"
+        ],
+        "pop": {
+            "city": "Athens",
+            "latitude": 37.9839412,
+            "longitude": 23.7283052,
+            "nation": "Greece"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node30": {
+        "_id": "LT",
+        "active_links": {
+            "link1": "LNLT",
+            "link2": "LTLN",
+            "link3": "LTPL",
+            "link4": "PLLT"
+        },
+        "active_links_list": [
+            "LTLN",
+            "LNLT",
+            "PLLT",
+            "LTPL"
+        ],
+        "active_neighbors": {
+            "neighbor1": "LN",
+            "neighbor2": "PL"
+        },
+        "active_neighbors_list": [
+            "LN",
+            "PL"
+        ],
+        "links": {
+            "link1": "LNLT",
+            "link2": "LTLN",
+            "link3": "LTPL",
+            "link4": "PLLT"
+        },
+        "links_list": [
+            "LTLN",
+            "LNLT",
+            "PLLT",
+            "LTPL"
+        ],
+        "neighbors": {
+            "neighbor1": "LN",
+            "neighbor2": "PL"
+        },
+        "neighbors_list": [
+            "LN",
+            "PL"
+        ],
+        "pop": {
+            "city": "Kaunas",
+            "latitude": 54.8982139,
+            "longitude": 23.9044817,
+            "nation": "Lithuania"
+        },
+        "role": "NR",
+        "status": "ok"
+    },
+    "node31": {
         "_id": "AT",
+        "active_links": {
+            "link1": "BGAT",
+            "link10": "ATIT",
+            "link11": "ATHR",
+            "link12": "SKAT",
+            "link13": "ITAT",
+            "link14": "HRAT",
+            "link2": "GCAT",
+            "link3": "ATPL",
+            "link4": "CZAT",
+            "link5": "ATCZ",
+            "link6": "ATBG",
+            "link7": "ATSK",
+            "link8": "ATGC",
+            "link9": "PLAT"
+        },
+        "active_links_list": [
+            "BGAT",
+            "GCAT",
+            "ATPL",
+            "CZAT",
+            "ATCZ",
+            "ATBG",
+            "ATSK",
+            "ATGC",
+            "PLAT",
+            "ATIT",
+            "ATHR",
+            "SKAT",
+            "ITAT",
+            "HRAT"
+        ],
+        "active_neighbors": {
+            "neighbor1": "BG",
+            "neighbor2": "PL",
+            "neighbor3": "HR",
+            "neighbor4": "IT",
+            "neighbor5": "SK",
+            "neighbor6": "GC",
+            "neighbor7": "CZ"
+        },
+        "active_neighbors_list": [
+            "BG",
+            "PL",
+            "HR",
+            "IT",
+            "SK",
+            "GC",
+            "CZ"
+        ],
         "links": {
             "link1": "ATPL",
             "link10": "HRAT",
@@ -19,6 +1481,24 @@
             "link8": "SKAT",
             "link9": "ATHR"
         },
+        "links_list": [
+            "ATHU",
+            "BGAT",
+            "GCAT",
+            "ATPL",
+            "CZAT",
+            "ATCZ",
+            "ATBG",
+            "ATSK",
+            "ATGC",
+            "PLAT",
+            "ATIT",
+            "ATHR",
+            "SKAT",
+            "ITAT",
+            "HRAT",
+            "HUAT"
+        ],
         "neighbors": {
             "neighbor1": "PL",
             "neighbor2": "CZ",
@@ -29,311 +1509,104 @@
             "neighbor7": "GC",
             "neighbor8": "IT"
         },
+        "neighbors_list": [
+            "HU",
+            "BG",
+            "PL",
+            "HR",
+            "IT",
+            "SK",
+            "GC",
+            "CZ"
+        ],
         "pop": {
             "city": "Vienna",
             "latitude": 48.2083537,
             "longitude": 16.3725042,
             "nation": "Austria"
-        }
+        },
+        "role": "NR",
+        "status": "ok"
     },
-    "node10": {
-        "_id": "FN",
-        "links": {
-            "link1": "CHFN",
-            "link2": "FNCH",
-            "link3": "FNIT",
-            "link4": "ITFN"
-        },
-        "neighbors": {
-            "neighbor1": "CH",
-            "neighbor2": "IT"
-        },
-        "pop": {
-            "city": "Marseilles",
-            "latitude": 47.0706778,
-            "longitude": 3.0029271,
-            "nation": "France"
-        }
-    },
-    "node11": {
-        "_id": "FR",
-        "links": {
-            "link1": "CHFR",
-            "link2": "FRCH",
-            "link3": "ESFR",
-            "link4": "FRES",
-            "link5": "FRUI",
-            "link6": "UIFR"
-        },
-        "neighbors": {
-            "neighbor1": "CH",
-            "neighbor2": "ES",
-            "neighbor3": "UI"
-        },
-        "pop": {
-            "city": "Paris",
-            "latitude": 48.8566969,
-            "longitude": 2.3514616,
-            "nation": "France"
-        }
-    },
-    "node12": {
-        "_id": "GR",
-        "links": {
-            "link1": "GCGR",
-            "link2": "GRGC",
-            "link3": "GRIT",
-            "link4": "ITGR"
-        },
-        "neighbors": {
-            "neighbor1": "GC",
-            "neighbor2": "IT"
-        },
-        "pop": {
-            "city": "Athens",
-            "latitude": 37.9839412,
-            "longitude": 23.7283052,
-            "nation": "Greece"
-        }
-    },
-    "node13": {
-        "_id": "GC",
-        "links": {
-            "link1": "GCGR",
-            "link2": "GRGC",
-            "link3": "ATGC",
-            "link4": "GCAT"
-        },
-        "neighbors": {
-            "neighbor1": "GR",
-            "neighbor2": "AT"
-        },
-        "pop": {
-            "city": "Athens",
-            "latitude": 37.9839412,
-            "longitude": 23.7283052,
-            "nation": "Greece"
-        }
-    },
-    "node14": {
-        "_id": "HR",
-        "links": {
-            "link1": "ATHR",
-            "link2": "HRAT",
-            "link3": "HRHU",
-            "link4": "HUHR"
-        },
-        "neighbors": {
-            "neighbor1": "AT",
-            "neighbor2": "HU"
-        },
-        "pop": {
-            "city": "Zagreb",
-            "latitude": 45.813177,
-            "longitude": 15.977048,
-            "nation": "Croatia"
-        }
-    },
-    "node15": {
-        "_id": "HU",
-        "links": {
-            "link1": "CZHU",
-            "link10": "SKHU",
-            "link11": "ATHU",
-            "link12": "HUAT",
-            "link2": "HUCZ",
-            "link3": "HURO",
-            "link4": "ROHU",
-            "link5": "HUSI",
-            "link6": "SIHU",
-            "link7": "HRHU",
-            "link8": "HUHR",
-            "link9": "HUSK"
-        },
-        "neighbors": {
-            "neighbor1": "CZ",
-            "neighbor2": "RO",
-            "neighbor3": "SI",
-            "neighbor4": "HR",
-            "neighbor5": "SK",
-            "neighbor6": "AT"
-        },
-        "pop": {
-            "city": "Budapest",
-            "latitude": 47.48138955,
-            "longitude": 19.14607278448202,
-            "nation": "Hungary"
-        }
-    },
-    "node16": {
-        "_id": "IE",
-        "links": {
-            "link1": "IEUK",
-            "link2": "UKIE",
-            "link3": "IEIR",
-            "link4": "IRIE"
-        },
-        "neighbors": {
-            "neighbor1": "UK",
-            "neighbor2": "IR"
-        },
-        "pop": {
-            "city": "Dublin",
-            "latitude": 53.3497645,
-            "longitude": -6.2602732,
-            "nation": "Ireland"
-        }
-    },
-    "node17": {
-        "_id": "IR",
-        "links": {
-            "link1": "IRUI",
-            "link2": "UIIR",
-            "link3": "IEIR",
-            "link4": "IRIE"
-        },
-        "neighbors": {
-            "neighbor1": "UI",
-            "neighbor2": "IE"
-        },
-        "pop": {
-            "city": "Dublin",
-            "latitude": 53.3497645,
-            "longitude": -6.2602732,
-            "nation": "Ireland"
-        }
-    },
-    "node18": {
-        "_id": "IT",
-        "links": {
-            "link1": "CHIT",
-            "link10": "ITFN",
-            "link2": "ITCH",
-            "link3": "ATIT",
-            "link4": "ITAT",
-            "link5": "ITSI",
-            "link6": "SIIT",
-            "link7": "GRIT",
-            "link8": "ITGR",
-            "link9": "FNIT"
-        },
-        "neighbors": {
-            "neighbor1": "CH",
-            "neighbor2": "AT",
-            "neighbor3": "SI",
-            "neighbor4": "GR",
-            "neighbor5": "FN"
-        },
-        "pop": {
-            "city": "Milan",
-            "latitude": 45.4668,
-            "longitude": 9.1905,
-            "nation": "Italy"
-        }
-    },
-    "node19": {
-        "_id": "LT",
-        "links": {
-            "link1": "LNLT",
-            "link2": "LTLN",
-            "link3": "LTPL",
-            "link4": "PLLT"
-        },
-        "neighbors": {
-            "neighbor1": "LN",
-            "neighbor2": "PL"
-        },
-        "pop": {
-            "city": "Kaunas",
-            "latitude": 54.8982139,
-            "longitude": 23.9044817,
-            "nation": "Lithuania"
-        }
-    },
-    "node2": {
+    "node4": {
         "_id": "BE",
+        "active_links": {
+            "link1": "BENL",
+            "link2": "NLBE",
+            "link3": "BEUK",
+            "link4": "UKBE"
+        },
+        "active_links_list": [
+            "NLBE",
+            "BENL",
+            "UKBE",
+            "BEUK"
+        ],
+        "active_neighbors": {
+            "neighbor1": "NL",
+            "neighbor2": "UK"
+        },
+        "active_neighbors_list": [
+            "NL",
+            "UK"
+        ],
         "links": {
             "link1": "BENL",
             "link2": "NLBE",
             "link3": "BEUK",
             "link4": "UKBE"
         },
+        "links_list": [
+            "NLBE",
+            "BENL",
+            "UKBE",
+            "BEUK"
+        ],
         "neighbors": {
             "neighbor1": "NL",
             "neighbor2": "UK"
         },
+        "neighbors_list": [
+            "NL",
+            "UK"
+        ],
         "pop": {
             "city": "Brussels",
             "latitude": 50.8436709,
             "longitude": 4.3674366933879565,
             "nation": "Belgium"
-        }
+        },
+        "role": "NR",
+        "status": "ok"
     },
-    "node20": {
-        "_id": "LN",
-        "links": {
-            "link1": "LNLT",
-            "link2": "LTLN",
-            "link3": "LNLV",
-            "link4": "LVLN"
-        },
-        "neighbors": {
-            "neighbor1": "LT",
-            "neighbor2": "LV"
-        },
-        "pop": {
-            "city": "Kaunas",
-            "latitude": 54.8982139,
-            "longitude": 23.9044817,
-            "nation": "Lithuania"
-        }
-    },
-    "node21": {
-        "_id": "LV",
-        "links": {
-            "link1": "ETLV",
-            "link2": "LVET",
-            "link3": "LNLV",
-            "link4": "LVLN"
-        },
-        "neighbors": {
-            "neighbor1": "ET",
-            "neighbor2": "LN"
-        },
-        "pop": {
-            "city": "Riga",
-            "latitude": 56.9493977,
-            "longitude": 24.1051846,
-            "nation": "Latvia"
-        }
-    },
-    "node22": {
-        "_id": "NL",
-        "links": {
-            "link1": "DUNL",
-            "link2": "NLDU",
-            "link3": "DENL",
-            "link4": "NLDE",
-            "link5": "BENL",
-            "link6": "NLBE",
-            "link7": "NLUK",
-            "link8": "UKNL"
-        },
-        "neighbors": {
-            "neighbor1": "DU",
-            "neighbor2": "DE",
-            "neighbor3": "BE",
-            "neighbor4": "UK"
-        },
-        "pop": {
-            "city": "Amsterdam",
-            "latitude": 52.3727598,
-            "longitude": 4.8936041,
-            "nation": "Netherlands"
-        }
-    },
-    "node23": {
+    "node5": {
         "_id": "PL",
+        "active_links": {
+            "link1": "LTPL",
+            "link2": "PLLT",
+            "link3": "ATPL",
+            "link4": "PLAT",
+            "link5": "DEPL",
+            "link6": "PLDE"
+        },
+        "active_links_list": [
+            "PLLT",
+            "LTPL",
+            "DEPL",
+            "ATPL",
+            "PLDE",
+            "PLAT"
+        ],
+        "active_neighbors": {
+            "neighbor1": "LT",
+            "neighbor2": "AT",
+            "neighbor3": "DE"
+        },
+        "active_neighbors_list": [
+            "DE",
+            "LT",
+            "AT"
+        ],
         "links": {
             "link1": "LTPL",
             "link2": "PLLT",
@@ -342,256 +1615,163 @@
             "link5": "DEPL",
             "link6": "PLDE"
         },
+        "links_list": [
+            "PLLT",
+            "LTPL",
+            "DEPL",
+            "ATPL",
+            "PLDE",
+            "PLAT"
+        ],
         "neighbors": {
             "neighbor1": "LT",
             "neighbor2": "AT",
             "neighbor3": "DE"
         },
+        "neighbors_list": [
+            "DE",
+            "LT",
+            "AT"
+        ],
         "pop": {
             "city": "Poznan",
             "latitude": 52.40063215,
             "longitude": 16.91978694287606,
             "nation": "Poland"
-        }
+        },
+        "role": "NR",
+        "status": "ok"
     },
-    "node24": {
-        "_id": "PT",
+    "node6": {
+        "_id": "HR",
+        "active_links": {
+            "link1": "HRAT",
+            "link2": "ATHR"
+        },
+        "active_links_list": [
+            "HRAT",
+            "ATHR"
+        ],
+        "active_neighbors": {
+            "neighbor1": "AT"
+        },
+        "active_neighbors_list": [
+            "AT"
+        ],
         "links": {
-            "link1": "PTUK",
-            "link2": "UKPT",
-            "link3": "PRPT",
-            "link4": "PTPR"
+            "link1": "ATHR",
+            "link2": "HRAT",
+            "link3": "HRHU",
+            "link4": "HUHR"
         },
+        "links_list": [
+            "HRAT",
+            "ATHR",
+            "HUHR",
+            "HRHU"
+        ],
         "neighbors": {
-            "neighbor1": "UK",
-            "neighbor2": "PR"
+            "neighbor1": "AT",
+            "neighbor2": "HU"
         },
+        "neighbors_list": [
+            "AT",
+            "HU"
+        ],
         "pop": {
-            "city": "Lisbon",
-            "latitude": 38.7077507,
-            "longitude": -9.1365919,
-            "nation": "Portugal"
-        }
-    },
-    "node25": {
-        "_id": "PR",
-        "links": {
-            "link1": "PRPT",
-            "link2": "PTPR",
-            "link3": "ESPR",
-            "link4": "PRES"
+            "city": "Zagreb",
+            "latitude": 45.813177,
+            "longitude": 15.977048,
+            "nation": "Croatia"
         },
-        "neighbors": {
-            "neighbor1": "PT",
-            "neighbor2": "ES"
-        },
-        "pop": {
-            "city": "Lisbon",
-            "latitude": 38.7077507,
-            "longitude": -9.1365919,
-            "nation": "Portugal"
-        }
+        "role": "NR",
+        "status": "ok"
     },
-    "node26": {
+    "node7": {
         "_id": "RO",
+        "active_links": {
+            "link1": "ROBG",
+            "link2": "BGRO"
+        },
+        "active_links_list": [
+            "ROBG",
+            "BGRO"
+        ],
+        "active_neighbors": {
+            "neighbor1": "BG"
+        },
+        "active_neighbors_list": [
+            "BG"
+        ],
         "links": {
             "link1": "BGRO",
             "link2": "ROBG",
             "link3": "HURO",
             "link4": "ROHU"
         },
+        "links_list": [
+            "ROBG",
+            "BGRO",
+            "ROHU",
+            "HURO"
+        ],
         "neighbors": {
             "neighbor1": "BG",
             "neighbor2": "HU"
         },
+        "neighbors_list": [
+            "BG",
+            "HU"
+        ],
         "pop": {
             "city": "Bucharest",
             "latitude": 44.4361414,
             "longitude": 26.1027202,
             "nation": "Romania"
-        }
+        },
+        "role": "NR",
+        "status": "ok"
     },
-    "node27": {
-        "_id": "SI",
-        "links": {
-            "link1": "ITSI",
-            "link2": "SIIT",
-            "link3": "HUSI",
-            "link4": "SIHU"
-        },
-        "neighbors": {
-            "neighbor1": "IT",
-            "neighbor2": "HU"
-        },
-        "pop": {
-            "city": "Ljubljana",
-            "latitude": 46.0499803,
-            "longitude": 14.5068602,
-            "nation": "Slovenia"
-        }
-    },
-    "node28": {
-        "_id": "SK",
-        "links": {
-            "link1": "HUSK",
-            "link2": "SKHU",
-            "link3": "ATSK",
-            "link4": "SKAT"
-        },
-        "neighbors": {
-            "neighbor1": "HU",
-            "neighbor2": "AT"
-        },
-        "pop": {
-            "city": "Bratislava",
-            "latitude": 48.1516988,
-            "longitude": 17.1093063,
-            "nation": "Slovakia"
-        }
-    },
-    "node29": {
-        "_id": "UK",
-        "links": {
-            "link1": "NLUK",
-            "link10": "UKPT",
-            "link2": "UKNL",
-            "link3": "BEUK",
-            "link4": "UKBE",
-            "link5": "UIUK",
-            "link6": "UKUI",
-            "link7": "IEUK",
-            "link8": "UKIE",
-            "link9": "PTUK"
-        },
-        "neighbors": {
-            "neighbor1": "NL",
-            "neighbor2": "BE",
-            "neighbor3": "UI",
-            "neighbor4": "IE",
-            "neighbor5": "PT"
-        },
-        "pop": {
-            "city": "London",
-            "latitude": 51.5073219,
-            "longitude": -0.1276474,
-            "nation": "United Kingdom"
-        }
-    },
-    "node3": {
-        "_id": "BG",
-        "links": {
-            "link1": "BGRO",
-            "link2": "ROBG",
-            "link3": "ATBG",
-            "link4": "BGAT"
-        },
-        "neighbors": {
-            "neighbor1": "RO",
-            "neighbor2": "AT"
-        },
-        "pop": {
-            "city": "Sofia",
-            "latitude": 42.6978634,
-            "longitude": 23.3221789,
-            "nation": "Bulgaria"
-        }
-    },
-    "node30": {
-        "_id": "UI",
-        "links": {
-            "link1": "UIUK",
-            "link2": "UKUI",
-            "link3": "FRUI",
-            "link4": "UIFR",
-            "link5": "IRUI",
-            "link6": "UIIR"
-        },
-        "neighbors": {
-            "neighbor1": "UK",
-            "neighbor2": "FR",
-            "neighbor3": "IR"
-        },
-        "pop": {
-            "city": "London",
-            "latitude": 51.5073219,
-            "longitude": -0.1276474,
-            "nation": "United Kingdom"
-        }
-    },
-    "node31": {
-        "_id": "DU",
-        "links": {
-            "link1": "DUEE",
-            "link2": "EEDU",
+    "node8": {
+        "_id": "DE",
+        "active_links": {
+            "link1": "DENL",
+            "link10": "DECH",
+            "link2": "NLDE",
             "link3": "DEDU",
             "link4": "DUDE",
-            "link5": "DUNL",
-            "link6": "NLDU"
+            "link5": "DEPL",
+            "link6": "PLDE",
+            "link7": "CZDE",
+            "link8": "DECZ",
+            "link9": "CHDE"
         },
-        "neighbors": {
-            "neighbor1": "EE",
-            "neighbor2": "DE",
-            "neighbor3": "NL"
+        "active_links_list": [
+            "NLDE",
+            "CHDE",
+            "DENL",
+            "DUDE",
+            "DEDU",
+            "DEPL",
+            "CZDE",
+            "DECH",
+            "PLDE",
+            "DECZ"
+        ],
+        "active_neighbors": {
+            "neighbor1": "NL",
+            "neighbor2": "DU",
+            "neighbor3": "PL",
+            "neighbor4": "CZ",
+            "neighbor5": "CH"
         },
-        "pop": {
-            "city": "Hamburg",
-            "latitude": 53.5437641,
-            "longitude": 10.0099133,
-            "nation": "Germany"
-        }
-    },
-    "node4": {
-        "_id": "CH",
-        "links": {
-            "link1": "CHDE",
-            "link10": "FRCH",
-            "link2": "DECH",
-            "link3": "CHIT",
-            "link4": "ITCH",
-            "link5": "CHFN",
-            "link6": "FNCH",
-            "link7": "CHES",
-            "link8": "ESCH",
-            "link9": "CHFR"
-        },
-        "neighbors": {
-            "neighbor1": "DE",
-            "neighbor2": "IT",
-            "neighbor3": "FN",
-            "neighbor4": "ES",
-            "neighbor5": "FR"
-        },
-        "pop": {
-            "city": "Geneva",
-            "latitude": 46.2017559,
-            "longitude": 6.1466014,
-            "nation": "Switzerland"
-        }
-    },
-    "node5": {
-        "_id": "CZ",
-        "links": {
-            "link1": "CZHU",
-            "link2": "HUCZ",
-            "link3": "ATCZ",
-            "link4": "CZAT",
-            "link5": "CZDE",
-            "link6": "DECZ"
-        },
-        "neighbors": {
-            "neighbor1": "HU",
-            "neighbor2": "AT",
-            "neighbor3": "DE"
-        },
-        "pop": {
-            "city": "Prague",
-            "latitude": 50.0874654,
-            "longitude": 14.4212535,
-            "nation": "Czech Republic"
-        }
-    },
-    "node6": {
-        "_id": "DE",
+        "active_neighbors_list": [
+            "PL",
+            "CH",
+            "CZ",
+            "NL",
+            "DU"
+        ],
         "links": {
             "link1": "DENL",
             "link10": "DECH",
@@ -604,6 +1784,18 @@
             "link8": "DECZ",
             "link9": "CHDE"
         },
+        "links_list": [
+            "NLDE",
+            "CHDE",
+            "DENL",
+            "DUDE",
+            "DEDU",
+            "DEPL",
+            "CZDE",
+            "DECH",
+            "PLDE",
+            "DECZ"
+        ],
         "neighbors": {
             "neighbor1": "NL",
             "neighbor2": "DU",
@@ -611,71 +1803,65 @@
             "neighbor4": "CZ",
             "neighbor5": "CH"
         },
+        "neighbors_list": [
+            "PL",
+            "CH",
+            "CZ",
+            "NL",
+            "DU"
+        ],
         "pop": {
             "city": "Frankfurt",
             "latitude": 50.1106444,
             "longitude": 8.6820917,
             "nation": "Germany"
-        }
-    },
-    "node7": {
-        "_id": "EE",
-        "links": {
-            "link1": "EEET",
-            "link2": "ETEE",
-            "link3": "DUEE",
-            "link4": "EEDU"
         },
-        "neighbors": {
-            "neighbor1": "ET",
-            "neighbor2": "DU"
-        },
-        "pop": {
-            "city": "Tallin",
-            "latitude": 59.4372155,
-            "longitude": 24.7453688,
-            "nation": "Estonia"
-        }
-    },
-    "node8": {
-        "_id": "ET",
-        "links": {
-            "link1": "EEET",
-            "link2": "ETEE",
-            "link3": "ETLV",
-            "link4": "LVET"
-        },
-        "neighbors": {
-            "neighbor1": "EE",
-            "neighbor2": "LV"
-        },
-        "pop": {
-            "city": "Tallin",
-            "latitude": 59.4372155,
-            "longitude": 24.7453688,
-            "nation": "Estonia"
-        }
+        "role": "NR",
+        "status": "ok"
     },
     "node9": {
-        "_id": "ES",
+        "_id": "SK",
+        "active_links": {
+            "link1": "SKAT",
+            "link2": "ATSK"
+        },
+        "active_links_list": [
+            "SKAT",
+            "ATSK"
+        ],
+        "active_neighbors": {
+            "neighbor1": "AT"
+        },
+        "active_neighbors_list": [
+            "AT"
+        ],
         "links": {
-            "link1": "ESFR",
-            "link2": "FRES",
-            "link3": "CHES",
-            "link4": "ESCH",
-            "link5": "ESPR",
-            "link6": "PRES"
+            "link1": "HUSK",
+            "link2": "SKHU",
+            "link3": "ATSK",
+            "link4": "SKAT"
         },
+        "links_list": [
+            "SKHU",
+            "HUSK",
+            "SKAT",
+            "ATSK"
+        ],
         "neighbors": {
-            "neighbor1": "FR",
-            "neighbor2": "CH",
-            "neighbor3": "PR"
+            "neighbor1": "HU",
+            "neighbor2": "AT"
         },
+        "neighbors_list": [
+            "HU",
+            "AT"
+        ],
         "pop": {
-            "city": "Madrid",
-            "latitude": 40.4167047,
-            "longitude": -3.7035825,
-            "nation": "Spain"
-        }
+            "city": "Bratislava",
+            "latitude": 48.1516988,
+            "longitude": 17.1093063,
+            "nation": "Slovakia"
+        },
+        "role": "NR",
+        "status": "ok"
     }
 }

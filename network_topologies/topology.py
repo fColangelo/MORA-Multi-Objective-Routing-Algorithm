@@ -79,13 +79,22 @@ class Topology:
         for link_info in link_dict:
             self.create_link(info=link_dict[link_info])
 
-    def shutdown_node(self, node):
+    def reset(self):
+        for node in self.nodes:
+            node.status('ok')
+        for link in self.links:
+            link.status('off')
+            link.status('on')
+        return
+        
+    def shutdown_node(self, node_name):
         """[summary]
         
         Arguments:
             node {[type]} -- [description]
         """
-        
+        node = self.get_one_node(node_name)
+
         node.status = 'ko'
         self.update_node_info(node)
 
@@ -123,11 +132,11 @@ class Topology:
         return self.reachability_matrix[src_index][dst_index]
 
     def clear_flow_from_network(self, flow):
-       """[summary]
-       
-       Arguments:
-           flow {[type]} -- [description]
-       """
+        """[summary]
+        
+        Arguments:
+            flow {[type]} -- [description]
+        """
        
         for link in self.links:
             if link.status == 'on' and flow['_id'] in link.service_flows:
@@ -414,6 +423,13 @@ class Topology:
         
         return reachablity_matrix
 
+    def print_reachability_matrix(self):
+        if self.reachability_matrix is None:
+            self.reachability_matrix = self.get_reachability_matrix()
+        for row in self.reachability_matrix:
+            print(row)
+        return
+
     ## ADJACENCY MATRICES
 
     def get_adjacency_matrix(self):
@@ -539,7 +555,7 @@ class Topology:
             self.get_path = optimize_route
         elif routing_method == 'Hop_by_hop':
             self.init_Hop_by_hop()
-            self.get_path = get_path_hop_by_hop
+            self.get_path = self.get_path_hop_by_hop
         else:
             raise NotImplementedError
 
