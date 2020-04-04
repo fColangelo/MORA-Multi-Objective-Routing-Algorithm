@@ -7,6 +7,7 @@ import time, datetime
 import os
 import pandas as pd
 import numpy as np 
+np.random.seed(13)
 
 class TrafficGenerator():
 
@@ -57,11 +58,21 @@ class TrafficGenerator():
         i = 0
         
         while i < len(self.traffic_files):
-            now = datetime.datetime.now()
-            print('Loading new traffic file...{}'.format(now.strftime("%m/%d/%Y, %H:%M:%S")))
+            
             flows = {}
 
+            beginning_of_iteration = time.time()
+            print('******* GENERATE_FLOWS -> ITERATION {} OUT OF {} *******'.format(i+1, len(self.traffic_files)))
+            
+            now = datetime.datetime.now()
+            print('++++ BEGINNING OF ITERATION @ {} ++++'.format(now.strftime("%m/%d/%Y, %H:%M:%S")))
+            print('')
+            
+            print('#### NODE FAILURES PHASE... execution time = ', end='')          
+            #
             ## NODE FAILURES ####################################################################
+            #
+            start_time = time.time()
             # Check if any node will fail
             disrupted_flows_ids = []
             for _, fault in enumerate(self.faults):
@@ -69,26 +80,29 @@ class TrafficGenerator():
                     disrupted_flows_ids.extend(self.topo.shutdown_node(fault[1]))
                     self.topo.faulty_node_list.append(fault[1])     
             #
+            print("{}".format(time.time() - start_time))
+            #
             ####################################################################################
             #
+            print('#### DISRUPTED FLOWS REROUTING PHASE... execution time = ', end='')          
             #
             ## DISRUPTED FLOWS REROUTING #######################################################
             #
             if disrupted_flows_ids:
                 # Remove duplicates in disrupted_flows_ids
                 disrupted_flows_ids = list(set(disrupted_flows_ids))
-
+                opa = self.old_path_archive.copy()  # make a copy of self.old_path_archive
+                
                 # 1) Find disrupted_flow in old_path_archive
                 # 2) Remove it from old_path_archive
                 # 3) Add it to flows, so that it will be rerouted
                 # 4) Remove it from all the other network links
-                for disrupted_flow_id in disrupted_flows_ids:
-                    opa = self.old_path_archive.copy()  # make a copy of self.old_path_archive
+                for disrupted_flow_id in disrupted_flows_ids:    
                     for flow in self.old_path_archive:
-                        if flow == disrupted_flow_id:  # 1)
-                            disrupted_flow = opa.pop(flow)  # 2)
-                            flows[disrupted_flow_id] = disrupted_flow  # 3)
-                            self.topo.clear_flow_from_network(disrupted_flow)  # 4)
+                        if flow[0]['_id'] == disrupted_flow_id:  # 1)
+                            opa.remove(flow)  # 2)
+                            flows[disrupted_flow_id] = flow[0]  # 3)
+                            self.topo.clear_flow_from_network(flow[0])  # 4)
                 # Update old_path_arhive
                 self.old_path_archive = opa
                 #
@@ -96,8 +110,11 @@ class TrafficGenerator():
                 self.apply_flows()
                 flows = {}
             #
+            print("{}".format(time.time() - start_time))
+            #
             ###################################################################################
             #
+            print('#### GENERATE NEW FLOWS PHASE... execution time = ', end='')          
             #
             ## GENERATE NEW FLOWS #############################################################
             #
@@ -118,9 +135,18 @@ class TrafficGenerator():
             i+=1
             self.apply_flows()
             #
+            print("{}".format(time.time() - start_time))
+            #
             ####################################################################################
             #
-            time.sleep(self.interval)
+            now = datetime.datetime.now()
+            print('++++ END OF ITERATION @ {} ++++'.format(now.strftime("%m/%d/%Y, %H:%M:%S")))
+            print('******* GENERATE_FLOWS -> ITERATION {} OUT OF {} ELAPSED TIME = {} *******'.format(i, len(self.traffic_files), time.time() - beginning_of_iteration))
+            try:
+                time.sleep(self.interval - (time.time() - beginning_of_iteration))
+            except:
+                print('******* INTERVAL EXCEEDED BY {} SECONDS *******'.format(time.time() - beginning_of_iteration - self.interval))
+    
 
     def get_flow(self, service_class, bandwidth, nodeA, nodeB):
         """[summary]
@@ -238,7 +264,7 @@ class TrafficGenerator():
                     self.topo.apply_service_on_network(flow, flow_path)
 
             ## REMOVE TERMINED FLOWS FROM NETWORK
-            # Remove all flows that are not alive anymroe
+            # Remove all flows that are not alive anymore
             # All old flows that are not matched in new flows
             # Everything left in old flows
             for entry in self.old_path_archive:
@@ -308,7 +334,7 @@ class TrafficGenerator():
         # When are the faults going to occur?
         self.faults = []
         if self.faults_number is not 0:
-            fault_times = np.random.choice(len(self.traffic_files), size = self.faults_number, replace = False)
+            fault_times = np.random.choice(list(range(1, len(self.traffic_files))), size = self.faults_number, replace = False)
             # Which nodes are going to fault?
             faulty_nodes = np.random.choice(len(self.topo.nodes), size = self.faults_number, replace = False)
             # Create the structure of faults

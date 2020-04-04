@@ -56,6 +56,7 @@ class Topology:
         self.faulty_node_list = []  
         
         self.create_topology(node_dict, link_dict)
+        self.reset()
 
         self.reachability_matrix = self.get_reachability_matrix()  # this Topology reachability matrix
         self.routing_method = routing_method
@@ -80,11 +81,17 @@ class Topology:
             self.create_link(info=link_dict[link_info])
 
     def reset(self):
+
+        print("Resetting network topology... ", end='')
+        
         for node in self.nodes:
-            node.status('ok')
+            node.status = 'on'
         for link in self.links:
-            link.status('off')
-            link.status('on')
+            link.status = 'off'
+            link.status = 'on'
+        
+        print("OK!")
+        
         return
         
     def shutdown_node(self, node_name):
@@ -95,7 +102,7 @@ class Topology:
         """
         node = self.get_one_node(node_name)
 
-        node.status = 'ko'
+        node.status = 'off'
         self.update_node_info(node)
 
         disrupted_flows_ids = []
@@ -772,7 +779,7 @@ class Node:
 
         # --------------------- OPERATIONAL STATE -----------------------------
         #
-        self._status = 'ok'                 # status: ok/ko
+        self._status = 'on'                 # status: on/off
         self.active_links = self.links.copy()
         self.active_links_list = self.links_list.copy()
         self.active_neighbors = self.neighbors.copy()
@@ -794,7 +801,7 @@ class Node:
     @status.setter
     def status(self, new_value):
         
-        possible_values = ['ok', 'ko']
+        possible_values = ['on', 'off']
 
         if new_value in possible_values:
             self._status = new_value

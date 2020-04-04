@@ -66,69 +66,11 @@ def main():
     routing_algo = 'EAR'
     topo = Geant(routing_method=routing_algo)
     #
-    print("--- {} seconds to build {} Topology with {} routing algorithm ---".format((time.time() - start_time), topo.name.upper(), topo.routing_method))
-
-    #####################################################
-    # Uncomment next lines to work with SIMPLE Topology #
-    #####################################################
-    #
-    #start_time = time.time()
-    #
-    #topo_name = 'simple_network'
-    #preprocess_metadata(topo_name)
-    #node_dict = read_from_json("network_topologies/simple_network/simple_networkDB/nodes.json")
-    #link_dict = read_from_json("network_topologies/simple_network/simple_networkDB/links.json")
-    #topo = Topology(node_dict=node_dict, link_dict=link_dict)
-    #
-    #print("--- %s seconds ---" % (time.time() - start_time))
-
-    ##########################################################
-    # Uncomment next lines to work with PSEUDOGEANT Topology #
-    ##########################################################
-    #
-    #start_time = time.time()
-    #
-    #topo = Pseudogeant()
-    #topo.save_topology_info()
-    #
-    #print("--- %s seconds ---" % (time.time() - start_time))
-
-    """
-    ********* ALGORITHM SELECTION *********
-    """
-    #####################################################
-    #           SIMPLE DIJKSTRA (OSPF-like)             #
-    #####################################################
-    #
-    #start_time = time.time()
-    #
-    #set_spt(topo)
-    #
-    #print("--- %s seconds to set up DIJKSTRA ---" % (time.time() - start_time))
-    #
-    #####################################################
-    #            ENERGY AWARE ROUTING (EAR)             #
-    #####################################################
-    #
-    #start_time = time.time()
-    # 
-    #ER_degree_threshold = 2
-    #ear(topo, ER_degree_threshold)
-    #
-    #print("--- %s seconds to set up EAR ---" % (time.time() - start_time))
+    print("--- {} seconds to build {} Topology with {} routing algorithm ---".format((time.time() - start_time), topo.name.upper(), topo.routing_method) + '\n')
     
-    """
-    ********* SHUTDOWN NODE TEST *********
-    """
-    #node_to_shut = topo.get_one_node('BE')
-    #topo.shutdown_node(node_to_shut)
-
-    """
-    ********* SERVICES example *********
-    """
-
     # INSTANTIATE TRAFFIC GENERATOR
-    tg = TrafficGenerator(interval=300, topology=topo, faults=1)  # 300 s = 5 minutes
+    traffic_matrices_path = '/home/marco/Desktop/MORA-Multi-Objective-Routing-Algorithm/service_flows/test_traffic'
+    tg = TrafficGenerator(interval=100, topology=topo, path = traffic_matrices_path, faults=1)  # 300 s = 5 minutes
     
     
     while True:
