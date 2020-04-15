@@ -6,8 +6,9 @@ import threading
 import time, datetime
 import os
 import pandas as pd
-import numpy as np 
-np.random.seed(13)
+import numpy as np
+
+np.random.seed(64)
 
 class TrafficGenerator():
 
@@ -44,15 +45,16 @@ class TrafficGenerator():
         thread.start()
 
         ### LOGGING ###
+        self.log_idx = 0
         self.starting_time = datetime.datetime.now()
         self.log_file_name = "log_{}_{}.csv".format(\
                 self.starting_time.strftime("%Y-%m-%d %H:%M:%S"), topology.routing_method)
-
-        df = pd.DataFrame(columns=['Routing algorithm', 'Power consumption [W]', 'Reliability score (Max)',\
+        self.log_cols = ['Routing algorithm', 'Power consumption [W]', 'Reliability score (Max)',\
                             'Reliability score (Mean)', 'Mean latency (premium) [ms]',\
-                            'Mean latency (assured) [ms]: ', 'Premium SLA violations:', 'Assured SLA violations:',
-                            'Mean Premium SLA violations:' , 'Mean Assured SLA violations:'])
-        df.to_csv(self.log_file_name, mode='w', header=True)
+                            'Mean latency (assured) [ms]', 'Premium SLA violations', 'Assured SLA violations',
+                            'Mean Premium SLA violations' , 'Mean Assured SLA violations']
+        df = pd.DataFrame(columns=self.log_cols)
+        df.to_csv(self.log_file_name, mode='w', header=True, index=False)
 
     def generate_flows(self):
         i = 0
@@ -146,7 +148,9 @@ class TrafficGenerator():
                 time.sleep(self.interval - (time.time() - beginning_of_iteration))
             except:
                 print('******* INTERVAL EXCEEDED BY {} SECONDS *******'.format(time.time() - beginning_of_iteration - self.interval))
-    
+            print('--------------------------------------------------------------------------')
+            print('')
+            
 
     def get_flow(self, service_class, bandwidth, nodeA, nodeB):
         """[summary]
@@ -273,7 +277,7 @@ class TrafficGenerator():
         self.old_path_archive = self.new_path_archive
         self.new_path_archive = []
         #self.topo.update_link_status()
-        #self.log_stats()
+        self.log_stats()
 
     def log_stats(self):
         """
@@ -298,35 +302,42 @@ class TrafficGenerator():
                 for j in range(len(f[1])-1):
                     link = self.topo.get_link_between_neighbors(f[1][j], f[1][j+1])
                     path_lat.append(link.latency)
-                    path_lat = np.mean(path_lat)
-                    premium_lat.append(path_lat)
-                    if path_lat > self.premium_thresh:
-                        premium_violations += 1
-                        mean_premium_violations.append(abs(path_lat - self.premium_thresh))
+                path_lat = np.mean(path_lat)
+                premium_lat.append(path_lat)
+                if path_lat > self.premium_thresh:
+                    premium_violations += 1
+                    mean_premium_violations.append(abs(path_lat - self.premium_thresh))
 
             elif 'assured' in f[0]['_id']:
                 path_lat = []
                 for j in range(len(f[1])-1):
                     link = self.topo.get_link_between_neighbors(f[1][j], f[1][j+1])
                     path_lat.append(link.latency)
-                    path_lat = np.mean(path_lat)
-                    assured_lat.append(path_lat)
-                    if path_lat > self.assured_thresh:
-                        assured_violations += 1
-                        mean_assured_violations.append(abs(path_lat - self.assured_thresh))
+                path_lat = np.mean(path_lat)
+                assured_lat.append(path_lat)
+                if path_lat > self.assured_thresh:
+                    assured_violations += 1
+                    mean_assured_violations.append(abs(path_lat - self.assured_thresh))
 
-        header = {'Routing algorithm':[self.topo.routing_method], \
-                  'Power consumption [W] ':[self.topo.get_power_consumption()], \
-                  'Reliability score (Max)':[max_rel], 'Reliability score (Mean)':[mean_rel],\
-                  'Mean latency (premium)': [np.mean(premium_lat)], \
-                  'Mean latency (assured):': [np.mean(assured_lat)], \
-                  'Premium SLA violations:': [premium_violations], \
-                  'Assured SLA violations:': [assured_violations], \
-                  'Mean Premium SLA violations:': [np.mean(mean_premium_violations)],\
-                  'Mean Assured SLA violations:': [np.mean(mean_assured_violations)]} 
+        if mean_premium_violations:
+            mpv = np.mean(mean_premium_violations)
+        else:
+            mpv = '-'
 
-        df = pd.DataFrame(header)
-        df.to_csv(self.log_file_name, mode='a', header=False)
+        if mean_assured_violations:
+            mav = np.mean(mean_assured_violations)
+        else:
+            mav = '-'
+        print(int(self.topo.get_power_consumption()), max_rel, mean_rel,\
+                   int(np.mean(premium_lat)), int(np.mean(assured_lat)), premium_violations, assured_violations, \
+                   mpv, mav)
+        row = pd.Series([self.topo.routing_method, int(self.topo.get_power_consumption()), max_rel, mean_rel,\
+                   int(np.mean(premium_lat)), int(np.mean(assured_lat)), premium_violations, assured_violations, \
+                   mpv, mav], index = self.log_cols)
+
+        df = pd.read_csv(self.log_file_name)
+        df = df.append(row, ignore_index='True')
+        df.to_csv(self.log_file_name, mode='w', index=False)
 
         return
 
