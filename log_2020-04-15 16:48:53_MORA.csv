@@ -1,0 +1,4 @@
+Routing algorithm,Power consumption [W],Reliability score (Max),Reliability score (Mean),Mean latency (premium) [ms],Mean latency (assured) [ms],Premium SLA violations,Assured SLA violations,Mean Premium SLA violations,Mean Assured SLA violations
+MORA,100760,0.26866080562500017,0.0044408207201087,2,2,0,0,-,-
+MORA,107632,0.00039456856406250296,4.288788739809815e-06,2,2,0,0,-,-
+MORA,99517,0.015246693006250034,0.00024872642642663175,2,2,0,0,-,-

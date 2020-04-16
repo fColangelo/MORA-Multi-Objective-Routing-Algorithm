@@ -6,7 +6,7 @@ import os, operator
 import numpy as np
 ## ROUTING ALGORITHMS
 # MORA
-from routing_algorithms.mora import eval_bandwidth_single_link, optimize_route
+from routing_algorithms.mora import eval_bandwidth_single_link, get_optimize_route, get_faster_optimize_route
 # DIJKSTRA
 from routing_algorithms.dijkstra import dijkstra_cost
 from routing_algorithms.dijkstra import set_spt
@@ -33,7 +33,7 @@ def write_to_json(data, filename, json_path):
 
 class Topology:
 
-    def __init__(self, name='topology', node_dict={}, link_dict={}, routing_method = 'Dijkstra'):
+    def __init__(self, name='topology', node_dict={}, link_dict={}, routing_method = 'Dijkstra', MORA_max_hops = 3):
         """
         Initialization Method of Topology object.
 
@@ -558,8 +558,8 @@ class Topology:
             self.init_EAR()
             self.get_path = self.get_shortest_path
         elif routing_method == 'MORA':
-            self.init_MORA()
-            self.get_path = optimize_route
+            self.init_MORA(max_hops = 3, favored_attr = 'Power consumption')
+            self.get_path = get_faster_optimize_route(self)
         elif routing_method == 'Hop_by_hop':
             self.init_Hop_by_hop()
             self.get_path = self.get_path_hop_by_hop
@@ -656,6 +656,21 @@ class Topology:
        
     # ************ MORA ANCILLARY METHODS ************
 
+    def enumerate_paths(self, s, d, max_hops, current_prefix = [], pts = []):
+        current_prefix.append(s)
+        N = self.get_valid_links(current_prefix[-1])
+        N = [x for x in N if x not in current_prefix]
+        for n in N:
+            if d == n:
+                new = current_prefix.copy()
+                new.append(d)
+                pts.append(new)
+                continue
+            if len(current_prefix) <= max_hops-1:
+                pts = self.enumerate_paths(n, d, max_hops, current_prefix, pts)
+        current_prefix.pop(-1)
+        return pts   
+
     def is_connection_possible(self, node_1, node_2):
         node_1_links = self.get_valid_links(node_1)
         if node_2 in node_1_links:
@@ -686,7 +701,7 @@ class Topology:
                 return False
         return True
 
-    def init_MORA(self, favored_attr = 'Reliability'):
+    def init_MORA(self, max_hops = 3, favored_attr = 'Power consumption'):
         if favored_attr == 'Shortest path':
             self.meta_heuristic = 0
         elif favored_attr == 'Latency':
@@ -695,7 +710,13 @@ class Topology:
             self.meta_heuristic = 2
         elif favored_attr == 'Reliability':
             self.meta_heuristic = 3
-
+        self.mutation_support = []
+        for ni in self.node_names:
+            for nj in self.node_names:
+                if ni != nj:
+                    pt = self.enumerate_paths(ni, nj, max_hops, [], [])
+                    # Structure node_1, node_2, list of all possible paths up to length max_hops
+                    self.mutation_support.append((ni, nj, pt))
         return 
 
     # ************ HOP BY HOP ANCILLARY METHODS ************
