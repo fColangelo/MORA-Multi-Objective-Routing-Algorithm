@@ -1,0 +1,4 @@
+Routing algorithm,Power consumption [W],Reliability score (Max),Reliability score (Mean),Mean latency (premium) [ms],Mean latency (assured) [ms],Premium SLA violations,Assured SLA violations,Mean Premium SLA violations,Mean Assured SLA violations
+EAR,104270,0,0.0,2,2,0,0,-,-
+EAR,116496,0,0.0,2,2,0,0,-,-
+EAR,105994,0,0.0,2,2,0,0,-,-
