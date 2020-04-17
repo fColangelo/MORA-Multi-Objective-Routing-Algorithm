@@ -99,12 +99,48 @@ def crossover_one_point(parent_1, parent_2, topology, ind_class, toolbox):
 
         return (child1, child2)
 
-def generate_individual(indi_class, starting_node, ending_node, topology):
+def generate_individual_random_walk(indi_class, starting_node, ending_node, topology):
 
     genome = []
     
     starting_node = starting_node
     ending_node = ending_node
+    while not genome or genome[-1] != ending_node:
+    
+        genome = []
+        genome.append(starting_node)
+
+        while genome[-1] != ending_node:
+            
+            # Cerca i collegamenti validi 
+            valid_links = topology.get_valid_links(genome[-1])
+            # Filter out nodes already in the topology
+            valid_links = [x for x in valid_links if x not in genome]
+            # If there is no valid link, restart the procedure
+            if not valid_links:
+                break
+            # Scegli a random il next hop
+            next_link = np.random.choice(valid_links)
+
+            # Controlla se non stato attraversato, se  valido aggiungilo alla topologia
+            if next_link not in genome:
+                genome.append(next_link)
+
+    return indi_class(genome)
+
+def generate_individual(indi_class, starting_node, ending_node, topology):
+
+    genome = []
+    
+
+    f = {'node1': starting_node, 'node2': ending_node}
+    shortest = topology.get_shortest_path(f)
+
+    population = topology.enumerate_paths(starting_node, ending_node, len(shortest)+2, [], [])
+    print('Path from {} to {}: shortest path has length {}, adding 2 hops lead to {} possible paths'.format(ni, nj, len(shortest), len(pt)))
+    len_list.append(len(pt))
+
+
     while not genome or genome[-1] != ending_node:
     
         genome = []

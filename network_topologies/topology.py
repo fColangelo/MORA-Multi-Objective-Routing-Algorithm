@@ -4,9 +4,11 @@ sys.dont_write_bytecode
 import json
 import os, operator
 import numpy as np
+from deap import algorithms, base, creator, tools, algorithms
+
 ## ROUTING ALGORITHMS
 # MORA
-from routing_algorithms.mora import eval_bandwidth_single_link, get_optimize_route, get_faster_optimize_route
+from routing_algorithms.mora_v2 import *
 # DIJKSTRA
 from routing_algorithms.dijkstra import dijkstra_cost
 from routing_algorithms.dijkstra import set_spt
@@ -701,6 +703,29 @@ class Topology:
                 return False
         return True
 
+    def generate_mutation_support(self, max_hops):
+        mutation_support = []
+        for ni in self.node_names:
+            for nj in self.node_names:
+                exist = fetch_paths(ni, nj, mutation_support)
+                if ni != nj and not exist:
+                    pt = self.enumerate_paths(ni, nj, max_hops, [], [])
+                    # Structure node_1, node_2, list of all possible paths 
+                    # up to length max_hops
+                    mutation_support.append((ni, nj, pt))
+        return mutation_support
+
+    def generate_MORA_routes(self):
+        mora_routes = []
+        for ni in self.node_names:
+            for nj in self.node_names:
+                exist = fetch_paths(ni, nj, mora_routes)
+                if ni != nj and not exist:
+                    shortest = self.get_shortest_path({'node1': ni, 'node2': nj})
+                    pt = self.enumerate_paths(ni, nj, len(shortest)+2, [], [])
+                    mora_routes.append((ni, nj, pt+[shortest]))
+        return mora_routes
+
     def init_MORA(self, max_hops = 3, favored_attr = 'Power consumption'):
         if favored_attr == 'Shortest path':
             self.meta_heuristic = 0
@@ -710,14 +735,22 @@ class Topology:
             self.meta_heuristic = 2
         elif favored_attr == 'Reliability':
             self.meta_heuristic = 3
-        self.mutation_support = []
-        for ni in self.node_names:
-            for nj in self.node_names:
-                if ni != nj:
-                    pt = self.enumerate_paths(ni, nj, max_hops, [], [])
-                    # Structure node_1, node_2, list of all possible paths up to length max_hops
-                    self.mutation_support.append((ni, nj, pt))
-        return 
+
+        creator.create("FitnessMultiObj", base.Fitness, weights=(-1.0, -1.0, -1.0, -1.0,)) 
+        creator.create("Individual", list, fitness=creator.FitnessMultiObj)
+        self.toolbox = base.Toolbox()
+        #toolbox.register("individual", generate_individual, creator.Individual, flow_obj.starting_node, flow_obj.ending_node, topology)
+        #toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+        self.toolbox.register("mate", crossover_one_point, topology=self, ind_class=creator.Individual, toolbox=toolbox)
+        self.toolbox.register("select", tools.selNSGA2)
+        self.toolbox.register("mutate", mutate_path, topology=self, indi_class=creator.Individual)
+        
+        set_spt(self)
+        self.mora_routes = self.generate_MORA_routes()
+        self.mutation_support = self.generate_mutation_support(max_hops)
+        self.get_path = get_optimize_route(self, toolbox)
+
+        return
 
     # ************ HOP BY HOP ANCILLARY METHODS ************
 
