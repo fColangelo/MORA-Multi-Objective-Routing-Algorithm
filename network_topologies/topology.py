@@ -1106,7 +1106,7 @@ class Link:
     def get_power_consumption(self, x, delta = 180, rho = 5e-4, mu = 1e-03, alpha = 1.4, n_l = 1):
         # See paper "A Hop-by-Hop Routing Mechanismfor Green Internet"
         # Link energy model used for "hop by hop..." and MORA
-        if x == 0:
+        if x <= 0:
             return 0
         else:
             return 2*n_l*(delta + rho*(x/n_l) + mu * ((x/n_l)**alpha))

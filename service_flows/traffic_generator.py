@@ -328,9 +328,9 @@ class TrafficGenerator():
             mav = np.mean(mean_assured_violations)
         else:
             mav = '-'
-        print(int(self.topo.get_power_consumption()), max_rel, mean_rel,\
-                   int(np.mean(premium_lat)), int(np.mean(assured_lat)), premium_violations, assured_violations, \
-                   mpv, mav)
+        #print(int(self.topo.get_power_consumption()), max_rel, mean_rel,\
+        #           int(np.mean(premium_lat)), int(np.mean(assured_lat)), premium_violations, assured_violations, \
+        #           mpv, mav)
         row = pd.Series([self.topo.routing_method, int(self.topo.get_power_consumption()), max_rel, mean_rel,\
                    int(np.mean(premium_lat)), int(np.mean(assured_lat)), premium_violations, assured_violations, \
                    mpv, mav], index = self.log_cols)
