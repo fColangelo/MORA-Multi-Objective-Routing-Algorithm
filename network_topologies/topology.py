@@ -1094,10 +1094,14 @@ class Link:
        
         self.consumed_bandwidth = self.consumed_bandwidth + float(required_bandwidth)
 
-        if self.consumed_bandwidth > self.total_bandwidth:
-            self.bandwidth_usage = 1
+        if self.consumed_bandwidth < -1e-3:
+            self.consumed_bandwidth = 0.0
+            self.bandwidth_usage = 0.0
+        elif self.consumed_bandwidth > self.total_bandwidth:
+            self.bandwidth_usage = 1.0
+            print("***** LINK {} IS CONGESTED: BANDWIDTH USAGE = {} % *****".format(self.id, (self.consumed_bandwidth/self.total_bandwidth)*100))
         else:
-            self.bandwidth_usage = self.consumed_bandwidth/self.total_bandwidth       
+            self.bandwidth_usage = self.consumed_bandwidth/self.total_bandwidth
 
         # Updating power consumption based on new link occupation
         self.power_consumption_MORA = self.get_power_consumption(self.consumed_bandwidth)

@@ -42,11 +42,12 @@ def main():
     # b  is the vector of the known terms --> the j-th element of b is the network traffic coupled on a network link
     #                                           in a specific link direction
     # Constrained Optimization: Karush-Kuhn-Tucker Theorem (generalization of Lagrange Multiplier Method)
-    # -----> min_x (|A x - b|) with x >= 0
+    # -----> min_x (|A x - b|^2) with x >= 0
 
     coefficient_matrix = generate_coefficient_matrix(directed_links, traffic_directions, topo)  # A
     A = np.array(coefficient_matrix)
 
+    mae_dict = {}
     for t in range(START, STOP):
         constants = get_link_throughputs(directed_links, t)  # b
         b = [elem[0] for elem in constants]  # b
@@ -54,6 +55,7 @@ def main():
         post_process_solution(solution)  # x
         
         mae = round(np.mean(abs(b-A.dot(solution)))/1000000,3)  # Mean Absolute Error expressed in Mbps
+        mae_dict[str(timeline[t])] = mae
         print(" {} --> MAE: {} ".format(timeline[t], mae))
 
         # Reorder data and write on json file (for every 
@@ -61,6 +63,8 @@ def main():
         traffic_matrix_data = generate_traffic_matrix_data(solution, traffic_directions)
         filename = '{}_traffic_matrices'.format(timeline[t])
         write_to_json(traffic_matrix_data, filename, TRAFFIC_MATRICES_PATH)
+    
+    write_to_json(mae_dict, "traffic_matrices_mae", THIS_FILE_PATH)
 
 
 def get_timeline():
