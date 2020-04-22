@@ -12,7 +12,7 @@ np.random.seed(64)
 
 class TrafficGenerator():
 
-    def __init__(self, interval, topology, path, faults = 0):
+    def __init__(self, interval, topology, path, faults = 0, traffic_boost = 0):
         
         #### CONSTANT PARAMETERS ####
         self.p_part = 0.16
@@ -31,6 +31,9 @@ class TrafficGenerator():
 
         #### TRAFFIC MATRICES ####
         self.path = path
+
+        #### TRAFFIC BOOST ####
+        self.traffic_boost = 1.0 + traffic_boost / 100
 
         # Get Traffic files & sort them
         self.traffic_files = [f for f in os.listdir(self.path)]
@@ -125,7 +128,7 @@ class TrafficGenerator():
 
             for src in f:
                 for dst in f[src]:
-                    bw = round(f[src][dst]/1000000,0)  # Get traffic bandwidth from src to dst and convert in Mbps
+                    bw = self.traffic_boost * round(f[src][dst]/1000000,0)  # Get traffic bandwidth from src to dst and convert in Mbps
                     if bw > 0:
                         bw_p = round(self.p_part * bw, 3)  # premium bandwidth
                         bw_a = round(self.a_part * bw, 3)  # assured bandwidth

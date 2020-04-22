@@ -1,0 +1,8 @@
+Routing algorithm,Power consumption [W],Reliability score (Max),Reliability score (Mean),Mean latency (premium) [ms],Mean latency (assured) [ms],Premium SLA violations,Assured SLA violations,Mean Premium SLA violations,Mean Assured SLA violations
+Dijkstra,190297,0,0.0,2,2,0,0,-,-
+Dijkstra,209712,0,0.0,2,2,0,0,-,-
+Dijkstra,187107,0,0.0,2,2,0,0,-,-
+Dijkstra,28504,0,0.0,3,3,0,0,-,-
+Dijkstra,154952,0,0.0,2,2,0,0,-,-
+Dijkstra,166257,0,0.0,2,2,0,0,-,-
+Dijkstra,151606,0,0.0,2,2,0,0,-,-

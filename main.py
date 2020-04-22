@@ -63,14 +63,14 @@ def main():
     #
     start_time = time.time()
     #
-    routing_algo = 'EAR'
+    routing_algo = 'Dijkstra'
     topo = Geant(routing_method=routing_algo)
     #
     print("--- {} seconds to build {} Topology with {} routing algorithm ---".format((time.time() - start_time), topo.name.upper(), topo.routing_method) + '\n')
     
     # INSTANTIATE TRAFFIC GENERATOR
     traffic_matrices_path = '/home/marco/Desktop/MORA-Multi-Objective-Routing-Algorithm/service_flows/test_traffic'
-    tg = TrafficGenerator(interval=100, topology=topo, path = traffic_matrices_path, faults=1)  # 300 s = 5 minutes
+    tg = TrafficGenerator(interval=100, topology=topo, path = traffic_matrices_path, faults=1, traffic_boost=50)  # 300 s = 5 minutes
     
     
     while True:
