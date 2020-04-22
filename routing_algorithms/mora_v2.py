@@ -25,7 +25,7 @@ def get_evaluate_individual(topology, flow):
             latency +=  link.latency 
             power += (link.get_power_consumption(link.consumed_bandwidth+ flow['bandwidth'])-link.power_consumption_MORA) 
             reliability.append(eval_bandwidth_single_link((link.consumed_bandwidth+ flow['bandwidth'])/link.total_bandwidth))
-        return len(individual), latency, power, max(reliability)
+        return latency, power, max(reliability)
     return evaluate_individual
 
 def get_evaluate_SLA(SLA_terms, topology, evaluate_individual):
@@ -125,16 +125,17 @@ def mutate_path(individual, topology, indi_class):
     else:
         return individual,
 
-def initPopulation(node1, node2, topology):
-    pts = fetch_paths(node1, node2, topology)   
+def initPopulation(pop_class, ind_class, node1, node2, topology):
+    pts = fetch_paths(node1, node2, topology.mora_routes)   
     if pts:
-        return pts[0]
+        pts = pop_class([ind_class(x) for x in pts[0]])
+        return pts
     else:
         return []
 
 def fetch_paths(node1, node2, pt_list):
     pts = [x[2] for x in pt_list \
-        if (x[1]==node1 and x[2]==node2) or (x[1]==node2 and x[2]==node1)]
+        if (x[0]==node1 and x[1]==node2) or (x[1]==node2 and x[0]==node1)]
     return pts
 
 def get_optimize_route(topology, toolbox):
@@ -149,7 +150,10 @@ def get_optimize_route(topology, toolbox):
         topology.toolbox.register("population_fetch", initPopulation, list, \
             creator.Individual, flow_obj.starting_node, flow_obj.ending_node, topology)
         pop = topology.toolbox.population_fetch()
-        
+        if pop == []:
+            print('WARNING - EMPTY POPULATION')
+            print(flow_dic['node1'], flow_dic['node2'])
+            print(fetch_paths(flow_dic['node1'], flow_dic['node2'], topology.mora_routes))
         hof = tools.ParetoFront(similar = compare_individuals)
         stats = tools.Statistics(lambda ind: ind.fitness.values)
         stats.register("avg", np.mean, axis=0)

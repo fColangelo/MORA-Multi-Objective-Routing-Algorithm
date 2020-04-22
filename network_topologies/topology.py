@@ -561,7 +561,7 @@ class Topology:
             self.get_path = self.get_shortest_path
         elif routing_method == 'MORA':
             self.init_MORA(max_hops = 3, favored_attr = 'Power consumption')
-            self.get_path = get_faster_optimize_route(self)
+            self.get_path = get_optimize_route(self, self.toolbox)
         elif routing_method == 'Hop_by_hop':
             self.init_Hop_by_hop()
             self.get_path = self.get_path_hop_by_hop
@@ -736,19 +736,17 @@ class Topology:
         elif favored_attr == 'Reliability':
             self.meta_heuristic = 3
 
-        creator.create("FitnessMultiObj", base.Fitness, weights=(-1.0, -1.0, -1.0, -1.0,)) 
+        creator.create("FitnessMultiObj", base.Fitness, weights=(-1.0, -1.0, -1.0,)) 
         creator.create("Individual", list, fitness=creator.FitnessMultiObj)
         self.toolbox = base.Toolbox()
-        #toolbox.register("individual", generate_individual, creator.Individual, flow_obj.starting_node, flow_obj.ending_node, topology)
-        #toolbox.register("population", tools.initRepeat, list, toolbox.individual)
-        self.toolbox.register("mate", crossover_one_point, topology=self, ind_class=creator.Individual, toolbox=toolbox)
+        self.toolbox.register("mate", crossover_one_point, topology=self, ind_class=creator.Individual, toolbox=self.toolbox)
         self.toolbox.register("select", tools.selNSGA2)
         self.toolbox.register("mutate", mutate_path, topology=self, indi_class=creator.Individual)
         
         set_spt(self)
         self.mora_routes = self.generate_MORA_routes()
         self.mutation_support = self.generate_mutation_support(max_hops)
-        self.get_path = get_optimize_route(self, toolbox)
+        #self.get_path = get_optimize_route(self, self.toolbox)
 
         return
 
@@ -758,13 +756,13 @@ class Topology:
         for node in self.nodes:
             input_capacity = 0
             for neighbor in node.neighbors_list:
-                input_capacity += self.get_link_between_neighbors(neighbor, node).total_bandwidth
-            node.x0 = input_capacity/800
+                input_capacity += self.get_link_between_neighbors(neighbor, node.name).total_bandwidth
+            node.x_0 = input_capacity/800
         return
                 
-    def get_path_hop_by_hop(self, path):
-        dest = path[-1]
-        source = path[0]
+    def get_path_hop_by_hop(self, flow_dic):
+        dest = flow_dic['node2']
+        source = flow_dic['node1']
         # Dictionary: for each node, the item is the current weight to get to that node
         node_paths_weights = {}
         # Dictionary: for each node, store the shortest path to that node
@@ -782,29 +780,29 @@ class Topology:
         # Set looping condition
         processed_nodes = []
         while processed_nodes != node_list:
-        # Get node with minimum weigth # What exactly are the w
-            cn = sorted(node_paths_weights, key=operator.itemgetter(1))[0]
-        # if current node == source
-            if cn == source:
+            # Get node with minimum weigth # What exactly are the w
+            cn = self.get_one_node(sorted(node_paths_weights, key=operator.itemgetter(1))[0])
+            # if current node == source
+            if cn.name == source:
                 node_paths[source].append(source)
                 return node_paths[source]
             # Get neighbors of n. For each neighbor...
             for ne in cn.neighbors_list:
                 # Get link between nodes
-                link = self.get_link_between_neighbors(cn, ne)
+                link = self.get_link_between_neighbors(cn.name, ne)
                 x_m = link.average_link_usage
                 # weight to get from cn to ne
-                w = link.get_power_consumption(x_m + ne.x_0) - link.get_power_consumption(x_m)
+                w = link.get_power_consumption(x_m + self.get_one_node(ne).x_0) - link.get_power_consumption(x_m)
                 # If this path is shorter
-                if node_paths_weights[cn] + w < node_paths_weights[ne]:
+                if node_paths_weights[cn.name] + w < node_paths_weights[ne]:
                     # The path to this node (ne) is equal to the path to cn ...
-                    node_paths[ne] = node_paths[cn]
+                    node_paths[ne] = node_paths[cn.name]
                     # ...plus cn
-                    node_paths[ne].append(cn)
+                    node_paths[ne].append(cn.name)
                     # The weight of this path is equal to the weight to cn + the weight cn->ne
-                    node_paths_weights[ne] = node_paths_weights[cn] + w
+                    node_paths_weights[ne] = node_paths_weights[cn.name] + w
             
-            processed_nodes.append(cn)             
+            processed_nodes.append(cn.name)             
         return []       
 
 
