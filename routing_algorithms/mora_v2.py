@@ -4,6 +4,7 @@ import numpy as np
 from deap import algorithms, base, creator, tools, algorithms
 import json
 import collections
+import operator
 from utils.network_objects import Flow
 
 
@@ -54,8 +55,70 @@ def compare_individuals(indi1, indi2):
     return indi1 == indi2
 
 def faster_crossover(parent_1, parent_2, topology, ind_class, toolbox):
-    if len(parent_1)> 
-    merging_points = parent_1[1:-2]
+    """Perform fast crossover between two individuals. Steps:
+       - Check that at least one of the individuals has len > 3. Otherwise it makes no sense to attempt crossover
+       - Select a possible merging point at random in p1, weigths based on its connectivity
+       - Check if it can be connected anywhere in p2
+
+    Arguments:
+        parent_1 {DEAP individual (list)} -- the first individual
+        parent_2 {DEAP individual (list)} -- the second individual
+        topology {Topology} -- the reference topology object for the individuals
+        ind_class {DEAP individual class} -- see DEAP docs
+        toolbox {DEAP toolbox} -- see DEAP docs
+    """
+    if len(parent_1) > 2:
+        connection_loci = []
+        mp = parent_1[1:-1] # Potential merging points
+        
+        n = [x[0] for x in topology.node_connectivity if x[0] in mp] # Nodes
+        p = [x[1] for x in topology.node_connectivity if x[0] in mp] # Nodes connectivities
+        p /=  np.sum(p) # Probability based on connectivity
+
+        candidate = np.random.choice(n, p=p)
+        valid_links_cand = topology.get_valid_links(candidate)
+        idx = parent_1.index(candidate)
+        used_nodes_P1_p1 = parent_1[:(idx+1)] # Notation: P -> parent; p -> part
+        used_nodes_P1_p2 = parent_1[(idx+1):]
+
+        for ind_p2 in range(1, len(parent_2)-1):
+            # These nodes are already used, we must check that parent1 does not contain any of these
+            used_nodes_P2_p1 = parent_2[ind_p2:]
+            used_nodes_P2_p2 = parent_2[:ind_p2]
+            # Check if there is any common node between the parent_1 and parent_2 genome
+            common_nodes_P1_P2 = [x for x in used_nodes_P1_p1 if x in used_nodes_P2_p2]
+            common_nodes_P2_P1 = [x for x in used_nodes_P2_p1 if x in used_nodes_P1_p2]
+            # If there are common nodes, no crossover can be made at these loci
+            if common_nodes_P1_P2 or common_nodes_P2_P1:
+                continue
+            else:
+                # If there are no common nodes, check if the two genomes can be connected
+                is_compatible = parent_2[ind_p2] in valid_links_cand 
+                if is_compatible:
+                    # The two genomes cannot be connected at this locus
+                    connection_loci.append((idx, ind_p2))
+
+        # If no compatible merging point has been found, output the two parents
+        if not connection_loci:
+            return parent_1, parent_2
+        else:
+            # Choose a random locus
+            locus = connection_loci[np.random.choice(len(connection_loci))]
+            # Create children (necessary for DEAP)
+            child1, child2 = [toolbox.clone(ind) for ind in (parent_1, parent_2)] 
+
+            child1 = child1[:locus[0]+1]
+            child1.extend((parent_2[locus[1]:]))
+            child1 =ind_class(child1)
+
+            child2 = child2[:locus[1]]
+            child2.extend((parent_1[locus[0]+1:]))
+            child2 = ind_class(child2)
+
+            return (child1, child2)
+    else:
+        return parent_1, parent_2
+    
 
 def crossover_one_point(parent_1, parent_2, topology, ind_class, toolbox):
     connection_loci = []

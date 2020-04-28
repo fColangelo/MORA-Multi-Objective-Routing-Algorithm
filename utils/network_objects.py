@@ -6,15 +6,14 @@ from pathlib import Path
 class SLA(object):
     
     def __init__(self, flow_dict):
-        self.bandwidth = flow_dict['bandwidth'] #int(re.findall(r'\d+', flow_dict['bandwidth'])[0])
-        self.latency = flow_dict['latency'] #int(re.findall(r'\d+', flow_dict['delay'])[0])
-        self.jitter = flow_dict['jitter'] #int(re.findall(r'\d+', flow_dict['jitter'])[0])
+        self.bandwidth = flow_dict['bandwidth'] 
+        self.latency = flow_dict['latency'] 
 
-
+"""
 class Link(object):
     
     def __init__(self, link_dict):
-        self.total_bandwidth = link_dict['bw'] # Measured in MB # TODO marco controlla
+        self.total_bandwidth = link_dict['bw'] # Measured in MB
         self.latency = int(re.findall(r'\d+', link_dict['delay'])[0])
         self.jitter = int(re.findall(r'\d+', link_dict['jitter'])[0])
         if link_dict['loss']:
@@ -33,7 +32,7 @@ class Link(object):
         if self.cost is not None:
             s += '\n' + 'Cost: {}'.format(self.cost)
         return s
-            
+"""            
 class Flow(object):
     
     def __init__(self, flow_dict):

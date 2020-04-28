@@ -742,12 +742,12 @@ class Topology:
 
         self.node_connectivity = []
         for ni in self.nodes:
-            self.node_connectivity.append(ni.name, len(ni.neighbors_list))
+            self.node_connectivity.append((ni.name, len(ni.neighbors_list)))
 
         creator.create("FitnessMultiObj", base.Fitness, weights=(-1.0, -1.0, -1.0,)) 
         creator.create("Individual", list, fitness=creator.FitnessMultiObj)
         self.toolbox = base.Toolbox()
-        self.toolbox.register("mate", crossover_one_point, topology=self, ind_class=creator.Individual, toolbox=self.toolbox)
+        self.toolbox.register("mate", faster_crossover, topology=self, ind_class=creator.Individual, toolbox=self.toolbox)
         self.toolbox.register("select", tools.selNSGA2)
         self.toolbox.register("mutate", mutate_path, topology=self, indi_class=creator.Individual)
         
