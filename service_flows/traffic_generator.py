@@ -53,9 +53,9 @@ class TrafficGenerator():
         self.log_file_name = "log_{}_{}.csv".format(\
                 self.starting_time.strftime("%Y-%m-%d %H:%M:%S"), topology.routing_method)
         self.log_cols = ['Routing algorithm', 'Power consumption [W]', 'Reliability score (Max)',\
-                            'Reliability score (Mean)', 'Mean latency (premium) [ms]',\
-                            'Mean latency (assured) [ms]', 'Premium SLA violations', 'Assured SLA violations',
-                            'Mean Premium SLA violations' , 'Mean Assured SLA violations']
+                            'Reliability score (# above 60%)', 'Mean latency (premium) [ms]',\
+                            'Mean latency (assured) [ms]', 'Premium SLA violations',\
+                                 'Assured SLA violations', 'Link usage']
         df = pd.DataFrame(columns=self.log_cols)
         df.to_csv(self.log_file_name, mode='w', header=True, index=False)
 
@@ -291,52 +291,49 @@ class TrafficGenerator():
         * Mean latency per flow class
         * ?
         """ 
-        max_rel, mean_rel = self.topo.get_reliability_score()
+        max_rel, above_thresh = self.topo.get_reliability_score()
         premium_lat = []
         assured_lat = [] 
         premium_violations = 0
         assured_violations = 0
-        mean_premium_violations = []
-        mean_assured_violations = []
+
 
         for f in self.old_path_archive:
             if 'premium' in f[0]['_id']:
                 path_lat = []
+                bw_violated = False
                 for j in range(len(f[1])-1):
                     link = self.topo.get_link_between_neighbors(f[1][j], f[1][j+1])
                     path_lat.append(link.latency)
+                    if link.bandwidth_usage > 1:
+                        bw_violated = True
                 path_lat = np.mean(path_lat)
                 premium_lat.append(path_lat)
-                if path_lat > self.premium_thresh:
+                if path_lat > self.premium_thresh or bw_violated:
                     premium_violations += 1
-                    mean_premium_violations.append(abs(path_lat - self.premium_thresh))
 
             elif 'assured' in f[0]['_id']:
                 path_lat = []
+                bw_violated = False
                 for j in range(len(f[1])-1):
                     link = self.topo.get_link_between_neighbors(f[1][j], f[1][j+1])
                     path_lat.append(link.latency)
+                    if link.bandwidth_usage > 1:
+                        bw_violated = True
                 path_lat = np.mean(path_lat)
                 assured_lat.append(path_lat)
-                if path_lat > self.assured_thresh:
+                if path_lat > self.assured_thresh or bw_violated:
                     assured_violations += 1
-                    mean_assured_violations.append(abs(path_lat - self.assured_thresh))
 
-        if mean_premium_violations:
-            mpv = np.mean(mean_premium_violations)
-        else:
-            mpv = '-'
+        self.log_cols = ['Routing algorithm', 'Power consumption [W]', 'Reliability score (Max)',\
+                            'Reliability score (# above 60%)', 'Mean latency (premium) [ms]',\
+                            'Mean latency (assured) [ms]', 'Premium SLA violations',\
+                                 'Assured SLA violations', 'Link usage']
 
-        if mean_assured_violations:
-            mav = np.mean(mean_assured_violations)
-        else:
-            mav = '-'
-        #print(int(self.topo.get_power_consumption()), max_rel, mean_rel,\
-        #           int(np.mean(premium_lat)), int(np.mean(assured_lat)), premium_violations, assured_violations, \
-        #           mpv, mav)
-        row = pd.Series([self.topo.routing_method, int(self.topo.get_power_consumption()), max_rel, mean_rel,\
+
+        row = pd.Series([self.topo.routing_method, int(self.topo.get_power_consumption()), max_rel, above_thresh,\
                    int(np.mean(premium_lat)), int(np.mean(assured_lat)), premium_violations, assured_violations, \
-                   mpv, mav], index = self.log_cols)
+                   self.topo.get_link_usages()], index = self.log_cols)
 
         df = pd.read_csv(self.log_file_name)
         df = df.append(row, ignore_index='True')

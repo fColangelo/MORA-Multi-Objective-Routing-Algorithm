@@ -31,22 +31,31 @@ def get_evaluate_individual(topology, flow):
 def get_evaluate_SLA(SLA_terms, topology, evaluate_individual):
     def evaluate_SLA(individual):
         evaluation = evaluate_individual(individual)
-        if evaluation[0] > SLA_terms.latency:
+        if evaluation[0] > SLA_terms.latency or evaluation[2] > 1:
             return False
         return True
     return evaluate_SLA
 
 def get_penalty(SLA_terms, topology, evaluate_individual):
     def penalty(individual):
-        evaluation = evaluate_individual(individual)
-        p1 = (evaluation[0] - SLA_terms.latency )**2
-        #p2 = (evaluation[1] - SLA_terms.jitter)**3
-        #p3 = ((evaluation[3] - 0.8)*10)**2
-        return p1#+p2+p3)
+        penalty_bw = 0
+        latency = 0
+        for idx in range(len(individual)-1):
+            # TODO consider multiple links
+            link = topology.get_link_between_neighbors(individual[idx], individual[idx+1])
+            penalty_bw +=  max(0, link.consumed_bandwidth - link.total_bandwidth)**2
+            latency +=  link.latency 
+        penalty_lat = max(0, (latency - SLA_terms.latency ))**2
+        
+        return penalty_lat + penalty_bw
     return penalty
 
 def compare_individuals(indi1, indi2):
     return indi1 == indi2
+
+def faster_crossover(parent_1, parent_2, topology, ind_class, toolbox):
+    if len(parent_1)> 
+    merging_points = parent_1[1:-2]
 
 def crossover_one_point(parent_1, parent_2, topology, ind_class, toolbox):
     connection_loci = []
@@ -100,6 +109,8 @@ def crossover_one_point(parent_1, parent_2, topology, ind_class, toolbox):
         return (child1, child2)
 
 
+    
+
 def mutate_path(individual, topology, indi_class):
     possible_mutations = []
     # Resample until we have at least one valid mutation
@@ -141,6 +152,15 @@ def fetch_paths(node1, node2, pt_list):
 def get_optimize_route(topology, toolbox):
     def optimize_route(flow_dic):
         
+        if 'premium' in flow_dic['_id']:
+            gen = 30
+        elif 'assured' in flow_dic['_id']:
+            gen = 20
+        else:
+            gen = 10
+
+        gen = 10
+
         flow_obj = Flow(flow_dic)        
         evaluate_individual = get_evaluate_individual(topology, flow_dic)
         evaluate_SLA = get_evaluate_SLA(flow_obj.SLA, topology, evaluate_individual)
@@ -153,14 +173,13 @@ def get_optimize_route(topology, toolbox):
         if pop == []:
             print('WARNING - EMPTY POPULATION')
             print(flow_dic['node1'], flow_dic['node2'])
-            print(fetch_paths(flow_dic['node1'], flow_dic['node2'], topology.mora_routes))
         hof = tools.ParetoFront(similar = compare_individuals)
         stats = tools.Statistics(lambda ind: ind.fitness.values)
         stats.register("avg", np.mean, axis=0)
         stats.register("std", np.std, axis=0)
         stats.register("min", np.min, axis=0)
         stats.register("max", np.max, axis=0)
-        algorithms.eaSimple(pop, topology.toolbox, cxpb=0.75, mutpb=0.2, ngen=10, stats=stats, halloffame=hof, verbose=False)
+        algorithms.eaSimple(pop, topology.toolbox, cxpb=0.75, mutpb=0.2, ngen=gen, stats=stats, halloffame=hof, verbose=False)
 
         min_attr = 1e15 
         meta_att = topology.meta_heuristic

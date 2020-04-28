@@ -359,11 +359,15 @@ class Topology:
 
     def get_reliability_score(self):
         reliabilities = [eval_bandwidth_single_link(x.bandwidth_usage) for x in self.links if x.status == 'on']
-        return np.max(reliabilities), np.mean(reliabilities)
+        above_threshold = len([x for x in reliabilities if x > 0.6])
+        return np.max(reliabilities), above_threshold
 
     def get_power_consumption(self):
         powers = [x.power_consumption_MORA for x in self.links if x.status == 'on']
         return np.sum(powers)
+
+    def get_link_usages(self):
+        return [x.bandwidth_usage for x in self.links]
 
     ## TOPO OBJECT
 
@@ -736,6 +740,10 @@ class Topology:
         elif favored_attr == 'Reliability':
             self.meta_heuristic = 3
 
+        self.node_connectivity = []
+        for ni in self.nodes:
+            self.node_connectivity.append(ni.name, len(ni.neighbors_list))
+
         creator.create("FitnessMultiObj", base.Fitness, weights=(-1.0, -1.0, -1.0,)) 
         creator.create("Individual", list, fitness=creator.FitnessMultiObj)
         self.toolbox = base.Toolbox()
@@ -763,47 +771,58 @@ class Topology:
     def get_path_hop_by_hop(self, flow_dic):
         dest = flow_dic['node2']
         source = flow_dic['node1']
-        # Dictionary: for each node, the item is the current weight to get to that node
+            # Dictionary: for each node, the item is the current weight to get to that node
         node_paths_weights = {}
         # Dictionary: for each node, store the shortest path to that node
         # Difference from paper: in the paper phi stores only the predecessor (no real difference)
         node_paths = {}
         node_list = []
+        pt = [source]
         for n in self.nodes:
-            if n.name is not dest:
-                node_paths_weights[n.name] = np.Inf
+            if n.name != dest:
+                node_paths_weights[n.name] = np.inf
             else:
                 node_paths_weights[n.name] = 0
-
             node_paths[n.name] = []
             node_list.append(n.name) 
         # Set looping condition
         processed_nodes = []
+
         while processed_nodes != node_list:
             # Get node with minimum weigth # What exactly are the w
-            cn = self.get_one_node(sorted(node_paths_weights, key=operator.itemgetter(1))[0])
+            # Extract_min
+            for n in sorted(node_paths_weights.items(), key=operator.itemgetter(1)):
+                if n[0] not in processed_nodes:
+                    cn = n[0]
+                    break
+            cn = self.get_one_node(cn)
             # if current node == source
             if cn.name == source:
-                node_paths[source].append(source)
-                return node_paths[source]
+                nn = source
+                while nn != dest:
+                    nn = node_paths[nn]
+                    pt.insert(0, nn) 
+                return list(reversed(pt))
             # Get neighbors of n. For each neighbor...
             for ne in cn.neighbors_list:
+
                 # Get link between nodes
                 link = self.get_link_between_neighbors(cn.name, ne)
                 x_m = link.average_link_usage
                 # weight to get from cn to ne
                 w = link.get_power_consumption(x_m + self.get_one_node(ne).x_0) - link.get_power_consumption(x_m)
                 # If this path is shorter
+                #print(ne, w)
+                #print(node_paths_weights[cn.name] + w, node_paths_weights[ne])
                 if node_paths_weights[cn.name] + w < node_paths_weights[ne]:
-                    # The path to this node (ne) is equal to the path to cn ...
-                    node_paths[ne] = node_paths[cn.name]
-                    # ...plus cn
-                    node_paths[ne].append(cn.name)
+                    # The path to this node passes through cn
+                    node_paths[ne] = cn.name 
                     # The weight of this path is equal to the weight to cn + the weight cn->ne
                     node_paths_weights[ne] = node_paths_weights[cn.name] + w
-            
-            processed_nodes.append(cn.name)             
-        return []       
+
+            processed_nodes.append(cn.name)   
+        return []
+    
 
 
 class Node:
@@ -1129,7 +1148,7 @@ class Link:
             self.consumed_bandwidth = 0.0
             self.bandwidth_usage = 0.0
         elif self.consumed_bandwidth > self.total_bandwidth:
-            self.bandwidth_usage = 1.0
+            self.bandwidth_usage = self.consumed_bandwidth/self.total_bandwidth #1.0
             print("***** LINK {} IS CONGESTED: BANDWIDTH USAGE = {} % *****".format(self.id, (self.consumed_bandwidth/self.total_bandwidth)*100))
         else:
             self.bandwidth_usage = self.consumed_bandwidth/self.total_bandwidth
