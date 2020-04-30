@@ -48,6 +48,7 @@ class TrafficGenerator():
         thread.start()
 
         ### LOGGING ###
+        self.last_elapsed = 0
         self.log_idx = 0
         self.starting_time = datetime.datetime.now()
         self.log_file_name = "log_{}_{}.csv".format(\
@@ -55,7 +56,7 @@ class TrafficGenerator():
         self.log_cols = ['Routing algorithm', 'Power consumption [W]', 'Reliability score (Max)',\
                             'Reliability score (# above 60%)', 'Mean latency (premium) [ms]',\
                             'Mean latency (assured) [ms]', 'Premium SLA violations',\
-                                 'Assured SLA violations', 'Link usage']
+                                 'Assured SLA violations', 'Time', 'Link usage']
         df = pd.DataFrame(columns=self.log_cols)
         df.to_csv(self.log_file_name, mode='w', header=True, index=False)
 
@@ -147,6 +148,7 @@ class TrafficGenerator():
             now = datetime.datetime.now()
             print('++++ END OF ITERATION @ {} ++++'.format(now.strftime("%m/%d/%Y, %H:%M:%S")))
             print('******* GENERATE_FLOWS -> ITERATION {} OUT OF {} ELAPSED TIME = {} *******'.format(i, len(self.traffic_files), time.time() - beginning_of_iteration))
+            self.last_elapsed = time.time() - beginning_of_iteration
             try:
                 time.sleep(self.interval - (time.time() - beginning_of_iteration))
             except:
@@ -328,12 +330,12 @@ class TrafficGenerator():
         self.log_cols = ['Routing algorithm', 'Power consumption [W]', 'Reliability score (Max)',\
                             'Reliability score (# above 60%)', 'Mean latency (premium) [ms]',\
                             'Mean latency (assured) [ms]', 'Premium SLA violations',\
-                                 'Assured SLA violations', 'Link usage']
+                                 'Assured SLA violations', 'Time', 'Link usage']
 
 
         row = pd.Series([self.topo.routing_method, int(self.topo.get_power_consumption()), max_rel, above_thresh,\
                    int(np.mean(premium_lat)), int(np.mean(assured_lat)), premium_violations, assured_violations, \
-                   self.topo.get_link_usages()], index = self.log_cols)
+                   self.last_elapsed , self.topo.get_link_usages()], index = self.log_cols)
 
         df = pd.read_csv(self.log_file_name)
         df = df.append(row, ignore_index='True')

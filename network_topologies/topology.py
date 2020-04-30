@@ -747,7 +747,7 @@ class Topology:
         creator.create("FitnessMultiObj", base.Fitness, weights=(-1.0, -1.0, -1.0,)) 
         creator.create("Individual", list, fitness=creator.FitnessMultiObj)
         self.toolbox = base.Toolbox()
-        self.toolbox.register("mate", faster_crossover, topology=self, ind_class=creator.Individual, toolbox=self.toolbox)
+        self.toolbox.register("mate", crossover_one_point, topology=self, ind_class=creator.Individual, toolbox=self.toolbox)
         self.toolbox.register("select", tools.selNSGA2)
         self.toolbox.register("mutate", mutate_path, topology=self, indi_class=creator.Individual)
         
@@ -1163,4 +1163,6 @@ class Link:
         if x <= 0:
             return 0
         else:
+            if x > self.total_bandwidth:
+                x = self.total_bandwidth
             return 2*n_l*(delta + rho*(x/n_l) + mu * ((x/n_l)**alpha))
