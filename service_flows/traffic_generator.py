@@ -15,8 +15,8 @@ class TrafficGenerator():
     def __init__(self, interval, topology, path, faults = 0, traffic_boost = 0):
         
         #### CONSTANT PARAMETERS ####
-        self.p_part = 0.16
-        self.a_part = 0.67
+        self.p_part = 0.19
+        self.a_part = 0.64
         self.be_part = 1 - (self.p_part + self.a_part)  # 0.17
 
         self.premium_thresh = 150 #ms
@@ -195,15 +195,15 @@ class TrafficGenerator():
         """
         
         if service_class == 'premium':
-            latency = 150  # ms
+            latency = self.premium_thresh  # ms
             jitter = 0
             loss = 0
         elif service_class == 'assured':
-            latency = 400  # ms
+            latency = self.assured_thresh  # ms
             jitter = 0
             loss = 0
         else:
-            latency = 300000  # ms --> 5 minutes = infinite time!
+            latency = 120000  # ms --> 2 minutes
             jitter = 0
             loss = 0
         
