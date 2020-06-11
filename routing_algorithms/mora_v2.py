@@ -21,18 +21,17 @@ def get_evaluate_individual(topology, flow):
         power = 0
         reliability = []
         for idx in range(len(individual)-1):
-            # TODO consider multiple links
             link = topology.get_link_between_neighbors(individual[idx], individual[idx+1])
             latency +=  link.latency 
             power += (link.get_power_consumption(link.consumed_bandwidth+ flow['bandwidth'])-link.power_consumption_MORA) 
             reliability.append(eval_bandwidth_single_link((link.consumed_bandwidth+ flow['bandwidth'])/link.total_bandwidth))
-        return latency, power, max(reliability)
+        return power, np.max(reliability), np.sum(reliability), latency
     return evaluate_individual
 
 def get_evaluate_SLA(SLA_terms, topology, evaluate_individual):
     def evaluate_SLA(individual):
         evaluation = evaluate_individual(individual)
-        if evaluation[0] > SLA_terms.latency or evaluation[2] > 1:
+        if evaluation[3] > SLA_terms.latency or evaluation[1] > 1:
             return False
         return True
     return evaluate_SLA
@@ -42,7 +41,6 @@ def get_penalty(SLA_terms, topology, evaluate_individual):
         penalty_bw = 0
         latency = 0
         for idx in range(len(individual)-1):
-            # TODO consider multiple links
             link = topology.get_link_between_neighbors(individual[idx], individual[idx+1])
             penalty_bw +=  max(0, link.consumed_bandwidth - link.total_bandwidth)**2
             latency +=  link.latency 
@@ -216,13 +214,13 @@ def get_optimize_route(topology, toolbox):
     def optimize_route(flow_dic):
         
         if 'premium' in flow_dic['_id']:
-            gen = 30
+            gen = 25
         elif 'assured' in flow_dic['_id']:
-            gen = 20
+            gen = 15
         else:
             gen = 10
 
-        gen = 10
+        #gen = 10
 
         flow_obj = Flow(flow_dic)        
         evaluate_individual = get_evaluate_individual(topology, flow_dic)

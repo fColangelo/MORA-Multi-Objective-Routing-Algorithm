@@ -244,10 +244,6 @@ class TrafficGenerator():
                 if flow["node1"] in self.topo.faulty_node_list \
                     or flow["node2"] in self.topo.faulty_node_list:
                     continue
-                #node1 = flow["node1"]
-                #node2 = flow["node2"]
-                #flow_path = self.topo.get_path(node1, node2)
-                #presence_flag = False
                 # Check if flow is currently applied on topology...
 
                 flow_exist = [x for x in self.old_path_archive if x[0]["_id"] == flow["_id"]]
@@ -272,16 +268,15 @@ class TrafficGenerator():
                     self.new_path_archive.append((flow, flow_path))
                     self.topo.apply_service_on_network(flow, flow_path)
 
-            ## REMOVE TERMINED FLOWS FROM NETWORK
-            # Remove all flows that are not alive anymore
-            # All old flows that are not matched in new flows
-            # Everything left in old flows
+            ## REMOVE OLD FLOWS FROM NETWORK
+            # Remove all flows that are not active anymore
+            #   All old flows that are not matched in new flows
+            #   Everything left in old flows
             for entry in self.old_path_archive:
                 self.topo.remove_service_from_network(entry[0], entry[1])
 
         self.old_path_archive = self.new_path_archive
         self.new_path_archive = []
-        #self.topo.update_link_status()
         self.log_stats()
 
     def log_stats(self):
@@ -289,9 +284,8 @@ class TrafficGenerator():
         Called at the end of every new flow cycle, log network wide stats
         * Network-wide energy consumption
         * Network-wide reliability score (max and mean)
-        * # of SLA violation
-        * Mean latency per flow class
-        * ?
+        * # of SLA violation (premium and assured)
+        * Time
         """ 
         max_rel, above_thresh = self.topo.get_reliability_score()
         premium_lat = []
