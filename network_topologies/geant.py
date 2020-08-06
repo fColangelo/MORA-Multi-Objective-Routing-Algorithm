@@ -27,10 +27,19 @@ def read_from_json(json_path):
 class Geant(Topology):
     
     def __init__(self, node_dict={}, link_dict={}, routing_method = 'Dijkstra'):
+        """
+        Initialization Method of Geant object.
+
+        Args:
+            node_dict (dict, optional): Dictionary of nodes and nodes' properties. Defaults to {}.
+            link_dict (dict, optional): Dictionary of links and links' properties. Defaults to {}.
+            routing_method (str, optional): Name of the routing method used by this Geant object. Defaults to 'Dijkstra'.
+        """
 
         topo_name = "geant"
         #preprocess_metadata(topo_name)
 
+        # Get nodes and links data
         current_dir = os.path.dirname(__file__)
         db_path = os.path.join(current_dir, topo_name , topo_name + "DB")
         node_dict = read_from_json(db_path + "/nodes.json")

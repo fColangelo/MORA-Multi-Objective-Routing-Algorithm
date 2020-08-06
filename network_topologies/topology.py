@@ -40,14 +40,14 @@ class Topology:
         Initialization Method of Topology object.
 
         Keyword Arguments:
-            name {str} -- Name of this Topology. (default: {'topology'})
-            node_dict {dict} -- Dictionary of nodes and nodes' properties. (default: {{}})
-            link_dict {dict} -- Dictionary of links and links' properties. (default: {{}})
+            name {str} -- Name of this Topology (default: {'topology'}).
+            node_dict {dict} -- Dictionary of nodes and nodes' properties (default: {{}}).
+            link_dict {dict} -- Dictionary of links and links' properties (default: {{}}).
         
-        N.B. There are no consistency checks between input node_dict and input link_dict
+        N.B. There are no consistency checks between input node_dict and input link_dict.
         """
 
-        self.name = name
+        self.name = name            # this Topology name
         self.nodes=[]               # list of Node objects belonging to this Topology
         self.links=[]               # list of Link objects belonging to this Topology
         self.node_names=[]          # list of node names
@@ -55,11 +55,13 @@ class Topology:
         self.node_dict = {}         # dictionary of nodes and nodes' properties
         self.link_dict = {}         # dictionary of links and links' properties
         self.current_flows = []     # list of currently applied flows on this Topology
-        self.faulty_node_list = []  
+        self.faulty_node_list = []  # list of faulty nodes
         
+        # Create this Topology nodes and links 
         self.create_topology(node_dict, link_dict)
         self.reset()
 
+        # Setup routing method
         self.reachability_matrix = self.get_reachability_matrix()  # this Topology reachability matrix
         self.routing_method = routing_method
         self.init_routing_method(routing_method)
@@ -70,8 +72,8 @@ class Topology:
         """
         Create nodes and links.
         Arguments:
-            node_dict {dict} -- Dictionary of nodes and nodes' properties (default: {{}})
-            link_dict {dict} -- Dictionary of links and links' properties (default: {{}})
+            node_dict {dict} -- Dictionary of nodes and nodes' properties (default: {{}}).
+            link_dict {dict} -- Dictionary of links and links' properties (default: {{}}).
         """
 
         # Create nodes
@@ -83,6 +85,10 @@ class Topology:
             self.create_link(info=link_dict[link_info])
 
     def reset(self):
+        """
+        Resets all topology nodes and links status.
+        Node/Link status attribute is set to 'on'.
+        """
 
         print("Resetting network topology... ", end='')
         
@@ -95,37 +101,10 @@ class Topology:
         print("OK!")
         
         return
-        
-    def shutdown_node(self, node_name):
-        """[summary]
-        
-        Arguments:
-            node {[type]} -- [description]
-        """
-        node = self.get_one_node(node_name)
-
-        node.status = 'off'
-        self.update_node_info(node)
-
-        disrupted_flows_ids = []
-
-        # Get currently active node's links and shutdown them
-        links_to_shut = node.active_links_list.copy()
-        for link in links_to_shut:
-            # Get this link object
-            link_obj = self.get_one_link(link)
-            # Get flows that are going to be disrupted by this link switching off
-            disrupted_flows_ids.extend(link_obj.service_flows)
-            # Switch off this link
-            self.switch_off_link(link_obj)
-        
-        # Remove duplicate elements from disrupted_flows_ids and return it
-        return list(set(disrupted_flows_ids))
 
     def is_reachable(self, src_node, dst_node):
         """
-        This function states if dst_node is reachable from src_node based
-        on the current network operational status.
+        This function states if dst_node is reachable from src_node based on the current network operational status.
         
         Arguments:
             src_node {str} -- Source node name.
@@ -207,12 +186,51 @@ class Topology:
         raise Exception('*** NODE {} IS NOT IN THIS TOPOLOGY! ***'.format(node_name))
 
     def update_node_info(self, node):
-        
+        """
+        Update node information.
+
+        Args:
+            node (Node): node to be updated.
+        """
+
         node_name = node.name
         for n in self.node_dict:
             if  node_name in self.node_dict[n]['_id']:
                 self.node_dict[n] = node.info
                 break
+
+    def shutdown_node(self, node_name):
+        """
+        Shuts down node named 'node_name', i.e. its status attribute is set to 'off'.
+        
+        When a node is shut down, all the links having this node as endpoint are shut down too.
+        All the traffic flows coupled to these links are considered 'disrupted flows'.
+
+        Args:
+            node_name (string): node name.
+
+        Returns:
+            [list]: list of disrupted flows.
+        """
+        node = self.get_one_node(node_name)
+
+        node.status = 'off'
+        self.update_node_info(node)
+
+        disrupted_flows_ids = []
+
+        # Get currently active node's links and shutdown them
+        links_to_shut = node.active_links_list.copy()
+        for link in links_to_shut:
+            # Get this link object
+            link_obj = self.get_one_link(link)
+            # Get flows that are going to be disrupted by this link switching off
+            disrupted_flows_ids.extend(link_obj.service_flows)
+            # Switch off this link
+            self.switch_off_link(link_obj)
+        
+        # Remove duplicate elements from disrupted_flows_ids and return it
+        return list(set(disrupted_flows_ids))
 
     ## LINKS
 
@@ -249,7 +267,7 @@ class Topology:
 
     def get_one_link(self, link_name):
         """
-        Return Link object with id 'link_name'
+        Return Link object with id 'link_name'.
 
         Arguments:
             link_name {str} -- ID of Link object.
@@ -268,7 +286,13 @@ class Topology:
         raise Exception('*** LINK {} IS NOT IN THIS TOPOLOGY! ***'.format(link_name))
     
     def update_link_info(self, link):
-        
+        """
+        Update link information.
+
+        Args:
+            link (Link): link to be updated.
+        """
+
         link_id = link.id
         for l in self.link_dict:
             if  link_id in self.link_dict[l]['_id']:
@@ -276,16 +300,16 @@ class Topology:
                 break
     
     def get_link_between_neighbors(self, nodeA_name, nodeB_name):
-        # TODO: write docstrings
-        """[summary]
-        
+        """
+        Returns the Link object between two nodes.
+
         Arguments:
-            nodeA_name {[type]} -- [description]
-            nodeB_name {[type]} -- [description]
+            nodeA_name {string} -- Name of link's endpoint A.
+            nodeB_name {string} -- Name of link's endpoint B.
         
         Raises:
-            Exception: [description]
-            Exception: [description]
+            Exception: endpoints A and B are not neighbors.
+            Exception: endpoints A and B are neighbors but no link between them was found.
         
         Returns:
             [Link] -- Link object between nodeA and nodeB.
@@ -303,6 +327,7 @@ class Topology:
         if nodeB.name not in nodeA_neighbors:
             raise Exception("*** {} IS NOT {}'s NEIGHBOR! ***".format(nodeB_name,nodeA_name))
         
+        # Find and return the link between A and B
         nodeA_links = nodeA.links_list
         for l in nodeA_links:
             link = self.get_one_link(l)
@@ -322,12 +347,21 @@ class Topology:
     ## SERVICES
 
     def get_shortest_path(self, flow):
-        # TODO: write docstrings
+        """
+        Returns the shortest path between source and destination nodes of a given flow.
+
+        Args:
+            flow (dict): service flow attributes.
+
+        Returns:
+            [list]: ordered list of nodes that compose the shortest path between source and destination. 
+        """
 
         src_name = flow['node1']
         dst_name = flow['node2']
         src = self.get_one_node(src_name)
-    
+
+        # Look for the path in the 'spt' list of source node that terminates at the destination node.
         for _, path in src.spt.items():
             if path[0] == src_name and path[-1] == dst_name:
                 return path
@@ -336,7 +370,13 @@ class Topology:
         return self.current_flows
 
     def apply_service_on_network(self, service_flow, path):
-        
+        """
+
+        Args:
+            service_flow ([type]): [description]
+            path ([type]): [description]
+        """
+
         # Update current flows
         self.current_flows.append(service_flow)
 
@@ -452,6 +492,7 @@ class Topology:
         Returns:
             [list] -- Topology Adjacency matrix. 
         """
+
         adj_matrix = [[ 0 for i in range(len(self.nodes))] for j in range(len(self.nodes))]
         sorted_nodes = sorted(self.node_names)
         for i in range(len(self.nodes)):
@@ -535,7 +576,7 @@ class Topology:
         Arguments:
             adj_matrix {list} -- Topology Adjacency matrix.
 
-        N.B. Node names must be all of the same length (for now). 
+        N.B. Node names must be all of the same length. 
         """
 
         print('**** ADJACENCY MATRIX ****')
@@ -1158,7 +1199,7 @@ class Link:
         self.update_info()
 
     def get_power_consumption(self, x, delta = 180, rho = 5e-4, mu = 1e-03, alpha = 1.4, n_l = 1):
-        # See paper "A Hop-by-Hop Routing Mechanismfor Green Internet"
+        # See paper "A Hop-by-Hop Routing Mechanism for Green Internet"
         # Link energy model used for "hop by hop..." and MORA
         if x <= 0:
             return 0
