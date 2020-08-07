@@ -43,11 +43,17 @@ def write_to_json(data, filename, json_path):
             json.dump(data, f, sort_keys=True, indent=4)
 
 def preprocess_metadata(topo_name):
-    
+    """
+    Add geo-coordinates (latitude-longitude) to network nodes and calculate length/latency of every network link.
+
+    Args:
+        topo_name (string): topology name.
+    """
+
+    # Get topology metadata
     current_dir = os.path.dirname(__file__)
     meta_path = os.path.join(current_dir, topo_name, topo_name + '_metadata.json')
     meta = read_from_json(meta_path)
-    
     node_dict = meta['nodes']
     link_dict = meta['links']
 
@@ -57,15 +63,20 @@ def preprocess_metadata(topo_name):
     add_geo_coordinates(node_dict)
     calculate_latency(link_dict, node_dict)
 
+    # ???
     print(" *** SETTING AVERAGE LINK USAGE (ALU) *** ")
     set_average_link_usage(link_dict)
 
-    #calculate_power_consumption(link_dict, node_dict)
-
+    # Save topology data in the proper folder
     save_topology_info(topo_name, node_dict, link_dict)
 
 def set_average_link_usage(link_dict):
+    """
+    ???
 
+    Args:
+        link_dict ([type]): [description]
+    """
     mean_link_bw = get_mean_link_bw()
 
     for link in link_dict:
@@ -75,10 +86,11 @@ def set_average_link_usage(link_dict):
                 link_dict[link]["alu"] = round(mean_link_bw[link_bw]/1e6,0)
 
 def add_geo_coordinates(node_dict):
-    """[summary]
-    
-    Arguments:
-        node_dict {[type]} -- [description]
+    """
+    Add geo-coordinates (latitude-longitude) to a network node.
+
+    Args:
+        node_dict (dict): node attributes.
     """
 
     geolocator = Nominatim(user_agent='geant')
@@ -96,11 +108,12 @@ def add_geo_coordinates(node_dict):
         time.sleep(1)
     
 def calculate_latency(link_dict, node_dict):
-    """[summary]
-    
-    Arguments:
-        link_dict {[type]} -- [description]
-        node_dict {[type]} -- [description]
+    """
+    Calculate length and latency of a network link.
+
+    Args:
+        link_dict (dict): link attributes.
+        node_dict (dict): node attributes.
     """
 
     for link in link_dict:
@@ -116,7 +129,10 @@ def calculate_latency(link_dict, node_dict):
                 node2_longitude  = node_dict[node]['pop']['longitude']
                 node2_coordinates = (node2_latitude, node2_longitude)
         
+        # link length is calculated as the air-line distance between the two link endpoints
         distance = great_circle(node1_coordinates, node2_coordinates).kilometers  # Km
+
+        # link latency (delay) is estimated taking into account the speed of light in optical fiber medium (200000 Km/s)
         light_speed_in_fiber = 200000.0  # Km/s
         delay = 1000 * (distance/light_speed_in_fiber)  # ms
         delay = round(delay, 1)
@@ -124,28 +140,6 @@ def calculate_latency(link_dict, node_dict):
         # OUTPUT
         link_dict[link]['delay'] = delay  # ms
         link_dict[link]['len'] = round(distance, 3)  # Km
-
-def calculate_power_consumption(link_dict, node_dict):
-    
-    for link in link_dict:
-        node1 = link_dict[link]['node1']
-        node2 = link_dict[link]['node2']
-        for node in node_dict:
-            if node_dict[node]['_id'] == node1:
-                node1_latitude  = node_dict[node]['pop']['latitude']
-                node1_longitude  = node_dict[node]['pop']['longitude']
-                node1_coordinates = (node1_latitude, node1_longitude)
-            elif node_dict[node]['_id'] == node2:
-                node2_latitude  = node_dict[node]['pop']['latitude']
-                node2_longitude  = node_dict[node]['pop']['longitude']
-                node2_coordinates = (node2_latitude, node2_longitude)
-
-        distance = great_circle(node1_coordinates, node2_coordinates).kilometers
-        ola_per_link = distance // INTER_OLA_DISTANCE
-        link_power_consumption = ola_per_link * OLA_POWER_CONSUMPTION
-
-        # OUTPUT
-        link_dict[link]["power_consumption"] = link_power_consumption
 
 def save_topology_info(topo_name, node_dict, link_dict):
     """
@@ -168,3 +162,4 @@ def save_topology_info(topo_name, node_dict, link_dict):
     # Save nodes and links data
     write_to_json(node_dict, 'nodes', database_path)
     write_to_json(link_dict, 'links', database_path)
+    
