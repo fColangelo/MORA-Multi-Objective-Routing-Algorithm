@@ -371,10 +371,11 @@ class Topology:
 
     def apply_service_on_network(self, service_flow, path):
         """
+        Applies a service flow on the links along the path. 
 
         Args:
-            service_flow ([type]): [description]
-            path ([type]): [description]
+            service_flow (dict): service flow attributes.
+            path (list): list of nodes between flow source and destination.
         """
 
         # Update current flows
@@ -384,10 +385,17 @@ class Topology:
             link = self.get_link_between_neighbors(path[i], path[i+1])
             link.apply_service_on_link(service_flow)
             self.update_link_info(link)
-        self.save_topology_info()     
+        self.save_topology_info()
 
     def remove_service_from_network(self, service_flow, path):
-        
+        """
+        Removes a service flow from the links along the path. 
+
+        Args:
+            service_flow (dict): service flow attributes.
+            path (list): list of nodes between flow source and destination.
+        """
+
         # Update current flows
         self.current_flows.remove(service_flow)
 
@@ -413,7 +421,7 @@ class Topology:
 
     def save_topology_info(self):
         """
-        Save topology info.
+        Saves topology info.
         
         'node_dict' and 'link_dict' are saved in folder ."self.name"/"self.name"DB/
         respectively in the files nodes.json and links.json.
@@ -437,7 +445,7 @@ class Topology:
 
     def depth_first_search(self, current_node, reachable_nodes):
         """
-        Depth-First Search (DPS) recursive function.
+        Depth-First Search (DFS) recursive function.
 
         Arguments:
             current_node {Node} -- [description]....
@@ -458,10 +466,15 @@ class Topology:
                 self.depth_first_search(current_neighbor, reachable_nodes)
 
     def get_reachability_matrix(self):
-        """[summary]
-        
+        """
+        Creates and returns the Reachability Matrix.
+
+        Reachability Matrix is a square matrix of degree N, where N is the number of nodes in a network.
+        The element a_ij is equal to True if node j is reachable from node i, and False otherwise.
+        N.B. "reachable" means that a path exists between node i and node j.
+
         Returns:
-            [type] -- [description]
+            [list] -- Reachability Matrix.
         """
 
         reachablity_matrix = []
@@ -477,6 +490,10 @@ class Topology:
         return reachablity_matrix
 
     def print_reachability_matrix(self):
+        """
+        Prints the Reachability Matrix on screen.
+        """
+
         if self.reachability_matrix is None:
             self.reachability_matrix = self.get_reachability_matrix()
         for row in self.reachability_matrix:
@@ -487,10 +504,14 @@ class Topology:
 
     def get_adjacency_matrix(self):
         """
-        Return Topology adjacency matrix.
+        Creates and returns the Adjacency Matrix.
+
+        Adjacency Matrix is a square matrix of degree N, where N is the number of nodes in a network.
+        The element a_ij is equal to 1 if node j is adjacent to node i, and 0 otherwise.
+        N.B. "adjacent" means that a link exists between node i and node j.
 
         Returns:
-            [list] -- Topology Adjacency matrix. 
+            [list] -- Adjacency Matrix. 
         """
 
         adj_matrix = [[ 0 for i in range(len(self.nodes))] for j in range(len(self.nodes))]
@@ -506,13 +527,14 @@ class Topology:
 
     def get_operational_adjacency_matrix(self):
         """
-        Return Topology operational adjacency matrix.
+        Creates and returns the Operational Adjacency Matrix.
 
-        The difference between op_adj_matrix and adj_matrix is that the former takes into account
-        the status of a link.
+        Operational Adjacency Matrix is a square matrix of degree N, where N is the number of nodes in a network.
+        The element a_ij is equal to 1 if node j is operationally adjacent to node i, and 0 otherwise.
+        N.B. "operationally adjacent" means that an active (i.e. switched on) link exists between node i and node j.
 
         Returns:
-            [list] -- Topology Operational Adjacency matrix. 
+            [list] -- Operational Adjacency Matrix. 
         """
         
         # Initialize adj_matrix (i: rows index, j: columns index)
@@ -574,7 +596,7 @@ class Topology:
         Print adjacency matrix in a human readable form.
 
         Arguments:
-            adj_matrix {list} -- Topology Adjacency matrix.
+            adj_matrix {list} -- Adjacency Matrix.
 
         N.B. Node names must be all of the same length. 
         """
@@ -616,14 +638,21 @@ class Topology:
     # ************ DIJKSTRA ANCILLARY METHODS ************
 
     def init_Dijkstra(self):
+        """
+        Dijkstra initialization method.
+        """
+
         set_spt(self)
 
     def dijkstra_cost_matrix(self):
-        # TODO: write docstrings
-        """[summary]
-        
+        """
+        Creates and returns the Cost Matrix.
+        Cost Matrix is a square matrix of degree N, where N is the number of nodes in a network.
+        The element a_ij is equal to the cost of the link between nodes i and j.
+        If a link between nodes i and j does not exist -> a_ij = infinity
+
         Returns:
-            [type] -- [description]
+            [list] -- Cost Matrix.
         """
 
         # Initialize cost_matrix (i: rows index, j: columns index)
@@ -654,11 +683,20 @@ class Topology:
     # ************ EAR ANCILLARY METHODS ******************
 
     def init_EAR(self):
+        """
+        EAR initialization method.
+        """
+
         ER_degree_threshold = 2
         ear(self, ER_degree_threshold)
 
     def switch_off_link(self, link):
-        # TODO: write docstrings
+        """
+        Switches off a topology link.
+
+        Args:
+            link (Link): link to be switched off.
+        """
 
         link.status = 'off'
         self.update_link_info(link)
@@ -677,7 +715,12 @@ class Topology:
         self.reachability_matrix = self.get_reachability_matrix()
 
     def turn_on_link(self,link):
-        # TODO: write docstrings
+        """
+        Turns on a topology link.
+
+        Args:
+            link (Link): link to be turned on.
+        """
 
         link.status = 'on'
         self.update_link_info(link)
@@ -696,7 +739,13 @@ class Topology:
         self.reachability_matrix = self.get_reachability_matrix()
 
     def change_node_role(self, node, role):
-        # TODO: write docstrings
+        """
+        Changes node role.
+
+        Args:
+            node (Node): node to be modified.
+            role (string): new role for the node.
+        """
 
         node.role = role
         self.update_node_info(node)
@@ -864,8 +913,6 @@ class Topology:
             processed_nodes.append(cn.name)   
         return []
     
-
-
 class Node:
  
     def __init__(self, info):
@@ -937,6 +984,9 @@ class Node:
             raise Exception("*** {} IS NOT A VALID ROLE! ***".format(new_value))
 
     def update_info(self):
+        """
+        Update this node information.
+        """
 
         info = {"_id": self.name,
                 "pop": self.pop,
@@ -955,15 +1005,14 @@ class Node:
         self.info = info
 
     def shutdown_link(self, link):
-        # TODO: write docstrings
         """
-        
-        Arguments:
-            link {[type]} -- [description]
-        
+        Shuts down a link of this node.
+
+        Args:
+            link (Link): link to be shut down.
+
         Raises:
-            exception.: [description]
-            Exception: [description]
+            Exception: input 'link' does not belong to this node or it is already shut down.
         """
 
         # Check if link belongs to this node and it is an active...
@@ -1005,12 +1054,14 @@ class Node:
         self.update_info()
    
     def startup_link(self, link):
-        # TODO: write docstrings
-        """[summary]
-        
+        """
+        Starts up a link of this node.
+
+        Args:
+            link (Link): link to be turned on.
+
         Raises:
-            exception.: [description]
-            Exception: [description]
+            Exception: input 'link' does not belong to this node or it is already turned on.
         """
 
         # Check if link belongs to this node and it is not active...
@@ -1126,9 +1177,8 @@ class Link:
         self.update_info()
     
     def update_info(self):
-        # TODO: write docstrings
         """
-        [summary]
+        Update this link information.
         """
 
         info = {"_id": self.id,
@@ -1150,37 +1200,48 @@ class Link:
         self.info = info
 
     def apply_service_on_link(self, service_flow):
-        # TODO: write docstrings
         """
-        [summary]
+        Applies a service flow on this link.
+
+        Args:
+            service_flow (dict): service flow to be applied on this link.
         """
 
+        # get service flow id and bandwidth values
         service_flow_id = service_flow["_id"]
         service_flow_bandwidth = service_flow["bandwidth"]
 
+        # apply service flow on this link
         self.service_flows.append(service_flow_id)
         self.consume_bandwidth(service_flow_bandwidth)
 
         self.update_info()
 
     def remove_service_from_link(self, service_flow):
-        # TODO: write docstrings
         """
-        [summary]
-        """
+        Remove a service flow from this link.
 
+        Args:
+            service_flow (dict): service flow to be removed from this link.
+        """
+       
+        # get service flow id and bandwidth values
         service_flow_id = service_flow["_id"]
         service_flow_bandwidth = - service_flow["bandwidth"]
 
+        # remove service flow from this link
         self.service_flows.remove(service_flow_id)
         self.consume_bandwidth(service_flow_bandwidth)
         
         self.update_info()
 
     def consume_bandwidth(self, required_bandwidth):
-        # TODO: write docstrings
         """
-        [summary]
+        Calculate link consumed bandwidth and power of this link after applying or removing a service flow from it.
+
+
+        Args:
+            required_bandwidth (string): new amount of bandwidth to be consumed or released.
         """
        
         self.consumed_bandwidth = self.consumed_bandwidth + float(required_bandwidth)
@@ -1189,7 +1250,7 @@ class Link:
             self.consumed_bandwidth = 0.0
             self.bandwidth_usage = 0.0
         elif self.consumed_bandwidth > self.total_bandwidth:
-            self.bandwidth_usage = self.consumed_bandwidth/self.total_bandwidth #1.0
+            self.bandwidth_usage = self.consumed_bandwidth/self.total_bandwidth # 1.0
             print("***** LINK {} IS CONGESTED: BANDWIDTH USAGE = {} % *****".format(self.id, (self.consumed_bandwidth/self.total_bandwidth)*100))
         else:
             self.bandwidth_usage = self.consumed_bandwidth/self.total_bandwidth
@@ -1199,7 +1260,23 @@ class Link:
         self.update_info()
 
     def get_power_consumption(self, x, delta = 180, rho = 5e-4, mu = 1e-03, alpha = 1.4, n_l = 1):
-        # See paper "A Hop-by-Hop Routing Mechanism for Green Internet"
+        """
+        Calculate actual power consumed by this link.
+
+        See paper IEEE "A Hop-by-Hop Routing Mechanism for Green Internet"
+
+        Args:
+            x ([type]): [description]
+            delta (int, optional): [description]. Defaults to 180.
+            rho ([type], optional): [description]. Defaults to 5e-4.
+            mu ([type], optional): [description]. Defaults to 1e-03.
+            alpha (float, optional): [description]. Defaults to 1.4.
+            n_l (int, optional): [description]. Defaults to 1.
+
+        Returns:
+            [float]: power consumed by this link.
+        """
+        
         # Link energy model used for "hop by hop..." and MORA
         if x <= 0:
             return 0
