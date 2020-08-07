@@ -4,7 +4,7 @@ import sys
 sys.dont_write_bytecode
 from .heap import build_min_heap
 
-REFERENCE_BANDWIDTH = 300000.0  # 100 G
+REFERENCE_BANDWIDTH = 300000.0  # 300 G
 
 
 def dijkstra_cost(bandwidth, reference_bandwidth=REFERENCE_BANDWIDTH):

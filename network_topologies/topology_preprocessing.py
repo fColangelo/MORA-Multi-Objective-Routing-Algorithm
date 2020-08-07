@@ -8,12 +8,6 @@ from geopy.distance import great_circle
 from service_flows.data_processor import get_mean_link_bw
 import time
 
-OLA_POWER_CONSUMPTION = 100  # kWh (average...a caso. Da dimensionare)
-INTER_OLA_DISTANCE = 80  # Km (average)
-# The INTER_OLA_DISTANCE value is calculated taking into account the following considerations:
-# 1) The average optical power gain of an OLA is 20dB
-# 2) The optical fiber attenuation in third window (1550nm) is almost -0.25db/Km
-
 def read_from_json(json_path):
     """
     Returns data read from json file at found at 'json_path' location.
@@ -47,7 +41,6 @@ def write_to_json(data, filename, json_path):
     # Write data
     with open(filepath + '.json', 'w+') as f:
             json.dump(data, f, sort_keys=True, indent=4)
-
 
 def preprocess_metadata(topo_name):
     
@@ -134,7 +127,6 @@ def calculate_latency(link_dict, node_dict):
 
 def calculate_power_consumption(link_dict, node_dict):
     
-
     for link in link_dict:
         node1 = link_dict[link]['node1']
         node2 = link_dict[link]['node2']
