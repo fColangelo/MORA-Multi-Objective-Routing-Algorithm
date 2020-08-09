@@ -13,7 +13,17 @@ np.random.seed(64)
 class TrafficGenerator():
 
     def __init__(self, interval, topology, path, faults = 0, traffic_boost = 0):
-        
+        """
+        Initialization Method of Traffic Generator.
+
+
+        Args:
+            interval (int): elapsed seconds between two traffic files. 
+            topology (Topology): topology on which the traffic is injected.
+            path (string): location of the traffic files.
+            faults (int, optional): [description]. Defaults to 0.
+            traffic_boost (int, optional): percent increase of bandwidth value. Defaults to 0.
+        """
         #### CONSTANT PARAMETERS ####
         self.p_part = 0.19
         self.a_part = 0.64
@@ -61,6 +71,10 @@ class TrafficGenerator():
         df.to_csv(self.log_file_name, mode='w', header=True, index=False)
 
     def generate_flows(self):
+        """
+        
+        """
+
         i = 0
         
         while i < len(self.traffic_files):

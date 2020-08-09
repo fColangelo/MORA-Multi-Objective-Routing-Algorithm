@@ -207,11 +207,11 @@ def spf_iteration(cost_matrix, min_dist, path, path_cost, nodes, dst, ecmp):
 
 
 def set_spt(topo):
-    # TODO: write docstrings
     """
-    
+    Calculate the SPT (Shortest Path Tree) for every node belonging to the input topology.
+
     Arguments:
-        topo {[type]} -- [description]
+        topo {Topology} -- a Topology object.
     """
 
     # Get list of node names
