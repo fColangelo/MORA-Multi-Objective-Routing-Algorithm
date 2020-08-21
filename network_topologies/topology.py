@@ -744,7 +744,7 @@ class Topology:
         for ni in self.nodes:
             self.node_connectivity.append((ni.name, len(ni.neighbors_list)))
 
-        creator.create("FitnessMultiObj", base.Fitness, weights=(-1.0, -1.0, -1.0,)) 
+        creator.create("FitnessMultiObj", base.Fitness, weights=(-1.0, -1.0, -1.0, -1.0)) 
         creator.create("Individual", list, fitness=creator.FitnessMultiObj)
         self.toolbox = base.Toolbox()
         self.toolbox.register("mate", crossover_one_point, topology=self, ind_class=creator.Individual, toolbox=self.toolbox)
