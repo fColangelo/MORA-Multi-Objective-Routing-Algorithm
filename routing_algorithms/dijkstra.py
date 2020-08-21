@@ -4,7 +4,7 @@ import sys
 sys.dont_write_bytecode
 from .heap import build_min_heap
 
-REFERENCE_BANDWIDTH = 300000.0  # 100 G
+REFERENCE_BANDWIDTH = 300000.0  # 300 G
 
 
 def dijkstra_cost(bandwidth, reference_bandwidth=REFERENCE_BANDWIDTH):
@@ -207,11 +207,11 @@ def spf_iteration(cost_matrix, min_dist, path, path_cost, nodes, dst, ecmp):
 
 
 def set_spt(topo):
-    # TODO: write docstrings
     """
-    
+    Calculate the SPT (Shortest Path Tree) for every node belonging to the input topology.
+
     Arguments:
-        topo {[type]} -- [description]
+        topo {Topology} -- a Topology object.
     """
 
     # Get list of node names

@@ -4,16 +4,19 @@ sys.dont_write_bytecode
 import os
 import json
 import time
+
 # TOPOLOGIES
 #from network_topologies.pseudogeant import Pseudogeant
 from network_topologies.geant import Geant
 #from network_topologies.topology import Topology
 #from network_topologies.topology_preprocessing import preprocess_metadata
+
 # ROUTING ALGORITHMS
 #from routing_algorithms.dijkstra import dijkstra
 #from routing_algorithms.dijkstra import calculate_path
 from routing_algorithms.dijkstra import set_spt
 from routing_algorithms.ear import ear
+
 # SERVICES
 from service_flows.traffic_generator import TrafficGenerator
 
