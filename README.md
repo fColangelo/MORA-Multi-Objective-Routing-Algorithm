@@ -1,19 +1,17 @@
 # Multi-Objective Routing Algorithm (MORA)
-<pre>
 This repo contains the code for the paper 'Multi-objective optimization-based reliable,energy efficient routing for SDN networks'
 
-##Prerequisites
-```
+## Prerequisites
+
     - Numpy
-    - Deap
+    - Deap v 1.3.0
     - Pandas
     - Jupyter notebook/lab
     - Geopy (To fetch data from GEANT API)
-```
-##Instructions
-To replicate the results, install the prerequisites and clone this repository.
-Then, simply launch the 'Simulator' notebook and set the parameters according to the enclosed instructions.
 
 
-
-</pre>
+## Instructions
+1) Install the prerequisites 
+2) Clone this repository.
+3) Launch the 'Simulator' notebook
+4) Set the parameters according to the enclosed instructions
