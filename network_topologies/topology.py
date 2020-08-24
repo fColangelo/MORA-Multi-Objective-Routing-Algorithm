@@ -120,10 +120,10 @@ class Topology:
         return self.reachability_matrix[src_index][dst_index]
 
     def clear_flow_from_network(self, flow):
-        """[summary]
+        """Remove a flow from every link in the network
         
         Arguments:
-            flow {[type]} -- [description]
+            flow {[dict]} -- dictionary containing the flow information
         """
        
         for link in self.links:
@@ -406,15 +406,20 @@ class Topology:
         self.save_topology_info()        
 
     def get_reliability_score(self):
+        # Return the max reliability score (for the most used link) 
+        # and the mean reliability score over the network the network, for logging purposes
+
         reliabilities = [eval_bandwidth_single_link(x.bandwidth_usage) for x in self.links if x.status == 'on']
         above_threshold = len([x for x in reliabilities if x > 0.6])
         return np.max(reliabilities), above_threshold
 
     def get_power_consumption(self):
+        # Return the overall power consumption of the network, for logging purposes
         powers = [x.power_consumption_MORA for x in self.links if x.status == 'on']
         return np.sum(powers)
 
     def get_link_usages(self):
+        # Return the list of link percentage usage over all the network, for logging purposes
         return [x.bandwidth_usage for x in self.links]
 
     ## TOPO OBJECT
@@ -569,7 +574,7 @@ class Topology:
         return op_adj_matrix
 
     def __repr__(self):
-        
+        # Print a readable version of the adjacency matrix
         adj_matrix=self.get_adjacency_matrix()        
         rep = '**** ADJACENCY MATRIX ****\n'  
         rep += '\n' 
@@ -753,6 +758,18 @@ class Topology:
     # ************ MORA ANCILLARY METHODS ************
 
     def enumerate_paths(self, s, d, max_hops, current_prefix = [], pts = []):
+        """Get all the paths from node s to node d up to length max_hops.
+
+        Args:
+            s ([int]): the source node
+            d ([int]): the destination node
+            max_hops ([int]): the maximum number of hops considered for paths from s to d.
+            current_prefix (list): Called recursively, the current prefix that is being examined. Defaults to [].
+            pts (list, optional): Called recursively, paths calculated up to this moment. Defaults to [].
+
+        Returns:
+            pts [list]: list of all the paths
+        """
         current_prefix.append(s)
         N = self.get_valid_links(current_prefix[-1])
         N = [x for x in N if x not in current_prefix]
@@ -768,6 +785,15 @@ class Topology:
         return pts   
 
     def is_connection_possible(self, node_1, node_2):
+        """Helper method to check if two nodes can be connected
+
+        Args:
+            node_1 ([int])
+            node_2 ([int])
+
+        Returns:
+            [Boolean]: Wheter the connecyion is possible
+        """
         node_1_links = self.get_valid_links(node_1)
         if node_2 in node_1_links:
             return True
@@ -775,12 +801,13 @@ class Topology:
             return False
 
     def get_valid_links(self, node):
-        #valid_links = []
-        """
-        node_links = self.get_operational_adjacency_matrix()[int(node)]
-        for idx in range(len(node_links)):
-            if node_links[idx] != 0:
-                valid_links.append(idx)
+        """Get all the valid links (neighbors) for node
+
+        Args:
+            node ([int])
+
+        Returns:
+            [list]: the nodes adjacent to node
         """
         n = [x for x in self.nodes if x.name == node][0]
         node_links = n.neighbors_list
@@ -788,16 +815,41 @@ class Topology:
         return sorted(node_links)
 
     def has_loops(self, path):
+        """Check if a path has loops
+
+        Args:
+            path ([list]): the path to be examined
+
+        Returns:
+            [Bool]: True if the path has loops, false otherwise
+        """
         has_loops = (len(path) != len(set(path)))                                                                     
         return has_loops 
 
     def is_valid(self, path):
+        """Check if all the connections in path are valid (a link exist)
+
+        Args:
+            path ([list]): the path to be examined
+
+        Returns:
+            [Bool]: True if all the connection are valid
+        """
         for idx in range(len(path)-1):
             if path[idx+1] not in self.get_valid_links(path[idx]):
                 return False
         return True
 
     def generate_mutation_support(self, max_hops):
+        """Get a list of paths for use in the mutation procedure.
+        For each pair of nodes, get all the paths up to length max_hops.
+
+        Args:
+            max_hops ([int]): maximum path length considered
+
+        Returns:
+            [list]: a list containing tuples in the form (node1, node2, list of paths)
+        """
         mutation_support = []
         for ni in self.node_names:
             for nj in self.node_names:
@@ -810,6 +862,12 @@ class Topology:
         return mutation_support
 
     def generate_MORA_routes(self):
+        """Generate a list of paths to support the multi-objective optimization
+        For each pair of nodes, get the shortest path of length l. Then fetch all the paths of length l+2.
+
+        Returns:
+            [list]: a list containing tuples in the form (node1, node2, list of paths)
+        """
         mora_routes = []
         for ni in self.node_names:
             for nj in self.node_names:
@@ -821,6 +879,15 @@ class Topology:
         return mora_routes
 
     def init_MORA(self, max_hops = 3, favored_attr = 'Power consumption'):
+        """Initialize the multi-objective optimization. Set the meta-heuristic attribute.
+        Set DEAP attributes that are not flow-specific.
+        See DEAP documentation for more information on the toolbox attributes.
+
+        Args:
+            max_hops (int, optional): Length of the sub-paths considered in the mutation phase. Defaults to 3.
+            favored_attr (str, optional): Meta-heuristic to decide between multiple Pareto-optimal solutions. 
+            Defaults to 'Power consumption'.
+        """
         if favored_attr == 'Shortest path':
             self.meta_heuristic = 0
         elif favored_attr == 'Latency':
@@ -844,12 +911,11 @@ class Topology:
         set_spt(self)
         self.mora_routes = self.generate_MORA_routes()
         self.mutation_support = self.generate_mutation_support(max_hops)
-        #self.get_path = get_optimize_route(self, self.toolbox)
 
         return
 
     # ************ HOP BY HOP ANCILLARY METHODS ************
-
+    ############## NOT USED FOR THE PAPER ##################
     def init_Hop_by_hop(self):
         for node in self.nodes:
             input_capacity = 0

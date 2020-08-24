@@ -25,6 +25,9 @@ import matplotlib.pyplot as plt
 import import_ipynb
 
 
+
+##########UNUSED IN THE PAPER###############
+
 class Hop_by_hop_Path_cost_1():
     def __init__(self, topology, beta = 1.5): 
         #Paper values

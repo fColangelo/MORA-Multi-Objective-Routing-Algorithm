@@ -10,12 +10,32 @@ from utils.network_objects import Flow
 
 
 def eval_bandwidth_single_link(percentage):
+    """Evaluate the bandwidth status of a single link
+
+    Args:
+        percentage ([float]): The percentage utilization of target link
+
+    Returns:
+        [float]: the cost associated with percentage usage, 0 if < 60%, 1 if = 100%
+    """
     if percentage > 0.6:
         return 6.25*(percentage**2) - 7.5 *(percentage) + 2.25
     elif percentage < 0.6:
         return 0
     
 def get_evaluate_individual(topology, flow):
+    """Generate a cost function for the individual characterized from flow
+
+    Args:
+        topology {Topology} -- the reference topology object for the flow
+        flow {dict}: dictionary containing the flow information
+    Returns:
+        evaluate individual {Function}: the cost function, which returns:
+            power {float}: the power consumption of the network if the current individual is chosen
+            reliability max {Function}: the maximum reliability cost if the current individual is chosen
+            reliability mean {Function}: the mean reliability cost if the current individual is chosen
+            latency {Function}: the overall latency of the path if the current individual is chosen
+    """
     def evaluate_individual(individual):
         latency = 0
         power = 0
@@ -29,6 +49,16 @@ def get_evaluate_individual(topology, flow):
     return evaluate_individual
 
 def get_evaluate_SLA(SLA_terms, topology, evaluate_individual):
+    """Generate a function to evaluate if the flow reliability and latency requirements are met
+
+    Args:
+        SLA_terms {SLA} -- an SLA object containing latency and bandwidth requirements
+        topology {Topology} -- the reference topology object for the flow
+        evaluate_individual {function}: a cost function, which returns the metric for a given individual
+        individual {DEAP individual (list)} -- the individual
+    Returns:
+        evaluate_SLA {Function}: a function returning True if the requirements are met, False otherwise
+    """
     def evaluate_SLA(individual):
         evaluation = evaluate_individual(individual)
         if evaluation[3] > SLA_terms.latency or evaluation[1] > 1:
@@ -37,6 +67,16 @@ def get_evaluate_SLA(SLA_terms, topology, evaluate_individual):
     return evaluate_SLA
 
 def get_penalty(SLA_terms, topology, evaluate_individual):
+    """Generate a function calculating a penalty for the optimization if the requirements are not met
+
+    Args:
+        SLA_terms {SLA} -- an SLA object containing latency and bandwidth requirements
+        topology {Topology} -- the reference topology object for the flow
+        evaluate_individual {function}: a cost function, which returns the metric for a given individual
+        individual {DEAP individual (list)} -- the individual
+    Returns:
+        penalty {function}: a function returning a float measuring the severity of the violation
+    """
     def penalty(individual):
         penalty_bw = 0
         latency = 0
@@ -52,73 +92,20 @@ def get_penalty(SLA_terms, topology, evaluate_individual):
 def compare_individuals(indi1, indi2):
     return indi1 == indi2
 
-def faster_crossover(parent_1, parent_2, topology, ind_class, toolbox):
-    """Perform fast crossover between two individuals. Steps:
-       - Check that at least one of the individuals has len > 3. Otherwise it makes no sense to attempt crossover
-       - Select a possible merging point at random in p1, weigths based on its connectivity
-       - Check if it can be connected anywhere in p2
+def crossover_one_point(parent_1, parent_2, topology, ind_class, toolbox):
+    """Single-point crossover for Path individuals
 
-    Arguments:
+    Args:
         parent_1 {DEAP individual (list)} -- the first individual
         parent_2 {DEAP individual (list)} -- the second individual
         topology {Topology} -- the reference topology object for the individuals
         ind_class {DEAP individual class} -- see DEAP docs
         toolbox {DEAP toolbox} -- see DEAP docs
+
+    Returns:
+        child1 {DEAP individual (list)} -- the first child obtained by mating the parents
+        child2 {DEAP individual (list)} -- the second child obtained by mating the parents
     """
-    if len(parent_1) > 2:
-        connection_loci = []
-        mp = parent_1[1:-1] # Potential merging points
-        
-        n = [x[0] for x in topology.node_connectivity if x[0] in mp] # Nodes
-        p = [x[1] for x in topology.node_connectivity if x[0] in mp] # Nodes connectivities
-        p /=  np.sum(p) # Probability based on connectivity
-
-        candidate = np.random.choice(n, p=p)
-        valid_links_cand = topology.get_valid_links(candidate)
-        idx = parent_1.index(candidate)
-        used_nodes_P1_p1 = parent_1[:(idx+1)] # Notation: P -> parent; p -> part
-        used_nodes_P1_p2 = parent_1[(idx+1):]
-
-        for ind_p2 in range(1, len(parent_2)-1):
-            # These nodes are already used, we must check that parent1 does not contain any of these
-            used_nodes_P2_p1 = parent_2[ind_p2:]
-            used_nodes_P2_p2 = parent_2[:ind_p2]
-            # Check if there is any common node between the parent_1 and parent_2 genome
-            common_nodes_P1_P2 = [x for x in used_nodes_P1_p1 if x in used_nodes_P2_p2]
-            common_nodes_P2_P1 = [x for x in used_nodes_P2_p1 if x in used_nodes_P1_p2]
-            # If there are common nodes, no crossover can be made at these loci
-            if common_nodes_P1_P2 or common_nodes_P2_P1:
-                continue
-            else:
-                # If there are no common nodes, check if the two genomes can be connected
-                is_compatible = parent_2[ind_p2] in valid_links_cand 
-                if is_compatible:
-                    # The two genomes cannot be connected at this locus
-                    connection_loci.append((idx, ind_p2))
-
-        # If no compatible merging point has been found, output the two parents
-        if not connection_loci:
-            return parent_1, parent_2
-        else:
-            # Choose a random locus
-            locus = connection_loci[np.random.choice(len(connection_loci))]
-            # Create children (necessary for DEAP)
-            child1, child2 = [toolbox.clone(ind) for ind in (parent_1, parent_2)] 
-
-            child1 = child1[:locus[0]+1]
-            child1.extend((parent_2[locus[1]:]))
-            child1 =ind_class(child1)
-
-            child2 = child2[:locus[1]]
-            child2.extend((parent_1[locus[0]+1:]))
-            child2 = ind_class(child2)
-
-            return (child1, child2)
-    else:
-        return parent_1, parent_2
-    
-
-def crossover_one_point(parent_1, parent_2, topology, ind_class, toolbox):
     connection_loci = []
     # Do not consider the last two 
     # The last is the final host
@@ -132,7 +119,6 @@ def crossover_one_point(parent_1, parent_2, topology, ind_class, toolbox):
         used_nodes_P1_p2 = parent_1[(ind_p1+1):]
         # Filter valid links to avoid going backward
         valid_links_P1 = [x for x in valid_links_P1 if x not in used_nodes_P1_p1]
-        # TODO -1 o -2?
         for ind_p2 in range(1, len(parent_2)-1):
             # These nodes are already used, we must check that parent1 does not contain any of these
             used_nodes_P2_p1 = parent_2[ind_p2:]
@@ -150,13 +136,13 @@ def crossover_one_point(parent_1, parent_2, topology, ind_class, toolbox):
                     # The two genomes cannot be connected at this locus
                     connection_loci.append((ind_p1, ind_p2))
 
-    # If no compatible merging point has been found, output the two parents
+    # If no compatible merging points have been found, output the two parents
     if not connection_loci:
         return parent_1, parent_2
     else:
         # Choose a random locus
         locus = connection_loci[np.random.choice(len(connection_loci))]
-        # Create children (necessary for DEAP)
+        # Create children objects (necessary for DEAP)
         child1, child2 = [toolbox.clone(ind) for ind in (parent_1, parent_2)] 
 
         child1 = child1[:locus[0]+1]
@@ -173,6 +159,16 @@ def crossover_one_point(parent_1, parent_2, topology, ind_class, toolbox):
     
 
 def mutate_path(individual, topology, indi_class):
+    """Mutation function, performing a random mutation between flipping, insertion, deletion (see paper for details)
+
+    Args:
+        individual {DEAP individual (list)} -- the individual to be mutated
+        topology {Topology} -- the reference topology object for the individuals
+        ind_class {DEAP individual class} -- see DEAP docs
+
+    Returns:
+        individual {DEAP individual (list)} -- the mutated individual or the original individual if no mutation is possible
+    """
     possible_mutations = []
     # Resample until we have at least one valid mutation
     # Select the mutation locus at random, excluding first and last node
@@ -198,6 +194,20 @@ def mutate_path(individual, topology, indi_class):
         return individual,
 
 def initPopulation(pop_class, ind_class, node1, node2, topology):
+    """Generate the initial population for the optimization problem 
+    by fetching a list of pre-generated paths between node1 and node2. 
+    See paper for further details.
+
+    Args:
+        pop_class ([Object type]): always list, see DEAP documentation for details
+        individual {DEAP individual (list)} -- the individual type
+        node1 ([int]): the starting node of the flow
+        node2 ([int]): the final node of the flow
+        topology {Topology} -- the reference topology object for the flow
+
+    Returns:
+        [list of individuals]: list containing the initial population for the flow optimization
+    """
     pts = fetch_paths(node1, node2, topology.mora_routes)   
     if pts:
         pts = pop_class([ind_class(x) for x in pts[0]])
@@ -211,6 +221,19 @@ def fetch_paths(node1, node2, pt_list):
     return pts
 
 def get_optimize_route(topology, toolbox):
+    """Generate a function to optimize the routing of flows on a given topology. 
+    A different function is necessary for each flow.
+    See DEAP for further details.
+
+    Args:
+        topology {Topology} -- the reference topology object for the flow
+        toolbox {DEAP toolbox} -- see DEAP docs
+        flow_dic {dict} -- dictionary containing the flow details for the optimization
+
+    Returns:
+        optimize_route [function]: function used to optimize a path for a flow_dic. 
+        Return a list containing the best path according to the optimization and the meta heuristic set in topology.
+    """
     def optimize_route(flow_dic):
         
         if 'premium' in flow_dic['_id']:
@@ -220,7 +243,6 @@ def get_optimize_route(topology, toolbox):
         else:
             gen = 10
 
-        #gen = 10
 
         flow_obj = Flow(flow_dic)        
         evaluate_individual = get_evaluate_individual(topology, flow_dic)
