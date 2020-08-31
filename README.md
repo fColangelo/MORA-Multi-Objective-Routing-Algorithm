@@ -5,9 +5,13 @@ The Results directory contains the csv files obtained during the experiments.
 
 ## Instructions
 1) Install the prerequisites <br>
-<code>pip install -r requirements.txt</code>
+```
+pip install -r requirements.txt
+```
 2) Clone this repository. <br>
-<code>git clone https://github.com/fColangelo/MORA-Multi-Objective-Routing-Algorithm</code>
+```
+git clone https://github.com/fColangelo/MORA-Multi-Objective-Routing-Algorithm
+```
 3) Launch the 'Simulator' notebook
 4) Set the routing algorithm (see instructions inside the notebook)
 5) Set the traffic generator by specifying the path for the traffic files and the value of traffic boost (see instructions inside the notebook for setting the values, see paper for an explanation of traffic boost)
@@ -27,5 +31,5 @@ The results of the simulation are logged inside a CSV file, named after the date
 
 ## Structure of the code
 
-Most of the core code (i.e. crossover, mutation, optimization and solution evaluation) is contained in the file "routing_algorithms/mora_v2.py". The initialization code (and thus the population generation function) can be found inside the "network_topologies/topology.py" file.
-Traffic generation and logging function can be found in the "service_flows/traffic_generator.py"
+Most of the core code (i.e. crossover, mutation, optimization and solution evaluation) is contained in the file "routing_algorithms/mora_v2.py". <br> The initialization code (and thus the population generation function) can be found inside the "network_topologies/topology.py" file. <br>
+All the data and functions concerning traffic matrixes can be found in "service_flows". Traffic generation and logging function can be found in the "service_flows/traffic_generator.py". <br>
