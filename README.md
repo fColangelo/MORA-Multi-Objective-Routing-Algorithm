@@ -12,17 +12,15 @@ The Results directory contains the csv files obtained during the experiments.
 4) Set the routing algorithm (see instructions inside the notebook)
 5) Set the traffic generator by specifying the path for the traffic files and the value of traffic boost (see instructions inside the notebook for setting the values, see paper for an explanation of traffic boost)
 
-The code will run in a separate thread, printing results on a file-by-file basis. The simulation is complete when the final iteration is printed. E.g.:
-<code>
-******* GENERATE_FLOWS -> ITERATION 288 OUT OF 288 *******
-++++ BEGINNING OF ITERATION @ 06/21/2020, 18:18:19 ++++
-
-#### NODE FAILURES PHASE... execution time = 5.0067901611328125e-06
-#### DISRUPTED FLOWS REROUTING PHASE... execution time = 0.00015687942504882812
-#### GENERATE NEW FLOWS PHASE... execution time = 222.01595902442932
-++++ END OF ITERATION @ 06/21/2020, 18:22:01 ++++
-******* GENERATE_FLOWS -> ITERATION 288 OUT OF 288 ELAPSED TIME = 222.0168719291687 *******
---------------------------------------------------------------------------
+The code will run in a separate thread, printing results on a file-by-file basis. The simulation is complete when the final iteration is printed. E.g.: <br>
+<code> GENERATE_FLOWS -> ITERATION 288 OUT OF 288  </code>  <br>
+BEGINNING OF ITERATION @ 06/21/2020, 18:18:19   <br>
+NODE FAILURES PHASE... execution time = 5.0067901611328125e-06 <br>
+DISRUPTED FLOWS REROUTING PHASE... execution time = 0.00015687942504882812 <br>
+GENERATE NEW FLOWS PHASE... execution time = 222.01595902442932 <br>
+END OF ITERATION @ 06/21/2020, 18:22:01   <br>
+GENERATE_FLOWS -> ITERATION 288 OUT OF 288 ELAPSED TIME = 222.0168719291687 <br>
+-------------------------------------------------------------------------- <br>
 </code>
 The results of the simulation are logged inside a CSV file, named after the date and time of the simulation start and the chosen routing algorithm. As an example, a simulation starting on 31/08/20, 10:00 with the EAR algorithm would result in a file named "log_2020-08-31 10:00:00_EAR.csv".
 
